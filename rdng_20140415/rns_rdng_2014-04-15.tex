@@ -5,6 +5,7 @@
 \documentclass[xcolor=x11names,compress]{beamer}
 
 \definecolor{CoolBlack}{rgb}{0.0, 0.18, 0.39}
+\definecolor{byellow}{rgb}{0.55037, 0.38821, 0.06142}
 %% General document %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage{graphicx}
 \usepackage{tikz}
@@ -168,6 +169,7 @@ Define response with function $f(\ve{r}, E)$ in volume, $V_d$ as
  R = \int_E \int_{V_f} f(\ve{r}, E) \phi(\ve{r}, E) dV dE 
  \label{eq:Response}
 \end{equation}
+%
 \begin{columns}
   \begin{column}{0.5\textwidth}
 	\begin{align}
@@ -194,6 +196,69 @@ If we let $q^{\dagger} = f(\ve{r}, E)$ then
 \end{equation}
 %
 Eq.\ \eqref{eq:ResponseRedef} expresses that $\phi^{\dagger}$ represents the expected contribution of a source particle to the response given the source, $q$.
+
+\end{frame}
+
+% --------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{CADIS}
+  
+  \begin{enumerate}
+  \item Define $q^{\dagger}$ as the local response of interest\\
+  \item Generate $\phi^{\dagger}$ and $R$ with a coarse deterministic solution
+  \end{enumerate}
+% 
+\begin{align}
+  imp(\ve{r}, E) &= \frac{\phi^{\dagger}(\ve{r}, E)}{\langle q(\ve{r}, E), \phi^{\dagger}(\ve{r}, E) \rangle} = \frac{\phi^{\dagger}(\ve{r}, E)}{R(\ve{r}, E)} \\
+  %
+  \hat{q}(\ve{r}, E) &= \frac{\phi^{\dagger}(\ve{r}, E) q(\ve{r}, E)}{R} \\
+  %
+  w_0(\ve{r}, E) &= \frac{q(\ve{r}, E)}{\hat{q}(\ve{r}, E)} = \frac{R}{\phi^{\dagger}(\ve{r}, E)} 
+  \label{eq:Importance}
+\end{align}
+
+Birth weights match weight windows, making this the \underline{Consistent} \underline{A}djoint \underline{D}riven \underline{I}mportance \underline{S}ampling \underline{M}ethod
+
+\end{frame}
+
+% --------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{FW-CADIS}
+
+\begin{itemize}
+\item We often what to optimize solutions in all of phase space\\
+\item In this case the adjoint source needs to be a global forward solution
+\end{itemize}
+%
+\begin{columns}
+  \begin{column}{0.5\textwidth}
+  \begin{center}
+  \textcolor{byellow}{To Optimize}
+  \end{center}
+	\begin{align}
+  	&\phi(\ve{r}, E)\nonumber \\
+  	%
+  	\int&\phi(\ve{r}, E)\sigma_d(\ve{r}, E)\nonumber
+  	\end{align}
+  \end{column}
+  %
+  \begin{column}{0.5\textwidth}
+  \begin{center}
+  \textcolor{byellow}{Adjoint Source}
+  \end{center}
+  	\begin{align}
+  	f(\ve{r}, E) &= \frac{1}{\phi(\ve{r}, E)}\nonumber \\
+  	%
+  	f(\ve{r}, E) &= \frac{\sigma_d(\ve{r}, E)}{\int\phi(\ve{r}, E)\sigma_d(\ve{r}, E)} \nonumber
+  	\end{align}
+  \end{column}
+\end{columns}
+\vspace*{1 em}
+For example
+%
+\begin{equation}
+ R = \int_E \int_{V_f} f(\ve{r}, E) \phi(\ve{r}, E) dV dE = \int_E \int_{V} \frac{1}{\phi(\ve{r}, E)} \phi(\ve{r}, E) dV dE \approx 1 \nonumber
+\end{equation}
 
 \end{frame}
 

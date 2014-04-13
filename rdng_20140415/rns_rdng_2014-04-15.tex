@@ -327,6 +327,8 @@ For example
   
 \end{frame}
 
+
+% --------------------------------------------------------------
 % --------------------------------------------------------------
 \section{Self-Shielding}
 \subsection{Cross Section Processing}
@@ -382,12 +384,200 @@ For example
 	\begin{align}
   	&\sigma_0^{*,(j)} = \frac{1}{N_j} \sum_{m \ne j} \sigma_{t}^{(m)} N_m 
 	+ \frac{1}{N_j \bar{l}} \\
-  	&\text{\textcolor{byellow}{thin slab:}}\:\bar{l} \approx \frac{4V}{S} \qquad \text{\textcolor{byellow}{no effect:}}\:\bar{l} \approx \text{large}
+  	&\text{\textcolor{byellow}{thin slab:}}\:\bar{l} \approx \frac{4V}{S} \qquad \text{\textcolor{byellow}{no effect:}}\:\bar{l} \approx \text{large} \nonumber
 	\end{align}
 	\end{itemize}
   
 \end{frame}
 
+% --------------------------------------------------------------
+\subsection{Problem Investigation}
+\begin{frame}[fragile]
+  \frametitle{Problem Investigation}
+  	\begin{columns}
+  	\begin{column}{0.45\textwidth}
+  	\begin{figure}
+  		\includegraphics[height=2in,clip]{plate-geometry}
+  		\caption{Shielding Stack Up}
+  	\end{figure}
+  	\end{column}
+ 	%
+ 	\begin{column}{0.6\textwidth}
+	\begin{itemize}
+	\item 53 cm $\times$ 50 cm $\times$ 140 cm 
+	\item Uniform in x except plate (25-28 cm in x; 30-130 cm in z)
+	\item Uniform in y
+	\item U-235 fission spectrum; homogenized U, Zr, and H2O
+	\vspace*{1 em}
+	\item MC21, MCNP, and PARTISN
+	\item ENDF/B-VII data (all codes)
+	\item Processed by TRANSX (multigroup)
+	\end{itemize}
+  	\end{column}
+	\end{columns}
+  
+\end{frame}
+
+
+% --------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Base Calculation Parameters}
+  \begin{table}[p]
+  \label{tab:calcParams}
+  \begin{center}
+    \begin{tabu}{| X | X | X |}\hline
+      Variable & PARTISN & MC21\\\hline\hline
+	Deterministic Mesh & 0.5 cm unif; 0.25 cm in $x$ over 24 to 29 cm & 1 cm uniform \\\hline
+	Tally mesh & N/A & 1 cm uniform \\\hline
+	N particles & N/A & $1 \times 10^{10}$\\\hline
+	Energy structure & 58 grps & 27 grps / continuous\\\hline
+	Angular quad & QR-18-252 & QR-8-36\\\hline
+	Scattering order & $P_3$ & $P_3$\\\hline
+	Convergence & 0.01 & 0.05\\\hline
+	TRANSX settings & default & default\\\hline
+	DCFs & 58 grps & 27 grps \\\hline
+    \end{tabu}
+  \end{center}
+\end{table}
+  
+\end{frame}
+
+% --------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Errors in Plate}
+ \begin{figure}[p]
+   \begin{center}
+     \includegraphics[height=2 in,clip]{NSE13-109R1-PlateDRandRE}
+   \end{center}
+   \caption{Plate base FW-CADIS MC21 dose rate (left) and 95CI RE (right) (xz-slice through y=25 cm)}
+   \label{fig:Plate}
+ \end{figure}
+\end{frame}
+
+% --------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Deterministic MC Mismatch}
+ \begin{figure}[p]
+   \begin{center}
+     \includegraphics[width=4in,clip]{NSE13-109R1-PlateFluxExcel}
+   \end{center}
+   \caption{Plate non-thermal flux (left axis) and method ratios (right axis) down the x-y centerline}
+   \label{fig:PlateFlux}
+ \end{figure}
+\end{frame}
+
+% --------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Deterministic MC Mismatch}
+ \begin{figure}[p]
+   \begin{center}
+     \includegraphics[width=4in,clip]{NSE13-109R1-PlateExitSpectra}
+   \end{center}
+   \caption{Plate flux spectra (left axis) and PARTSN/MC21 (right axis) at start of air region (z = 130.5 cm)}
+   \label{fig:PlateExit}
+ \end{figure}
+\end{frame}
+
+% --------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Correct Without Plate}
+ \begin{figure}[p]
+   \begin{center}
+     \includegraphics[height=2in,clip]{NSE13-109R1-NoPlateDRandRE}
+   \end{center}
+   \caption{No-Plate MC21 dose rate (left) and 95CI RE (right) (xz-slice through y=25 cm)}
+   \label{fig:noPlate}
+ \end{figure}
+\end{frame}
+
+% --------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Correct Without Plate}
+ \begin{figure}[p]
+   \begin{center}
+     \includegraphics[width=4in,clip]{NSE13-109R1-NoPlateFluxExcel}
+   \end{center}
+   \caption{Plate non-thermal flux (left axis) and method ratios (right axis) down the x-y centerline}
+   \label{fig:noPlateFlux}
+ \end{figure}
+\end{frame}
+
+% --------------------------------------------------------------
+\subsection{Resonance Factor Method}
+\begin{frame}[fragile]
+  \frametitle{Resonance Factor Method}
+  
+\end{frame}
+
+
+% --------------------------------------------------------------
+\subsection{Results}
+\begin{frame}[fragile]
+  \frametitle{Results}
+  
+\end{frame}
+
+
+% --------------------------------------------------------------
+\subsection{Summary and Conclusions}
+\begin{frame}[fragile]
+  \frametitle{Summary and Conclusions}
+  
+\end{frame}
+
+% --------------------------------------------------------------
+% --------------------------------------------------------------
+\section{Strong Anisotropies}
+\begin{frame}[fragile]
+  \frametitle{}
+
+  
+\end{frame}
+
+
+% --------------------------------------------------------------
+% --------------------------------------------------------------
+\section{Other Potential Projects}
+\begin{frame}[fragile]
+  \frametitle{}
+
+  
+\end{frame}
+
+
+% --------------------------------------------------------------
+% --------------------------------------------------------------
+\section*{}
+\begin{frame}[fragile]
+  \frametitle{Questions?}
+  \begin{center}
+  \includegraphics[height=3in,clip]{../questions-comic}  
+  \end{center}
+  
+\end{frame}
+
+% --------------------------------------------------------------
+\section*{}
+\begin{frame}[fragile]
+	\begin{columns}
+  	\begin{column}{0.5\textwidth}
+
+  	\end{column}
+ 	%
+ 	\begin{column}{0.5\textwidth}
+
+
+  	\end{column}
+	\end{columns}
+	
+  	\begin{center}
+  	\begin{figure}
+  		\includegraphics[height=2in,clip]{plate-badVR}
+  		\caption{MC 95\% CI RE using FW-CADIS, Plate}
+  	\end{figure}
+  	\end{center}
+  
+\end{frame}
 
 
 \end{document}

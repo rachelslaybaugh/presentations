@@ -1,0 +1,202 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%  Class 2, NE 155
+%%
+
+\documentclass[xcolor=x11names,compress]{beamer}
+
+\definecolor{CoolBlack}{rgb}{0.0, 0.18, 0.39}
+%% General document %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{decorations.fractals}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% Beamer Layout %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\useoutertheme[subsection=false,shadow]{miniframes}
+\useinnertheme{default}
+\usefonttheme{serif}
+\usepackage{palatino}
+\usepackage{tabu}
+
+% addition of color
+\usepackage{xcolor}
+\definecolor{dgreen}{rgb}{0.,0.6,0.}
+\definecolor{RawSienna}{cmyk}{0,0.72,1,0.45}
+
+\setbeamerfont{title like}{shape=\scshape}
+\setbeamerfont{frametitle}{shape=\scshape}
+
+\setbeamercolor*{lower separation line head}{bg=CoolBlack} 
+\setbeamercolor*{normal text}{fg=black,bg=white} 
+\setbeamercolor*{alerted text}{fg=red} 
+\setbeamercolor*{example text}{fg=black} 
+\setbeamercolor*{structure}{fg=black} 
+ 
+\setbeamercolor*{palette tertiary}{fg=black,bg=black!10} 
+\setbeamercolor*{palette quaternary}{fg=black,bg=black!10} 
+
+\renewcommand{\(}{\begin{columns}}
+\renewcommand{\)}{\end{columns}}
+\newcommand{\<}[1]{\begin{column}{#1}}
+\renewcommand{\>}{\end{column}}
+
+% adding slide numbers
+\addtobeamertemplate{navigation symbols}{}{%
+    \usebeamerfont{footline}%
+    \usebeamercolor[fg]{footline}%
+    \hspace{1em}%
+    \insertframenumber/\inserttotalframenumber
+}
+
+% equation stuff
+\newcommand{\Macro}{\ensuremath{\Sigma}}
+\newcommand{\Sn}{\ensuremath{S_N} }
+\newcommand{\vOmega}{\ensuremath{\hat{\Omega}}}
+\usepackage{mathrsfs}
+\usepackage[mathcal]{euscript}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{epsfig}
+\usepackage{amsmath}
+
+\newcommand{\ve}[1]{\ensuremath{\mathbf{#1}}}
+\newcommand{\micro}{\ensuremath{\sigma}}
+\newcommand{\detR}{\ensuremath{\Sigma}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\title{Recent Past and Planned Research}
+\subtitle{Reactor Design and Neutronics Group}
+\author{
+        \includegraphics[height=2cm]{bk}\\R.\ N.\ Slaybaugh}
+
+\date{April 15, 2014}
+\titlepage
+\end{frame}
+
+% --------------------------------------------------------------
+\begin{frame}[fragile]{Outline}
+  \frametitle{Outline}
+  \begin{itemize}
+    \item Hybrid methods overview
+    \begin{itemize}
+     	\item Background and Motivation
+		\item CADIS
+		\item FW-CADIS
+    \end{itemize}
+	\item MC importances in the presence of space and energy self-shielding
+	\begin{itemize}
+    		\item Background
+		\item Problem Investigation
+		\item Resonance Factor Method
+		\item Results
+		\item Summary and Conclusions
+  	\end{itemize}
+	\item MC importances for problems with strong anisotropies
+	\item Other potential projects
+  \end{itemize}
+
+\end{frame}
+
+
+% --------------------------------------------------------------
+% --------------------------------------------------------------
+\section{\scshape Hybrid Methods}
+\subsection{Motivation}
+\begin{frame}[fragile]
+  \frametitle{Solving the TE}
+
+\begin{columns}
+  \begin{column}{0.5\textwidth}
+  \begin{center}
+  \underline{Monte Carlo}
+  \end{center}
+	\begin{itemize}
+	\item Solution has associated statistical error
+	\item Continuous phase space: ``gold standard answers"
+	\item Can take a long time
+	\item Good for streaming
+	\item Optically thick = slow
+	\end{itemize}
+  \end{column}
+  \begin{column}{0.5\textwidth}
+  \begin{center}
+  \underline{Deterministic}
+  \end{center}
+	\begin{itemize}
+	\item Solution equally valid everywhere
+	\item Discretized phase space: drives solution quality
+	\item Can be fast
+	\item Streaming = ray effects
+	\item Good for optically thick
+	\end{itemize}
+  \end{column}
+\end{columns}
+
+\end{frame}
+
+% --------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Acceleration}
+  \begin{itemize}
+  	\item To use MC in many applications, we need to \textit{accelerate} it
+	\item Variance reduction is designed to improve the FOM:
+  \end{itemize}
+\begin{align}
+\text{FOM} = \frac{1}{\text{R}^2\text{t}} \qquad & \text{R = relative error} \nonumber \\ 
+& \text{t = time} \nonumber 
+\end{align}
+  \begin{itemize}
+  	\item \underline{Idea}: can we use deterministic and Monte Carlo methods together to lessen the weaknesses of each?
+  \end{itemize}
+  $\rightarrow$ \textbf{Hybrid Methods}
+
+\end{frame}
+
+
+% --------------------------------------------------------------
+\subsection{Background}
+\begin{frame}[fragile]
+  \frametitle{CADIS}
+Define response with function $f(\ve{r}, E)$ in volume, $V_d$ as
+%
+\begin{equation}
+ R = \int_E \int_{V_f} f(\ve{r}, E) \phi(\ve{r}, E) dV dE 
+ \label{eq:Response}
+\end{equation}
+\begin{columns}
+  \begin{column}{0.5\textwidth}
+	\begin{align}
+  	H\phi &= q \quad \text{(forward)}\nonumber \\
+  	%
+  	H^{\dagger} \phi^{\dagger} &= q^{\dagger} \quad 
+  	\text{(adjoint)}\nonumber
+  	\end{align}
+  \end{column}
+  \begin{column}{0.5\textwidth}
+  	\begin{align}
+  	\langle H\phi, \phi^{\dagger} \rangle &= \langle H^{\dagger} \phi^{\dagger}, \phi \rangle \:, \text{and therefore} \nonumber \\
+  	%
+  	\langle q, \phi^{\dagger} \rangle &= \langle q^{\dagger}, \phi \rangle \nonumber
+  	\end{align}
+  \end{column}
+\end{columns}
+\vspace*{1 em}
+If we let $q^{\dagger} = f(\ve{r}, E)$ then
+%
+\begin{equation}
+ \langle q^{\dagger}, \phi \rangle = \langle f, \phi \rangle = R = \langle q, \phi^{\dagger} \rangle
+ \label{eq:ResponseRedef}
+\end{equation}
+%
+Eq.\ \eqref{eq:ResponseRedef} expresses that $\phi^{\dagger}$ represents the expected contribution of a source particle to the response given the source, $q$.
+
+\end{frame}
+
+
+
+\end{document}

@@ -6,6 +6,7 @@
 %% General document %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage{graphicx}
 \usepackage{tikz}
+\usepackage{Tabbing}
 \usetikzlibrary{decorations.fractals}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -456,6 +457,18 @@ For example
 
 % --------------------------------------------------------------
 \begin{frame}[fragile]
+  \frametitle{Correct Without Plate}
+ \begin{figure}[p]
+   \begin{center}
+     \includegraphics[height=2in,clip]{NSE13-109R1-NoPlateDRandRE}
+   \end{center}
+   \caption{No-Plate MC21 dose rate (left) and 95CI RE (right) (xz-slice through y=25 cm)}
+   \label{fig:noPlate}
+ \end{figure}
+\end{frame}
+
+% --------------------------------------------------------------
+\begin{frame}[fragile]
   \frametitle{Deterministic MC Mismatch}
  \begin{figure}[p]
    \begin{center}
@@ -483,23 +496,61 @@ For example
   \frametitle{Correct Without Plate}
  \begin{figure}[p]
    \begin{center}
-     \includegraphics[height=2in,clip]{NSE13-109R1-NoPlateDRandRE}
-   \end{center}
-   \caption{No-Plate MC21 dose rate (left) and 95CI RE (right) (xz-slice through y=25 cm)}
-   \label{fig:noPlate}
- \end{figure}
-\end{frame}
-
-% --------------------------------------------------------------
-\begin{frame}[fragile]
-  \frametitle{Correct Without Plate}
- \begin{figure}[p]
-   \begin{center}
      \includegraphics[width=4in,clip]{NSE13-109R1-NoPlateFluxExcel}
    \end{center}
    \caption{Plate non-thermal flux (left axis) and method ratios (right axis) down the x-y centerline}
    \label{fig:noPlateFlux}
  \end{figure}
+\end{frame}
+
+% --------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Investigation}
+
+	\begin{itemize}
+	\item Parameters
+	\begin{tabbing}
+	Mean chord length: \hspace*{1em} \= $\bar{l} = \frac{4V}{S}$ vs.\ $\bar{l} = 10,000$ \\
+	Angular quadrature: \> CMG-591 vs.\ QR-18-252 \\
+	Scattering expansion: \> P$_{5}$ vs.\ P$_{3}$ \\
+	Importance mesh: 	\> 0.25 cm (x), 0.5 cm (y,z) \\ \> in plate vs. 1 cm \\
+	Energy Structure: 	\> 58 vs.\ 27 groups
+	\end{tabbing}
+	
+	\item CADIS in 2 cm area following plate
+
+	\item Physics
+		\begin{itemize}
+		\item Polyethylene follow-on
+		\item Cr plate (different resonance material)
+		\item Air in plate (no resonance material)
+		\end{itemize}
+	\end{itemize}	  
+  
+\end{frame}
+
+% --------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Resonance Factor Method}
+  
+\end{frame}
+
+% --------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Resonance Factor Method}
+  
+\end{frame}
+
+% --------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Resonance Factor Method}
+  
+\end{frame}
+
+% --------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Resonance Factor Method}
+  
 \end{frame}
 
 % --------------------------------------------------------------

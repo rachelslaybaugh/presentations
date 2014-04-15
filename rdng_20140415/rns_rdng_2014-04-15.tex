@@ -560,7 +560,7 @@ Base      & 1e10 & 849.77    & 8.10e-1 & 1.02e-2 & 1.79e-3 & 11.3\\
 %
 1e11 & 1e11 & 8,543.47  & 1.64e-1 & 3.28e-3 & 4.33e-3 & 10.9\\
 %
-58 grps & 1e10 & 954.89    & 5.22e-1 & 9.33e-3 & 3.85e-3 & 12.0\\
+58 g & 1e10 & 954.89    & 5.22e-1 & 9.33e-3 & 3.85e-3 & 12.0\\
 %
 Fine & 1e10 & 905.34    & 1.55  & 1.71e-2 & 4.63e-4 & 3.78\\
 %
@@ -594,28 +594,101 @@ F2e11 & 2e11 & 18,367.67 & 3.43e-1 & 4.00e-3 & 4.62e-4 & 3.40\\\hline
 
 % --------------------------------------------------------------
 \begin{frame}[fragile]
-  \frametitle{Resonance Factor Method}
+  \frametitle{MAVRIC}
+  
+  \begin{itemize}
+  \item We also ran this problem with and without the plate in MAVRIC (a multigroup MC code in SCALE)
+  \item MAVRIC has more advanced cross section processing options
+  \item Used 27 g and 200 g
+  \item One 200 g case the plate was broken into 9 separate 10-cm segments – each with different xsecs
+  \item Without plate case was correct
+  \item 27 g $\rightarrow$ completely missed the behavior
+  \item Both 200 g cases $\rightarrow$ exhibited the same streaming and high relative error behavior
+  \end{itemize}
   
 \end{frame}
 
 % --------------------------------------------------------------
 \begin{frame}[fragile]
-  \frametitle{Resonance Factor Method}
+  \frametitle{Investigation Summary}
+  
+	\begin{itemize}
+	\item Behavior is related to space and energy self-shielding
+	
+	\item Using these items did not improve PARTISN
+	 \begin{itemize}
+	 \item finer quadrature
+	 \item higher scattering order
+	 \item more theoretically-accurate mean chord length
+	 \end{itemize}
+	 
+	\item Using these items in imp map creation did not reduce REs
+	 \begin{itemize}
+	 \item finer spatial mesh in the problem area
+	 \item finer energy group structure to create the importance map
+	 \end{itemize}
+	 
+	\item The high RE in and following the plate is present when using different codes and different methods to produce VR parameters, and exists when a different resonance material is used.
+	\end{itemize}
+
+
+A sufficiently accurate PARTISN solution would be better (probably), but prohibitively expensive.
   
 \end{frame}
+
 
 % --------------------------------------------------------------
-\begin{frame}[fragile]
-  \frametitle{Resonance Factor Method}
-  
-\end{frame}
-
 % --------------------------------------------------------------
 \subsection{Resonance Factor Method}
 \begin{frame}[fragile]
   \frametitle{Resonance Factor Method}
+  	Apply renormalization factor to FW-CADIS source $q^{\dagger}_{FWC}$: 
+	%
+	\begin{equation}
+   	q^{\dagger}(\ve{r},E) = \Bigl(\frac{\phi_{res(\micro_0)}(\ve{r},E)}{\phi_{dilute(\micro_0)}(\ve{r},E)}\Bigr)^M q^{\dagger}_{FWC} 
+  	 \label{eq:newQ}
+	\end{equation}
+	%
+	where
+	\begin{itemize}
+  	\item M is problem-dependent constant 
+ 	 \item $\phi_{res(\micro_0)}(\ve{r},E)$ is forward flux using a small background xsec
+ 	 \item $\phi_{dilute(\micro_0)}(\ve{r},E)$ is forward flux using a large background xsec
+	\end{itemize}
+	
+	The resulting adjoint flux is used to make importances
+	\vspace*{1 em}
+	
+	Implementation: use $\phi_{res(\micro_0)}(\ve{r},E)$  in all locations where $\phi$ would be used in the FW-CADIS method
+	
+	
+	
+\end{frame}
+
+% --------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Resonance Factor Method}
+  
+	Example: optimize the space- and energy-dependent flux
+	
+	\vspace*{1 em}
+	$q^{\dagger}_{FWC} = 1 / \phi$ and results in this corrected response: 
+	%
+	\begin{align}
+ 	R &= \int_E \int_{V} \Bigl(\frac{\phi_{res(\micro_0)}(\ve{r},E)}{\phi_{dilute(\micro_0)}(\ve{r},E)}\Bigr)^M \frac{1}{\phi_{res(\micro_0)}(\ve{r}, E)} \phi_{res(\micro_0)}(\ve{r}, E) dV dE \nonumber
+ 	\label{eq:newResponse} \\
+  	 &\approx \int_E \int_{V} \Bigl(\frac{\phi_{res(\micro_0)}(\ve{r},E)}{\phi_{dilute(\micro_0)}(\ve{r},E)}\Bigr)^M dV dE \:. \nonumber
+	\end{align}
+	%
+	The expanded version of importance map in plate becomes:
+	%
+	\begin{equation}
+ imp(\ve{r},E)= \frac{\phi_{res(\micro_0)}^{\dagger}(\ve{r},E)}{\int_E \int_{V} \bigl(\frac{\phi_{res(\micro_0)}(\ve{r},E)}{\phi_{dilute(\micro_0)}(\ve{r},E)}\bigr)^M dV dE}
+ 	 \label{eq:newImp}
+	\end{equation}  
   
 \end{frame}
+
 
 
 % --------------------------------------------------------------

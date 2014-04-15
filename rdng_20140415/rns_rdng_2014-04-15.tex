@@ -510,29 +510,86 @@ For example
 	\begin{itemize}
 	\item Parameters
 	\begin{tabbing}
-	Mean chord length: \hspace*{1em} \= $\bar{l} = \frac{4V}{S}$ vs.\ $\bar{l} = 10,000$ \\
-	Angular quadrature: \> CMG-591 vs.\ QR-18-252 \\
-	Scattering expansion: \> P$_{5}$ vs.\ P$_{3}$ \\
-	Importance mesh: 	\> 0.25 cm (x), 0.5 cm (y,z) \\ \> in plate vs. 1 cm \\
-	Energy Structure: 	\> 58 vs.\ 27 groups
+	* Mean chord length: \hspace*{1em} \= $\bar{l} = \frac{4V}{S}$ vs.\ $\bar{l} = 10,000$ \\
+	* Angular quadrature: \> CMG-591 vs.\ QR-18-252 \\
+	* Scattering expansion: \> P$_{5}$ vs.\ P$_{3}$ \\
+	* Importance mesh: 	\> 0.25 cm (x), 0.5 cm (y,z) \\ \> in plate vs. 1 cm \\
+	* Energy Structure: 	\> 58 vs.\ 27 groups
 	\end{tabbing}
 	
 	\item CADIS in 2 cm area following plate
-
+	\end{itemize}
+	%
+	\begin{columns}
+  	\begin{column}{0.65\textwidth}
+	\begin{itemize}
 	\item Physics
 		\begin{itemize}
 		\item Polyethylene follow-on
 		\item Cr plate (different resonance material)
 		\item Air in plate (no resonance material)
 		\end{itemize}
-	\end{itemize}	  
+	\end{itemize}
+  	\end{column}
+  	%
+ 	\begin{column}{0.35\textwidth}
+ 	\begin{align}
+ 	\text{FOM}_{\min} &= \frac{1}{Rt_{\max}^2} \nonumber \\
+ 	\text{FOM}_{\max} &= \frac{1}{Rt_{\min}^2} \nonumber
+ 	\end{align}
+ 	\end{column}
+	\end{columns}
   
 \end{frame}
 
 % --------------------------------------------------------------
 \begin{frame}[fragile]
-  \frametitle{Resonance Factor Method}
+  \frametitle{Parameters Results}
   
+  	\begin{itemize}
+  	\item Geometric chord length $\rightarrow$ PARTISN flux even farther from correct, especially in plate
+  	\item Angular quadrature $\rightarrow$ no differences with impact
+	\item Scattering order $\rightarrow$ (nearly) no change
+  	\end{itemize}
+  	
+  \begin{center}
+    \begin{tabu}{|l|r|r|r|r|r|r|}\hline
+      Case & NPS & CPU-hrs & Max RE & Avg RE & Min F & Avg F\\\hline
+      %%
+Base      & 1e10 & 849.77    & 8.10e-1 & 1.02e-2 & 1.79e-3 & 11.3\\
+%
+1e11 & 1e11 & 8,543.47  & 1.64e-1 & 3.28e-3 & 4.33e-3 & 10.9\\
+%
+58 grps & 1e10 & 954.89    & 5.22e-1 & 9.33e-3 & 3.85e-3 & 12.0\\
+%
+Fine & 1e10 & 905.34    & 1.55  & 1.71e-2 & 4.63e-4 & 3.78\\
+%
+F2e11 & 2e11 & 18,367.67 & 3.43e-1 & 4.00e-3 & 4.62e-4 & 3.40\\\hline
+    \end{tabu}
+  \end{center}
+
+\end{frame}
+
+% --------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{CADIS, Poly Follow}
+ \begin{figure}[p]
+   \begin{center}
+     \includegraphics[width=4in,clip]{cadis-poly}
+   \end{center}
+ \end{figure}
+\end{frame}
+
+% --------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Resonance Streaming}
+   \begin{figure}[p]
+   \begin{center}
+     \includegraphics[width=4in,clip]{NSE13-109R1-CrAir}
+   \end{center}
+   \caption{Cr plate (left) and air plate (right) FW-CADIS MC21 dose rate 95CI RE (xz-slice through y=25 cm)}
+   \label{fig:CrAir}
+ \end{figure}
 \end{frame}
 
 % --------------------------------------------------------------

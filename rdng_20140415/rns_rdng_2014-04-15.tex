@@ -73,7 +73,7 @@
 \author{
         \includegraphics[height=2cm]{bk}\\R.\ N.\ Slaybaugh}
 
-\date{April 15, 2014}
+\date{April 16, 2014}
 \titlepage
 \end{frame}
 
@@ -161,8 +161,8 @@
 % --------------------------------------------------------------
 %\subsection{CADIS}
 \begin{frame}[fragile]
-  \frametitle{CADIS}
-Define response with function $f(\ve{r}, E)$ in volume, $V_d$ as
+  \frametitle{Forward-Adjoint Relationship}
+Define response with function $f(\ve{r}, E)$ in volume $V_d$ as
 %
 \begin{equation}
  R = \int_E \int_{V_f} f(\ve{r}, E) \phi(\ve{r}, E) dV dE 
@@ -204,11 +204,11 @@ Eq.\ \eqref{eq:ResponseRedef} expresses that $\phi^{\dagger}$ represents the exp
   
   \begin{enumerate}
   \item Define $q^{\dagger}$ as the local response of interest\\
-  \item Generate $\phi^{\dagger}$ and $R$ with a coarse deterministic solution
+  \item Coarse deterministic calculation to get $\phi^{\dagger}$ and $R$
   \end{enumerate}
 % 
 \begin{align}
-  imp(\ve{r}, E) &= \frac{\phi^{\dagger}(\ve{r}, E)}{\langle q(\ve{r}, E), \phi^{\dagger}(\ve{r}, E) \rangle} = \frac{\phi^{\dagger}(\ve{r}, E)}{R(\ve{r}, E)} \\
+  imp(\ve{r}, E) &= \frac{\phi^{\dagger}(\ve{r}, E)}{\langle q(\ve{r}, E), \phi^{\dagger}(\ve{r}, E) \rangle} = \frac{\phi^{\dagger}(\ve{r}, E)}{R} \\
   %
   \hat{q}(\ve{r}, E) &= \frac{\phi^{\dagger}(\ve{r}, E) q(\ve{r}, E)}{R} \\
   %
@@ -310,8 +310,8 @@ For example
 		\item Spatial self-shielding
 		\end{itemize}
 		\item High relative error through location of Interest
-		\item Outcome: new methods based on FW-CADIS
-		\item The Resonance Factor method uses different cross section processing
+		\item \textbf{Need} new methods based on FW-CADIS
+		\item E.g., Resonance Factor method (uses different cross section processing)
 		\end{itemize}
 	\end{center}
   	\end{column}
@@ -344,11 +344,11 @@ For example
  	 \label{eq:baseBondarenko}
  	\end{equation} 
  	
- 	\item Bondarekno method uses a background cross section
+ 	\item Bondarenko method uses a background cross section
  	\begin{equation}
   	\micro_0^{(j)} = \frac{1}{N_j} \sum_{m \ne j} \micro_{t}^{(m)} N_m 
   	%\label{eq:bgxsec}
-  	\:, \quad \micro_{x,g}^{(j)}(\micro_0^{(j)}y) = \frac{\langle
+  	\:, \quad \micro_{x,g}^{(j)}(\micro_0^{(j)}) = \frac{\langle
   	 \micro_{x}^{(j)}(u) \frac{\phi_{\infty}(u)} {\micro_{t}^{(j)}(u)
   	 + \micro_0^{(j)}} \rangle}
   	 { \langle \frac{\phi_{\infty}(u)}{\micro_{t}^{(j)}(u) +
@@ -366,8 +366,8 @@ For example
   \frametitle{Cross Section Processing}
 
 	\begin{itemize}
-	\item When When a nuclide is dilute, $\sigma_0^{(j)} >>
-	 \sigma_t^{(j)}$, \\$W(u) \rightarrow$ uncorrected 
+	\item When a nuclide is dilute, $\sigma_0^{(j)} >>
+	 \sigma_t^{(j)}$, $W(u) \rightarrow$ uncorrected 
 		\begin{itemize}
 		\item Large $\sigma_0$ = infinitely dilute case	
 		\end{itemize}
@@ -534,8 +534,8 @@ For example
   	%
  	\begin{column}{0.35\textwidth}
  	\begin{align}
- 	\text{FOM}_{\min} &= \frac{1}{Rt_{\max}^2} \nonumber \\
- 	\text{FOM}_{\max} &= \frac{1}{Rt_{\min}^2} \nonumber
+ 	\text{FOM}_{\min} &= \frac{1}{R_{\max}^2t} \nonumber \\
+ 	\text{FOM}_{\max} &= \frac{1}{R_{\min}^2t} \nonumber
  	\end{align}
  	\end{column}
 	\end{columns}
@@ -807,7 +807,7 @@ M = 1 & 534.80 & 2.69e-1 & 2.44e-2 & 2.58e-2 & 3.13\\\hline
 	\begin{itemize}
 	\item MC VR parameters created from adjoint deterministic flux that is a function of space and energy only
 	\item Angular dependence of the importance function is not retained, otherwise the map would be very large (tens or hundreds of GB) and more costly and complex to use in the Monte Carlo simulation
-	\item Drawback: within a given space/energy cell, the map provides the average importance of a particle moving in any direction through the cell—excluding information about how particles move toward the objective
+	\item Drawback: within a given space/energy cell, the map provides the average importance of a particle moving in any direction through the cell -- excluding information about how particles move toward the objective
 	\end{itemize}
 
 \end{frame}
@@ -864,10 +864,11 @@ M = 1 & 534.80 & 2.69e-1 & 2.44e-2 & 2.58e-2 & 3.13\\\hline
 
   	\begin{itemize}
   	\item Continuing development of MC on GPU
-	\item 3D shielding optimization: applicable to SMRs
-	\item Parallelization of open source deterministic code 
-	\item Hartouni Method
-	\item Using SP$_N$ in multigrid preconditioner in Denovo
+	\item 3D shielding optimization: applicable to SMRs 
+	\item Parallelization of open source deterministic code, Detran 
+	\item Investigating use of hybrid methods for interrogation of SNM with neutron time-correlations 
+	\item Using SP$_N$ in multigrid preconditioner in Denovo 
+	\item Contributing methods to PyNE; investigating a long term research relationship
 	\end{itemize}
 	
 \end{frame}

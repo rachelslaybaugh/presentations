@@ -1,5 +1,5 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\documentclass[xcolor=x11names,compress]{beamer}
+\documentclass[xcolor=x11names,compress, draft]{beamer}
 
 \definecolor{CoolBlack}{rgb}{0.0, 0.18, 0.39}
 \definecolor{byellow}{rgb}{0.55037, 0.38821, 0.06142}
@@ -695,8 +695,43 @@ A sufficiently accurate PARTISN solution would be better (probably), but prohibi
 \subsection{Results}
 \begin{frame}[fragile]
   \frametitle{Results}
-  
+    \begin{center}
+  \includegraphics[width=4in,clip]{m1-vs-58g}  
+  \end{center}
 \end{frame}
+
+% --------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Results}
+
+	\begin{table}[p]
+ 	 \label{tab:comparison}
+  	\begin{center}
+    \begin{tabular}{|l|r|r|r|r|r|}\hline
+      Case & CPU-hrs & Max RE & Avg RE & Min FOM & Avg FOM\\\hline
+      %%
+base & 849.77 & 8.10e-1 & 1.02e-2 & 1.79e-3 & 11.3\\
+%
+58 g & 954.89 & 5.22e-1 & 9.33e-3 & 3.85e-3 & 12.0\\
+%
+M = 1 & 534.80 & 2.69e-1 & 2.44e-2 & 2.58e-2 & 3.13\\\hline
+    \end{tabular}
+ 	 \end{center}
+	\end{table}
+
+	\begin{itemize}
+	\item M = 1.0 used the same deterministic parameters as the base case
+	\item FOM$_{\min}$ $\sim$10x better than best FW-CADIS case
+	\item FOM$_{\min}$ and FOM$_{\text{avg}}$ are $\sim$100x closer together than best FW-CADIS case
+	\end{itemize}
+
+\end{frame}
+%
+%% --------------------------------------------------------------
+%\begin{frame}[fragile]
+%  \frametitle{Results}
+%
+%\end{frame}
 
 
 % --------------------------------------------------------------
@@ -704,14 +739,59 @@ A sufficiently accurate PARTISN solution would be better (probably), but prohibi
 \begin{frame}[fragile]
   \frametitle{Summary and Conclusions}
   
+  \begin{itemize}
+  \item Space and energy self-shielding make variance reduction difficult
+  
+  \item Caused by multigroup cross sections in angle-independent implementation
+  
+  \item Not resolved by
+   \begin{itemize}
+   \item Finer spatial mesh, energy group structure, or angular quadrature; higher order scattering expansion; or Bondarenko method
+   \end{itemize}
+   
+  \item New method
+   \begin{itemize}
+  	\item Adds a factor accounting for resonances to FW-CADIS adjoint source
+  	\item Tunable based on degree of problem manifestation
+	\item Lowers FOM$_{\min}$ and brings FOM$_{\min}$ closer to FOM$_{\text{avg}}$
+	\item More work, but useful in these pathological cases
+   \end{itemize}
+  \end{itemize}
+
 \end{frame}
 
 % --------------------------------------------------------------
 % --------------------------------------------------------------
 \section{Strong Anisotropies}
 \begin{frame}[fragile]
-  \frametitle{}
+  \frametitle{Anisotropy: a computational challenge}
 
+	\begin{columns}
+  	\begin{column}{0.5\textwidth}
+	\begin{itemize}
+	\item Many important nuclear applications have strong anisotropies
+	 \begin{itemize}
+	 \item Used fuel casks
+	 \item Reprocessing facilities
+	 \item Reactor facilities
+	 \item Active interrogation of cargo
+	 \end{itemize}
+	\item These are difficult to capture with current tools:
+	 \begin{itemize}
+	 \item Ray affects with deterministic methods
+	 \item Too slow with analog MC
+	 \item Insufficient acceleration of MC with hybrid methods
+	 \end{itemize}
+	\end{itemize}
+  	\end{column}
+ 	%
+ 	\begin{column}{0.5\textwidth}
+
+
+  	\end{column}
+	\end{columns}
+
+	  
   
 \end{frame}
 

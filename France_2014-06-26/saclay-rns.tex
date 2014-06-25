@@ -398,7 +398,7 @@ For example
   	\begin{columns}
   	\begin{column}{0.45\textwidth}
   	\begin{figure}
-  		\includegraphics[height=2in,clip]{plate-geometry}
+  		\includegraphics[height=2.5in,clip]{plate-geometry}
   		\caption{Shielding Stack Up}
   	\end{figure}
   	\end{column}
@@ -406,13 +406,13 @@ For example
  	\begin{column}{0.6\textwidth}
 	\begin{itemize}
 	\item 53 cm $\times$ 50 cm $\times$ 140 cm 
-	\item Uniform in x except plate (25-28 cm in x; 30-130 cm in z)
-	\item Uniform in y
-	\item U-235 fission spectrum; homogenized U, Zr, and H2O
+	\item Uniform in $x$ except plate (25-28 cm in $x$; 30-130 cm in $z$)
+	\item Uniform in $y$
+	\item Source: U-235 fission spectrum; homogenized U, Zr, and H2O
 	\vspace*{1 em}
 	\item MC21, MCNP, and PARTISN
 	\item ENDF/B-VII data (all codes)
-	\item Processed by TRANSX (multigroup)
+	\item Processed by TRANSX (multi-group)
 	\end{itemize}
   	\end{column}
 	\end{columns}
@@ -431,8 +431,8 @@ For example
 	Deterministic Mesh & 0.5 cm unif; 0.25 cm in $x$ over 24 to 29 cm & 1 cm uniform \\\hline
 	Tally mesh & N/A & 1 cm uniform \\\hline
 	N particles & N/A & $1 \times 10^{10}$\\\hline
-	Energy structure & 58 grps & 27 grps / continuous\\\hline
-	Angular quad & QR-18-252 & QR-8-36\\\hline
+	Energy structure & 58 grps & 27 grps / cont.\\\hline
+	Angular quad. & QR-18-252 & QR-8-36\\\hline
 	Scattering order & $P_3$ & $P_3$\\\hline
 	Convergence & 0.01 & 0.05\\\hline
 	TRANSX settings & default & default\\\hline
@@ -448,9 +448,9 @@ For example
   \frametitle{Errors in Plate}
  \begin{figure}[p]
    \begin{center}
-     \includegraphics[height=2 in,clip]{NSE13-109R1-PlateDRandRE}
+     \includegraphics[height=2.25 in,clip]{NSE13-109R1-PlateDRandRE}
    \end{center}
-   \caption{Plate base FW-CADIS MC21 dose rate (left) and 95CI RE (right) (xz-slice through y=25 cm)}
+   \caption{Plate base case MC21 dose rate (left) and 95CI RE (right) (xz-slice through y=25 cm)}
    \label{fig:Plate}
  \end{figure}
 \end{frame}
@@ -460,7 +460,7 @@ For example
   \frametitle{Correct Without Plate}
  \begin{figure}[p]
    \begin{center}
-     \includegraphics[height=2in,clip]{NSE13-109R1-NoPlateDRandRE}
+     \includegraphics[height=2.25 in,clip]{NSE13-109R1-NoPlateDRandRE}
    \end{center}
    \caption{No-Plate MC21 dose rate (left) and 95CI RE (right) (xz-slice through y=25 cm)}
    \label{fig:noPlate}
@@ -476,6 +476,18 @@ For example
    \end{center}
    \caption{Plate non-thermal flux (left axis) and method ratios (right axis) down the x-y centerline}
    \label{fig:PlateFlux}
+ \end{figure}
+\end{frame}
+
+% --------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{MC Plate 95 CI RE}
+ \begin{figure}[p]
+   \begin{center}
+     \includegraphics[width=4in,clip]{NSE13-109R1-PlateREExcel}
+   \end{center}
+   \caption{Plate 95CI RE for non-thermal flux down the x-y centerline}
+   \label{fig:noPlateRE}
  \end{figure}
 \end{frame}
 
@@ -503,6 +515,18 @@ For example
  \end{figure}
 \end{frame}
 
+%% --------------------------------------------------------------
+%\begin{frame}[fragile]
+%  \frametitle{MC No-Plate 95 CI RE}
+% \begin{figure}[p]
+%   \begin{center}
+%     \includegraphics[width=4in,clip]{NSE13-109R1-NoPlateREExcel}
+%   \end{center}
+%   \caption{No-Plate 95CI RE for non-thermal flux down the x-y centerline}
+%   \label{fig:noPlateRE}
+% \end{figure}
+%\end{frame}
+
 % --------------------------------------------------------------
 \begin{frame}[fragile]
   \frametitle{Investigation}
@@ -524,11 +548,11 @@ For example
   	\begin{column}{0.65\textwidth}
 	\begin{itemize}
 	\item Physics
-		\begin{itemize}
-		\item Polyethylene follow-on
-		\item Cr plate (different resonance material)
-		\item Air in plate (no resonance material)
-		\end{itemize}
+		\begin{tabbing}
+		* Polyethylene follow-on \\
+		* Cr plate (different resonance material)\\
+		* Air in plate (no resonance material)\\
+		\end{tabbing}
 	\end{itemize}
   	\end{column}
   	%
@@ -541,6 +565,18 @@ For example
 	\end{columns}
   
 \end{frame}
+
+% --------------------------------------------------------------
+%\begin{frame}[fragile]
+%  \frametitle{Geometric Chord Length is Worse}
+% \begin{figure}[p]
+%   \begin{center}
+%     \includegraphics[width=2in,clip]{NSE13-109R1-ChordLength}
+%   \end{center}
+%   \caption{PARTISN dose rate ratio: $\bar{l}$̅ = 10,000 to $\bar{l}$̅ = 4V/S (xz-slice through y=25 cm)}
+%   \label{fig:noPlateRE}
+% \end{figure}
+%\end{frame}
 
 % --------------------------------------------------------------
 \begin{frame}[fragile]
@@ -587,7 +623,7 @@ F2e11 & 2e11 & 18,367.67 & 3.43e-1 & 4.00e-3 & 4.62e-4 & 3.40\\\hline
    \begin{center}
      \includegraphics[width=4in,clip]{NSE13-109R1-CrAir}
    \end{center}
-   \caption{Cr plate (left) and air plate (right) FW-CADIS MC21 dose rate 95CI RE (xz-slice through y=25 cm)}
+   \caption{Cr plate (left) and air plate (right) MC21 dose rate 95CI RE (xz-slice through y=25 cm)}
    \label{fig:CrAir}
  \end{figure}
 \end{frame}
@@ -597,11 +633,11 @@ F2e11 & 2e11 & 18,367.67 & 3.43e-1 & 4.00e-3 & 4.62e-4 & 3.40\\\hline
   \frametitle{MAVRIC}
   
   \begin{itemize}
-  \item We also ran this problem with and without the plate in MAVRIC (a multigroup MC code in SCALE)
+  \item Also ran problem with and without the plate in MAVRIC (a multi-group MC code in SCALE using FW-CADIS)
   \item MAVRIC has more advanced cross section processing options
   \item Used 27 g and 200 g
-  \item One 200 g case the plate was broken into 9 separate 10-cm segments – each with different xsecs
-  \item Without plate case was correct
+  \item One 200 g case: plate was broken into 9 separate 10-cm segments -- each with different cross sections
+  \item Case without plate was correct
   \item 27 g $\rightarrow$ completely missed the behavior
   \item Both 200 g cases $\rightarrow$ exhibited the same streaming and high relative error behavior
   \end{itemize}
@@ -613,22 +649,26 @@ F2e11 & 2e11 & 18,367.67 & 3.43e-1 & 4.00e-3 & 4.62e-4 & 3.40\\\hline
   \frametitle{Investigation Summary}
   
 	\begin{itemize}
-	\item Behavior is related to space and energy self-shielding
+	\item Behavior is related to \emph{space and energy} self-shielding
 	
-	\item Using these items did not improve PARTISN
+	\item Using these items \emph{did not} improve PARTISN
 	 \begin{itemize}
 	 \item finer quadrature
 	 \item higher scattering order
 	 \item more theoretically-accurate mean chord length
 	 \end{itemize}
 	 
-	\item Using these items in imp map creation did not reduce REs
+	\item Using these items in imp map creation \emph{did not} reduce REs
 	 \begin{itemize}
 	 \item finer spatial mesh in the problem area
 	 \item finer energy group structure to create the importance map
 	 \end{itemize}
 	 
-	\item The high RE in and following the plate is present when using different codes and different methods to produce VR parameters, and exists when a different resonance material is used.
+	\item The high RE in and following the plate is 
+	  \begin{itemize}
+	  \item present when using different codes and different methods to produce VR parameters
+	  \item exists when a different resonance material is used
+	  \end{itemize}  
 	\end{itemize}
 
 
@@ -642,7 +682,7 @@ A sufficiently accurate PARTISN solution would be better (probably), but prohibi
 %\subsection{Resonance Factor Method}
 \begin{frame}[fragile]
   \frametitle{Resonance Factor Method}
-  	Apply renormalization factor to FW-CADIS source $q^{\dagger}_{FWC}$: 
+  	Apply renormalization factor to FW-CADIS source, $q^{\dagger}_{FWC}$: 
 	%
 	\begin{equation}
    	q^{\dagger}(\ve{r},E) = \Bigl(\frac{\phi_{res(\micro_0)}(\ve{r},E)}{\phi_{dilute(\micro_0)}(\ve{r},E)}\Bigr)^M q^{\dagger}_{FWC} 
@@ -651,8 +691,8 @@ A sufficiently accurate PARTISN solution would be better (probably), but prohibi
 	%
 	where
 	\begin{itemize}
-  	\item M is problem-dependent constant 
- 	 \item $\phi_{res(\micro_0)}(\ve{r},E)$ is forward flux using a small background xsec
+  	\item $M$ is a problem-dependent constant 
+ 	 \item $\phi_{res(\micro_0)}$ is forward flux using a small background xsec
  	 \item $\phi_{dilute(\micro_0)}(\ve{r},E)$ is forward flux using a large background xsec
 	\end{itemize}
 	
@@ -672,7 +712,7 @@ A sufficiently accurate PARTISN solution would be better (probably), but prohibi
 	Example: optimize the space- and energy-dependent flux
 	
 	\vspace*{1 em}
-	$q^{\dagger}_{FWC} = 1 / \phi$ and results in this corrected response: 
+	$q^{\dagger}_{FWC} = 1 / \phi(\ve{r},E)$ and results in this corrected response: 
 	%
 	\begin{align}
  	R &= \int_E \int_{V} \Bigl(\frac{\phi_{res(\micro_0)}(\ve{r},E)}{\phi_{dilute(\micro_0)}(\ve{r},E)}\Bigr)^M \frac{1}{\phi_{res(\micro_0)}(\ve{r}, E)} \phi_{res(\micro_0)}(\ve{r}, E) dV dE \nonumber
@@ -710,17 +750,17 @@ A sufficiently accurate PARTISN solution would be better (probably), but prohibi
     \begin{tabular}{|l|r|r|r|r|r|}\hline
       Case & CPU-hrs & Max RE & Avg RE & Min FOM & Avg FOM\\\hline
       %%
-base & 849.77 & 8.10e-1 & 1.02e-2 & 1.79e-3 & 11.3\\
+base & 849.77 & 8.10e-1 & 1.02e-2 & \textcolor{RawSienna}{1.79e-3} & 11.3\\
 %
-58 g & 954.89 & 5.22e-1 & 9.33e-3 & 3.85e-3 & 12.0\\
+58 g & 954.89 & 5.22e-1 & 9.33e-3 & \textcolor{RawSienna}{3.85e-3} & 12.0\\
 %
-M = 1 & 534.80 & 2.69e-1 & 2.44e-2 & 2.58e-2 & 3.13\\\hline
+$M$ = 1 & 534.80 & 2.69e-1 & 2.44e-2 & \textcolor{dgreen}{2.58e-2} & \textcolor{byellow}{3.13}\\\hline
     \end{tabular}
  	 \end{center}
 	\end{table}
 
 	\begin{itemize}
-	\item M = 1.0 used the same deterministic parameters as the base case
+	\item $M$ = 1.0 used the same deterministic parameters as the base case
 	\item FOM$_{\min}$ $\sim$10x better than best FW-CADIS case
 	\item FOM$_{\min}$ and FOM$_{\text{avg}}$ are $\sim$100x closer together than best FW-CADIS case
 	\end{itemize}
@@ -737,12 +777,12 @@ M = 1 & 534.80 & 2.69e-1 & 2.44e-2 & 2.58e-2 & 3.13\\\hline
 % --------------------------------------------------------------
 %\subsection{Summary and Conclusions}
 \begin{frame}[fragile]
-  \frametitle{Summary and Conclusions}
+  \frametitle{Resonance Factor Conclusions}
   
   \begin{itemize}
   \item Space and energy self-shielding make variance reduction difficult
   
-  \item Caused by multigroup cross sections in angle-independent implementation
+  \item Caused by multi-group cross sections in angle-independent implementation
   
   \item Not resolved by
    \begin{itemize}
@@ -805,9 +845,13 @@ M = 1 & 534.80 & 2.69e-1 & 2.44e-2 & 2.58e-2 & 3.13\\\hline
   \frametitle{Current hybrid methods are insufficient}
 
 	\begin{itemize}
-	\item MC VR parameters created from adjoint deterministic flux that is a function of space and energy only
-	\item Angular dependence of the importance function is not retained, otherwise the map would be very large (tens or hundreds of GB) and more costly and complex to use in the Monte Carlo simulation
-	\item Drawback: within a given space/energy cell, the map provides the average importance of a particle moving in any direction through the cell -- excluding information about how particles move toward the objective
+	\item MC VR parameters created from adjoint deterministic flux that is a function of \emph{space and energy only}
+	\item Angular dependence of the importance function is not retained, otherwise the map would be
+	  \begin{itemize}
+	  \item very large (tens or hundreds of GB)
+	  \item more costly and complex to use in MC simulation
+      \end{itemize}	   
+	\item Drawback: within a given space/energy cell, the map provides the \emph{average} importance of a particle moving in \emph{any direction} through the cell -- excluding information about how particles move \underline{toward} the objective
 	\end{itemize}
 
 \end{frame}
@@ -864,11 +908,11 @@ M = 1 & 534.80 & 2.69e-1 & 2.44e-2 & 2.58e-2 & 3.13\\\hline
 
   	\begin{itemize}
   	\item Continuing development of MC on GPU
+  	\item Contributing methods to PyNE; investigating a long term research relationship
 	\item 3D shielding optimization: applicable to SMRs 
 	\item Parallelization of open source deterministic code, Detran 
 	\item Investigating use of hybrid methods for interrogation of SNM with neutron time-correlations 
 	\item Using SP$_N$ in multigrid preconditioner in Denovo 
-	\item Contributing methods to PyNE; investigating a long term research relationship
 	\end{itemize}
 	
 \end{frame}

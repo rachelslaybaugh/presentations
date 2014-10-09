@@ -1,0 +1,207 @@
+\documentclass{beamer}
+\usepackage{graphicx}
+% \usepackage{beamerthemesplit} // Activate for custom appearance
+
+\title{Eigenvalue Acceleration Methods for Denovo}
+\usepackage{amsmath}
+\author{Rachel Slaybaugh}
+\subtitle{Neutronics Group Meeting }
+\date{March 24, 2010}
+
+\begin{document}
+
+%-----------title slide--------------------%
+\begin{frame}
+  \titlepage
+\end{frame}
+
+%-------------outline slide---------------%
+\begin{frame}
+  \frametitle{Outline}
+  
+\begin{itemize}
+  \item Introduction
+  \item TheTransport Equation 
+  \item Operator Form
+  \item Krylov Methods
+  \item Upscattering
+  \item Eigenvalue
+  \item Preconditioning
+\end{itemize}
+
+\end{frame}
+
+%-------------slide-------------------------%
+\begin{frame}
+  \frametitle{Introduction}
+  
+\begin{itemize}
+  \item My thesis topic is developing eigenvalue acceleration methods for the code Denovo.
+  \item Denovo is a 3D, massively parallel, discrete ordinates transport code from ORNL.
+  \item I  have added an option for using a Krylov solver to address upscattering.
+  \item I will add an option to do a shifted eigenvalue solve.
+  \item I will add a preconditioner.
+\end{itemize}
+
+\end{frame}
+
+%-------------slide-------------------------%
+\begin{frame}
+  \frametitle{The Transport Equation}
+
+The steady-state multigroup form of the $S_{N}$ approximation to the transport equation \cite{Den}:
+\begin{align}
+   \mathbf{\hat{\Omega}}_{n} \cdot \nabla \psi^{g}_{n}(\mathbf{r}) + \sigma^{g} (\mathbf{r}) \psi^{g}_{n}(\mathbf{r}) &= \sum_{g'=0}^{G}  \sum_{n'=0}^{N} \sigma_{s}^{gg'}(\mathbf{r}, \mathbf{\hat{\Omega}}_{n'} \cdot \mathbf{\hat{\Omega}}_{n}) \psi^{g'}_{n'}(\mathbf{r}) w_{n'} \nonumber \\
+&+ \frac{\chi^{g}}{k} \sum_{g'=0}^{G} \nu \sigma_{f}^{g'}(\mathbf{r})\phi^{g'}(\mathbf{r}),
+\end{align}
+where: \\
+\indent $\psi^{g}_{n} = \psi^{g}(\mathbf{\hat{\Omega}}_{n})$ is the angular flux for energy group g, \\
+\indent $\sigma^{g}$ is the total group cross section, \\
+\indent $\sigma^{gg'}_{s}$ is the scattering cross section from group g' to into group g, \\
+\indent $\sigma^{g'}_{f}$ is the fission cross section for group g', \\
+\indent $\chi^{g}$ is the fission spectrum for group g, \\
+\indent $k$ is the neutron multiplication factor or eigenvalue, \\
+\indent $\phi^{g} = \sum_{n=0}^{N} \psi^{g}_{n} w_{n}$ is the scalar flux for group g, and \\
+\indent $w_{n}$ is a quadrature weight. \\
+  
+\end{frame}
+
+%-------------slide-------------------------%
+\begin{frame}
+  \frametitle{Operator Form}
+After discretization we can define some operators and express equation 1 as an eigenvalue problem as follows \cite{Den}:
+
+\indent $\mathbf{L} = \mathbf{\hat{\Omega}} \cdot \nabla + \sigma$ is the transport operator, \\
+\indent $\mathbf{M}$ is the operator that converts harmonic moments into discrete angles, \\
+\indent $\mathbf{S}$ is the scattering matrix, \\
+\indent $\mathbf{f}$ is the fission cross sections, and \\
+\indent $\phi = \mathbf{D}\psi$, where $\mathbf{D}$ is the discrete-to-moment operator. 
+
+ 
+\begin{equation}
+  (\mathbf{I} - \mathbf{TS}) \phi = \lambda\mathbf{TF}\phi,
+\end{equation}
+where: \\ 
+\indent $\mathbf{T} =  \mathbf{DL^{-1}M}$, \\
+\indent $\mathbf{F} = \boldsymbol{\chi}\mathbf{f^{T}}$, and \\
+\indent $\lambda = k^{-1}$, the eigenvalue. 
+
+\end{frame}
+
+%-------------slide-------------------------%
+\begin{frame}
+  \frametitle{Krylov Methods}
+  
+  \begin{itemize}
+    \item A Krylov subspace of dimension $m + 1$ is $K_{m+1}  =span\{v_0, Av_0, A^2v_0,..., A^mv_0\}$ \\
+    for an $n$ x $n$ matrix $A$ with starting vector $v_{0}$. \\
+    \item A Galerkin method uses a discretization from an n-dimensional subspace and projects the problem of interest onto it, thereby transforming a continuous problem to a discrete problem.\\
+    \item We can choose a Galerkin method onto a Krylov subspace that solves the eigenvalue problem or a problem of the form $Ax = b$ \cite{gmres}.\\
+    \item We encounter both problems in Denovo - either with fission or with upscattering.
+ \end{itemize}
+  
+\end{frame}    
+
+%-------------slide-------------------------%
+\begin{frame}
+  \frametitle{Krylov Methods}
+      
+For non-symmetric $A$ we can use the Galerkin conditions and an orthogonal projection method to obtain the Arnoldi process \cite{gmres}:\\
+    \begin {itemize}
+      \item Build an orthogonal basis, $V$, for the Krylov subspace.\\
+      \item Build an Upper Hessenberg matrix, $H$, where after k iterations $AV_{k} = V_{k}H_{k} + f_{k}e_{k}^{T}$.
+      \item $f_{k}$ is the most recent entry added below the diagonal in $H$. 
+      \item The eigenvalues of $A$ are approximated by those of $H_{k}$ and used in forming a solution,
+      \item -OR- an output vector $z = V_{k}y_{k}$ can be used in solving $Ax = b$.
+      \item the details of $y_{k}$ and/or how this information is used is determined by the Krylov method.
+    \end{itemize}
+
+ 
+\end{frame}
+
+%-------------slide-------------------------%
+\begin{frame}
+  \frametitle{Upscattering with GS}
+  
+  \begin{itemize}
+    \item Eqn. 2 gives a series of coupled single-group equations. \\
+    \item When there is no upscatter then the coupled equations can be solved using forward-substitution. \\
+    \item When upscatter is important in groups $[g1,G]$ then the $[g1,G]$ portion of the matrix $\mathbf{S}$ becomes semi-dense. 
+    \item Denovo solves the downscattering ($[0,g1-1]$) portion using forward-sub,
+    \item and the upscattering ($[g1, G]$) with Gauss-Seidel (GS) iteration, which uses the new information obtained from down and within group scattering: 
+    \begin{equation}
+       \mathbf{L}\psi^{k+1}_{g} = \mathbf{MS}_{gg}\phi^{k+1}_{g} + (\mathbf{M}\sum_{g'=g1}^{g-1}\mathbf{S}_{gg'}\phi^{k+1}_{g'} + \mathbf{M}\sum_{g'=g+1}^{G}\mathbf{S}_{gg'}\phi^{k}_{g'} + q_{eg}).
+    \end{equation}
+    \item A Krylov method is used to solve each group in series \cite{Den}.
+\end{itemize}
+ 
+\end{frame}
+
+%-------------slide-------------------------%
+\begin{frame}
+  \frametitle{Upscattering with Krylov}
+  
+  \begin{itemize}
+    \item Any purely downscattering portion of the matrix $[0, g1-1]$, is solved just as before. \\
+    \item For groups $[g1,  G]$ we do \\    
+    \begin{equation}
+      \mathbf{L}\psi^{k+1} = \mathbf{MS}_{lft}\phi^{k} + (\mathbf{MS}_{rt}\phi^{k+1} + q_{eg}).
+    \end{equation} \\
+    \item where $\mathbf{S}_{rt}$ is the $[0, g1-1]$; $[g1, G]$ portion of the $\mathbf{S}$ matrix and $\mathbf{S}_{lft}$ is the $[g1, G]$; $[g1, G]$ portion of the $\mathbf{S}$ matrix.
+    \item The $\mathbf{S}_{rt}$ term is already known from downscattering and is added into the source. 
+    \item The resulting equation now looks like a Jacobi method instead of a Gauss Seidel method, and we can apply a Krylov solver over the entire upscatter block. 
+    \item Each energy group is decoupled and we can parallelize over the upscatter energy groups. 
+\end{itemize}
+  
+\end{frame}
+ 
+ %-------------slide-------------------------%
+\begin{frame}
+  \frametitle{Eigenvalue}
+  
+  \begin{itemize}
+    \item It is possible to add a shift to the eigenvalue problem. \\
+    \begin{equation}
+      (\mathbf{I} - \mathbf{T\tilde{S}}) \phi = (\lambda - \omega) \mathbf{TF}\phi \text{ ,}
+    \end{equation}
+    where $\mathbf{\tilde{S}} = \mathbf{S} - \omega\mathbf{F}$, and $\omega$ is the parameter by which the eigenvalue is shifted. \\
+    \item This does not change the eigenvectors. 
+    \item The eigenvalues near the shift become separated and easy to find. 
+    \item We will use the Rayleigh Quotient Iteration method to update the shift \cite{dcs},\cite{rqi}.
+    \item The $\mathbf{S}$ matrix becomes dense and we can solve the entire problem with our new Krylov block solver.
+  \end{itemize}
+  
+\end{frame}
+
+ %-------------slide-------------------------%
+\begin{frame}
+  \frametitle{Preconditioning}
+  
+  \begin{itemize}
+    \item Based on the physical problem we know some things about the matrices of which A is comprised.\\
+    \item We can use this information to create a physics-based right preconditioner: \\
+    \item Defining $\tilde{q} = (\lambda - \omega) \mathbf{TF}\phi$, and multiplying Eqn. (2) by $(\mathbf{I} - \mathbf{T\tilde{S}}_{L})^{-1}$, we obtain
+    \begin{equation}
+      (\mathbf{I} -\mathbf{T\tilde{S}}_{L})^{-1} (\mathbf{I} -\mathbf{T\tilde{S}}) \phi = (\mathbf{I} - \mathbf{T\tilde{S}}_{L})^{-1} \tilde{q} \text{ ,}
+    \end{equation}
+   \item where $\mathbf{\tilde{S}} = \mathbf{\tilde{S}}_{U} + \mathbf{\tilde{S}}_{L}$.
+\end{itemize}
+  
+\end{frame}  
+  
+ %-------------slide-------------------------%
+\begin{frame}
+ \begin{thebibliography}{4}
+
+ \bibitem{Den} Evans, T M. \underline{Denovo Methods Manual}. Oak Ridge, TN: Oak Ridge National Laboratory, 2009. Electronic. 
+
+ \bibitem{rqi} Parlett, B.N. ``The Rayleigh Quotient Iteration and Some Generalizations for Nonnormal Matrices.'' \emph{Mathematics of Computation} 28.127 (1974) : 679-693. Print. 
+ 
+ \bibitem{gmres} Saad, Youcef and Martin Schultz. ``A Generalized Minimal Residual Algorithm for Solving Nonsymmetric Linear Systems.'' \emph{SIAM J. Sci. Stat. Comput.} 7.3 (1986) : 856-869. Print.
+ 
+ \bibitem{dcs} Sorensen, Danny C. ``Implicitly Restarted Arnoldi/Lanczos Methods for Large Scale Eigenvalue Calculatoins.'' NASA Contractor Report 198342, ICASE Report No. 96-40, May 1996.
+
+\end{thebibliography}
+\end{frame}
+
+\end{document}

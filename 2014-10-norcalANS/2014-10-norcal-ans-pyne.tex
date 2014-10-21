@@ -1,9 +1,44 @@
-\documentclass{beamer}
-%\documentclass[handout]{beamer} %use this for no pauses
+\documentclass[xcolor=x11names,compress]{beamer}
+
+%% General document %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{Tabbing}
+\usetikzlibrary{decorations.fractals}
 \usepackage{fancyvrb}
-\usepackage{color}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% Beamer Layout %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\useoutertheme[subsection=false,shadow]{miniframes}
+\useinnertheme{default}
+\usefonttheme{serif}
+\usepackage{palatino}
+\usepackage{tabu}
+
+% addition of color
+\usepackage{xcolor}
+\definecolor{CoolBlack}{rgb}{0.0, 0.18, 0.39}
+\definecolor{byellow}{rgb}{0.55037, 0.38821, 0.06142}
+\definecolor{dgreen}{rgb}{0.,0.6,0.}
+\definecolor{RawSienna}{cmyk}{0,0.72,1,0.45}
 \definecolor{forestgreen(web)}{rgb}{0.13, 0.55, 0.13}
 \definecolor{cardinal}{rgb}{0.77, 0.12, 0.23}
+
+\setbeamerfont{title like}{shape=\scshape}
+\setbeamerfont{frametitle}{shape=\scshape}
+
+\setbeamercolor*{lower separation line head}{bg=CoolBlack} 
+\setbeamercolor*{normal text}{fg=black,bg=white} 
+\setbeamercolor*{alerted text}{fg=red} 
+\setbeamercolor*{example text}{fg=black} 
+\setbeamercolor*{structure}{fg=black} 
+ 
+\setbeamercolor*{palette tertiary}{fg=black,bg=black!10} 
+\setbeamercolor*{palette quaternary}{fg=black,bg=black!10} 
+
+% Margins
+\usepackage{changepage}
+
 \mode<presentation>
 {
   \definecolor{berkeleyblue}{HTML}{003262}
@@ -11,8 +46,8 @@
   \usetheme{Boadilla}      % or try Darmstadt, Madrid, Warsaw, Boadilla...
   %\usecolortheme{dove} % or try albatross, beaver, crane, ...
   \setbeamercolor{structure}{fg=berkeleyblue,bg=berkeleygold}
-  \setbeamercolor{palette primary}{fg=berkeleyblue,bg=berkeleygold} % changed this
-  \setbeamercolor{palette secondary}{bg=berkeleyblue,fg=white} % changed this
+  \setbeamercolor{palette primary}{bg=berkeleyblue,fg=white} % changed this
+  \setbeamercolor{palette secondary}{fg=berkeleyblue,bg=berkeleygold} % changed this
   \setbeamercolor{palette tertiary}{bg=berkeleyblue,fg=white} % changed this
   \usefonttheme{structurebold}  % or try serif, structurebold, ...
   \useinnertheme{circles}
@@ -21,6 +56,12 @@
   \usebackgroundtemplate{}
 }
 
+% Columns
+\renewcommand{\(}{\begin{columns}}
+\renewcommand{\)}{\end{columns}}
+\newcommand{\<}[1]{\begin{column}{#1}}
+\renewcommand{\>}{\end{column}}
+
 % adding slide numbers
 \addtobeamertemplate{navigation symbols}{}{%
     \usebeamerfont{footline}%
@@ -28,11 +69,6 @@
     \hspace{1em}%
     \insertframenumber/\inserttotalframenumber
 }
-
-\renewcommand{\(}{\begin{columns}}
-\renewcommand{\)}{\end{columns}}
-\newcommand{\<}[1]{\begin{column}{#1}}
-\renewcommand{\>}{\end{column}}
 
 % equation stuff
 \newcommand{\Macro}{\ensuremath{\Sigma}}
@@ -44,12 +80,12 @@
 \usepackage{amsthm}
 \usepackage{epsfig}
 \usepackage{amsmath}
-
 \newcommand{\ve}[1]{\ensuremath{\mathbf{#1}}}
 \newcommand{\micro}{\ensuremath{\sigma}}
 \newcommand{\detR}{\ensuremath{\Sigma}}
 
-\title{PyNE Software Library: an Overview}
+% title stuff for footer
+\title{The PyNE Software Library}
 \author{R.\ N.\ Slaybaugh}
 \date{22 October 2014}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -58,42 +94,83 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
-\title{PyNE Software Library: an Overview}
-\subtitle{ANS Nor Cal Meeting}
+\title{The PyNE Software Library: Why and How?}
+%\subtitle{}
 \author{
-        \includegraphics[height=2cm]{../bk}\\R.\ N.\ Slaybaugh, \\ Univ. of Cal.\ Berkeley}
+        \includegraphics[height=2cm]{pyne-icon-big}\\R.\ N.\ Slaybaugh \\ Univ.\ of Cal.\ Berkeley}
 
-\date{22 October 2014\\ Alfred's Stakehouse, San Francisco}
+\date{ANS Nor Cal Meeting \\ 22 October 2014\\ Alfred's Stakehouse, San Francisco, CA}
 \titlepage
 \end{frame}
 
-
+%------------------------------------------------------
 \begin{frame}{Outline}
-	\begin{itemize}
-    \item
-	\end{itemize}
+
+	\begin{columns}
+  	\begin{column}{0.4\textwidth}
+	    \begin{itemize}
+        \item PyNE: What is it?
+        \item Demo
+        \item Current initiatives
+        \item PyNE as a research tool
+        \item Get involved!
+	    \end{itemize}
+  	\end{column}
+ 	%
+ 	\begin{column}{0.5\textwidth}
+ 	   \begin{center}
+ 	   \begin{figure}
+ 	   \includegraphics[height=1.25in,clip]{data_sources_thumb}  \\
+       \includegraphics[height=1.25in,clip]{half_life_thumb}
+ 	   \end{figure}
+ 	   \end{center}
+  	\end{column}
+	\end{columns}
+
 \end{frame}
 
-\begin{frame}{WARP \cite{pyne}}
-	\begin{itemize}
-	\item
-	\end{itemize}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Overview}
+\begin{frame}{What is PyNE \cite{pyne}?}
+
+As our tagline says, PyNE is the open source nuclear engineering toolkit.
+\vspace*{1em}
+  \begin{itemize}
+  \item PyNE is intended as a \textit{library of composable tools} that is used to build nuclear science and engineering applications.
+  \item It is \textit{permissively licensed} (2-clause BSD)
+  \item It supports both a \textit{C++ and a Python} API.
+  \item The name 'PyNE' is a bit of a misnomer since most of the code base is in C++ but most daily usage happens in Python.
+  \item \textit{v0.4} is the current, stable release
+  \item As an organization, PyNE was born in April 2011.  However, core parts of PyNE have existed since 2007.
+  \end{itemize}
+
 \end{frame}
 
-\begin{frame}{Software Verification and Validation}
-	\begin{itemize}
-	\pause
-	\item{Ensuring that software meets its specifications and fulfills its intended purpose}
-	\pause
-	\item{Validation: ``Are we building the right thing?"}
-	\pause
-	\item{Verification: ``Are we building the thing right?"}
-	\pause
-	\item{Test cases are an important part of software V\&V}
-	\end{itemize}
+\begin{frame}{What are the Goals of PyNE?}
+To help nuclear engineers:
+  \begin{itemize}
+  \item be more productive,
+  \item have the best solvers,
+  \item have a beautiful API,
+  \item write really great code,
+  \item and teach the next generation.
+  \end{itemize}
+  
+And of course, to perform neat tricks like this:
+
 \end{frame}
 
-
+%Python for Nuclear Engineering, or PyNE (http://pyne.io/), is a collaborative, open source project consisting of a collection of
+%computational tools pertinent to nuclear engineering analysis and simulations.
+%PyNE primarily provides a common Python interface for code written in C++,
+%Python, and Fortran. This allows fundamental components of PyNE to easily be
+%combined to form powerful and complex programs. These fundamental components
+%include canonical nuclide and reaction naming conventions, material handling,
+%nuclear data and cross-section reading, mesh operations, and
+%physics-code-specific input and output parsing.
+%
+%This presentation will begin with a discussion about the background and philosophy behind PyNE and include a demonstration of how PyNE could be used in a project. I will also cover some of the current developments, with a focus of how I'm using PyNE as a tool for my research in computational methods for neutral particle transport. 
 
 % --------------------------------------------------------------
 \section*{}

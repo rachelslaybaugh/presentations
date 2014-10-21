@@ -165,11 +165,11 @@
     \begin{column}{0.4\textwidth}
         To help nuclear engineers:
         \begin{itemize}
-        \item be more productive
-        \item have the best solvers
-        \item have a beautiful API
+        \item be more \textit{productive} (don't reinvent the wheel!)
+        \item have the best \textit{solvers}
+        \item have a clear and useful \textit{API}
         \item write really great code
-        \item teach the next generation
+        \item \textit{teach} the next generation
         \end{itemize}
   	\end{column}
    	%
@@ -182,7 +182,6 @@
  	   \end{center}
   	\end{column}
 	\end{columns}
-
 
 \end{frame}
 
@@ -199,43 +198,46 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Demo}
-\begin{frame}{What can PyNE do?}
+\begin{frame}{What Can PyNE Do?}
 
-    PyNE is \textit{the} open source nuclear engineering toolkit.
-    \vspace*{1em}
     \begin{itemize}
-    \item PyNE is a \textit{library of composable tools} used to build 
-    nuclear science and engineering applications
-    \item It is \textit{permissively licensed} (2-clause BSD)
-    \item It supports both a \textit{C++} and a \textit{Python} API
-    \item The name 'PyNE' is a bit of a misnomer since most of the code 
-    base is in C++ but most daily usage happens in Python
-    \item \textit{v0.4} is the current, stable release
-    \item As an organization, PyNE was born in April 2011 
-    (however, core parts of PyNE have existed since 2007)
+    \item Nuclear data and cross-section reading/processing
+    \item Material handling
+    \item Canonical nuclide and reaction naming conventions
+    \item Mesh operations
+    \item MCNP and Serpent input/output parsing
+    \item Fuel cycle functionality (transmutation, enrichment)
+    \item There's more, and the list continues to grow
     \end{itemize}
+    
+    The idea is to be able to easily combine components and avoid redeveloping
+    utilities someone else has developed.
+    
+    \begin{center}
+    \textbf{Demos}: (1) Data sources \hspace*{3 em} (2) Enrichment
+    \end{center}
 
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Current initiatives}
-\begin{frame}{What can PyNE do?}
+\begin{frame}{What are we Working on Now?}
 
-    PyNE is \textit{the} open source nuclear engineering toolkit.
-    \vspace*{1em}
+    The biggest push: orienting toward NQA-1 qualification \cite{pyne_vnv}
     \begin{itemize}
-    \item PyNE is a \textit{library of composable tools} used to build 
-    nuclear science and engineering applications
-    \item It is \textit{permissively licensed} (2-clause BSD)
-    \item It supports both a \textit{C++} and a \textit{Python} API
-    \item The name 'PyNE' is a bit of a misnomer since most of the code 
-    base is in C++ but most daily usage happens in Python
-    \item \textit{v0.4} is the current, stable release
-    \item As an organization, PyNE was born in April 2011 
-    (however, core parts of PyNE have existed since 2007)
+    \item Adding theory descriptions for each piece
+    \item Documenting our V\&V process
+    \item Slowling removing the "VnVWarning: pyne.nucname is not yet V\&V compliant" as
+    things become qualified
     \end{itemize}
 
+    \vspace*{1 em}
+    DAGMC and R2S development (\textcolor{cardinal}{Univ.\ Wisconsin})
+    
+    \vspace*{1 em}
+    Plug-and-play solver research sandbox (\textcolor{byellow}{Berkeley})
+    
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

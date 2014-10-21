@@ -14,7 +14,10 @@
 \usefonttheme{serif}
 \usepackage{palatino}
 \usepackage{tabu}
+% Links
 \usepackage{hyperref}
+\definecolor{links}{HTML}{003262}
+\hypersetup{colorlinks,linkcolor=,urlcolor=links}
 
 % addition of color
 \usepackage{xcolor}
@@ -89,8 +92,11 @@
 \title{The PyNE Software Library}
 \author{R.\ N.\ Slaybaugh}
 \date{22 October 2014}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -98,7 +104,7 @@
 \title{The PyNE Software Library: Why and How?}
 %\subtitle{}
 \author{
-        \includegraphics[height=2cm]{pyne-icon-big}\\R.\ N.\ Slaybaugh \\ Univ.\ of Cal.\ Berkeley}
+        \includegraphics[height=2cm]{../bk}\\R.\ N.\ Slaybaugh \\ Univ.\ of Cal.\ Berkeley}
 
 \date{ANS Nor Cal Meeting \\ 22 October 2014\\ Alfred's Stakehouse, San Francisco, CA}
 \titlepage
@@ -110,7 +116,7 @@
 	\begin{columns}
   	\begin{column}{0.4\textwidth}
 	    \begin{itemize}
-        \item PyNE: What is it?
+        \item PyNE \cite{pyne}: what is it?
         \item Demo
         \item Current initiatives
         \item PyNE as a research tool
@@ -121,9 +127,10 @@
  	\begin{column}{0.5\textwidth}
  	   \begin{center}
  	   \begin{figure}
- 	   \includegraphics[height=1.25in,clip]{data_sources_thumb}  \\
-       \includegraphics[height=1.25in,clip]{half_life_thumb}
- 	   \end{figure}
+       \includegraphics[height=3.5cm]{pyne-icon-big}
+% 	   \includegraphics[height=1.25in,clip]{data_sources_thumb}  \\
+%       \includegraphics[height=1.25in,clip]{half_life_thumb}
+	   \end{figure}
  	   \end{center}
   	\end{column}
 	\end{columns}
@@ -132,33 +139,50 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Overview}
-\begin{frame}{What is PyNE \cite{pyne}?}
+\section{PyNE \cite{pyne}: what is it?}
+\begin{frame}{What is PyNE?}
 
-PyNE is \textit{the} open source nuclear engineering toolkit.
-\vspace*{1em}
-  \begin{itemize}
-  \item PyNE is a \textit{library of composable tools} used to build nuclear science and engineering applications
-  \item It is \textit{permissively licensed} (2-clause BSD)
-  \item It supports both a \textit{C++} and a \textit{Python} API
-  \item The name 'PyNE' is a bit of a misnomer since most of the code base is in C++ but most daily usage happens in Python
-  \item \textit{v0.4} is the current, stable release
-  \item As an organization, PyNE was born in April 2011 (however, core parts of PyNE have existed since 2007)
-  \end{itemize}
+    PyNE is \textit{the} open source nuclear engineering toolkit.
+    \vspace*{1em}
+    \begin{itemize}
+    \item PyNE is a \textit{library of composable tools} used to build 
+    nuclear science and engineering applications
+    \item It is \textit{permissively licensed} (2-clause BSD)
+    \item It supports both a \textit{C++} and a \textit{Python} API
+    \item The name 'PyNE' is a bit of a misnomer since most of the code 
+    base is in C++ but most daily usage happens in Python
+    \item \textit{v0.4} is the current, stable release
+    \item As an organization, PyNE was born in April 2011 
+    (however, core parts of PyNE have existed since 2007)
+    \end{itemize}
 
 \end{frame}
 
+%------------------------------------------------------
 \begin{frame}{What are the Goals of PyNE?}
-To help nuclear engineers:
-  \begin{itemize}
-  \item be more productive,
-  \item have the best solvers,
-  \item have a beautiful API,
-  \item write really great code,
-  \item and teach the next generation.
-  \end{itemize}
-  
-And of course, to perform neat tricks like this:
+
+    \begin{columns}
+    \begin{column}{0.4\textwidth}
+        To help nuclear engineers:
+        \begin{itemize}
+        \item be more productive
+        \item have the best solvers
+        \item have a beautiful API
+        \item write really great code
+        \item teach the next generation
+        \end{itemize}
+  	\end{column}
+   	%
+ 	\begin{column}{0.5\textwidth}
+ 	   \begin{center}
+ 	   \begin{figure}
+ 	   \includegraphics[height=1.25in,clip]{data_sources_thumb}  \\
+       \includegraphics[height=1.25in,clip]{half_life_thumb}
+	   \end{figure}
+ 	   \end{center}
+  	\end{column}
+	\end{columns}
+
 
 \end{frame}
 
@@ -172,9 +196,73 @@ And of course, to perform neat tricks like this:
 %physics-code-specific input and output parsing.
 %
 %This presentation will begin with a discussion about the background and philosophy behind PyNE and include a demonstration of how PyNE could be used in a project. I will also cover some of the current developments, with a focus of how I'm using PyNE as a tool for my research in computational methods for neutral particle transport. 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Demo}
+\begin{frame}{What can PyNE do?}
+
+    PyNE is \textit{the} open source nuclear engineering toolkit.
+    \vspace*{1em}
+    \begin{itemize}
+    \item PyNE is a \textit{library of composable tools} used to build 
+    nuclear science and engineering applications
+    \item It is \textit{permissively licensed} (2-clause BSD)
+    \item It supports both a \textit{C++} and a \textit{Python} API
+    \item The name 'PyNE' is a bit of a misnomer since most of the code 
+    base is in C++ but most daily usage happens in Python
+    \item \textit{v0.4} is the current, stable release
+    \item As an organization, PyNE was born in April 2011 
+    (however, core parts of PyNE have existed since 2007)
+    \end{itemize}
+
+\end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Get Involved!}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Current initiatives}
+\begin{frame}{What can PyNE do?}
+
+    PyNE is \textit{the} open source nuclear engineering toolkit.
+    \vspace*{1em}
+    \begin{itemize}
+    \item PyNE is a \textit{library of composable tools} used to build 
+    nuclear science and engineering applications
+    \item It is \textit{permissively licensed} (2-clause BSD)
+    \item It supports both a \textit{C++} and a \textit{Python} API
+    \item The name 'PyNE' is a bit of a misnomer since most of the code 
+    base is in C++ but most daily usage happens in Python
+    \item \textit{v0.4} is the current, stable release
+    \item As an organization, PyNE was born in April 2011 
+    (however, core parts of PyNE have existed since 2007)
+    \end{itemize}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{PyNE as a research tool}
+\begin{frame}{What can PyNE do?}
+
+    PyNE is \textit{the} open source nuclear engineering toolkit.
+    \vspace*{1em}
+    \begin{itemize}
+    \item PyNE is a \textit{library of composable tools} used to build 
+    nuclear science and engineering applications
+    \item It is \textit{permissively licensed} (2-clause BSD)
+    \item It supports both a \textit{C++} and a \textit{Python} API
+    \item The name 'PyNE' is a bit of a misnomer since most of the code 
+    base is in C++ but most daily usage happens in Python
+    \item \textit{v0.4} is the current, stable release
+    \item As an organization, PyNE was born in April 2011 
+    (however, core parts of PyNE have existed since 2007)
+    \end{itemize}
+
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Get involved!}
 \begin{frame}{Why Would I Get Involved?}
 
 As a \underline{\textcolor{byellow}{\textbf{user}}} you could do your work or research with PyNE.  Even if you have your own software that looks and behaves similarly to some aspects of PyNE, using PyNE will mean that you no longer have to develop AND maintain that functionality.
@@ -184,14 +272,15 @@ As a \underline{\textcolor{byellow}{\textbf{developer}}} you should be selfish. 
 
 \end{frame}
 
+%------------------------------------------------------
 \begin{frame}{How Can I Get Involved?}
 
     \underline{\textcolor{byellow}{Contact PyNE}}
     \begin{itemize}
-    \item Website: http://pyne.io/
-    \item User's Mailing List: pyne-users@googlegroups.com
-    \item Developer's List: pyne-dev@googlegroups.com
-    \item GitHub: https://github.com/pyne/pyne
+    \item Website: \href{http://pyne.io/}{http://pyne.io/}
+    \item User's Mailing List: \href{pyne-users@googlegroups.com}{pyne-users@googlegroups.com}
+    \item Developer's List: \href{pyne-dev@googlegroups.com}{pyne-dev@googlegroups.com}
+    \item GitHub: \href{https://github.com/pyne/pyne}{https://github.com/pyne/pyne}
     \end{itemize}
     
     \vspace*{2 em}
@@ -203,16 +292,30 @@ As a \underline{\textcolor{byellow}{\textbf{developer}}} you should be selfish. 
 \end{frame}
 
 % --------------------------------------------------------------
-\section*{}
-\begin{frame}[fragile]
-  \frametitle{Questions?}
-  \begin{center}
-  \includegraphics[height=3in,clip]{../questions-comic}  
-  \end{center}
+\begin{frame}[fragile]{PyNE In the Literature}
+
+    \begin{itemize}
+    \item Intro: "PyNE: Python For Nuclear Engineering" \cite{pyne_intro}
+    \item Progress reports: \cite{scopatz_pyne}, \cite{pyne_progress}
+    \item In research: \cite{Biondo2014}, \cite{MarquezDamian2014280}, \cite{Scopatz2013a}
+    \item V\&V: "Quality Assurance within the PyNE Open Source \\Toolkit" \cite{pyne_vnv}
+    \item Poster at SciPy: \cite{scipy}
+    \end{itemize}
   
 \end{frame}
 
-\begin{frame}[plain,noframenumbering]{References}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{}
+\begin{frame}[fragile]{Questions?}
+
+    \begin{center}
+    \includegraphics[height=3in,clip]{../questions-comic}  
+    \end{center}
+  
+\end{frame}
+% --------------------------------------------------------------
+\begin{frame}[allowframebreaks]{References}
 	\bibliographystyle{unsrt}
 	\bibliography{2014-10-norcal-ans-pyne.bib}
 \end{frame}

@@ -116,9 +116,11 @@
 \begin{frame}{Outline}
 
 	\begin{columns}
-  	\begin{column}{0.4\textwidth}
+  	\begin{column}{0.5\textwidth}
 	    \begin{itemize}
         \item PyNE \cite{pyne}: what is it?
+        
+        (Python for Nuclear Engineering)
         \item PyNE Demo
         \item Current initiatives
         \item PyNE as a research tool
@@ -126,10 +128,10 @@
 	    \end{itemize}
   	\end{column}
  	%
- 	\begin{column}{0.5\textwidth}
+ 	\begin{column}{0.4\textwidth}
  	   \begin{center}
  	   \begin{figure}
-       \includegraphics[height=3.5cm]{pyne-icon-big}
+       \includegraphics[height=4cm]{pyne-icon-big}
 	   \end{figure}
  	   \end{center}
   	\end{column}
@@ -282,19 +284,20 @@
     more efficiently:
     %   
     \begin{align}
-    [\vOmega \cdot \nabla + \Macro(\vec{r}, E)] &\psi(\vec{r}, \vOmega, E)  = 
-     \chi(E)   \int_0^{\infty} dE' \:\nu \Macro_{f}(\vec{r}, E') \int_{4\pi} d\vOmega'
-     \:\psi(\vec{r}, \vOmega', E')  \nonumber \\
-     &+ \int_0^{\infty} dE' \int_{4\pi} d\vOmega' \:\Macro_{s}(\vec{r}, E' \to E,
-     \vOmega' \cdot \vOmega) \psi(\vec{r}, \vOmega', E')  \nonumber
+    [\vOmega \cdot \nabla + \Macro(\vec{r}, E)] &\psi(\vec{r}, \vOmega, E)  =  + q(\vec{r}, \vOmega, E) \nonumber\\
+     &\int_0^{\infty} dE' \int_{4\pi} d\vOmega' \:\Macro_{s}(\vec{r}, E' \to E,
+     \vOmega' \cdot \vOmega) \psi(\vec{r}, \vOmega', E') \nonumber
     \end{align}
 
-    Discretized and converted to operator form:
+    Discretize, then convert to operator form:
     \begin{align}
-    \mathbf{L} \psi &= \mathbf{MS}\phi + \frac{1}{k}\mathbf{MF}\phi \nonumber\\
-    \phi &= \mathbf{D}\psi \nonumber
+    \mathbf{L} \psi &= \mathbf{MS}\phi + \mathbf{Q} \nonumber\\
+    \phi &= \mathbf{D}\psi \nonumber \\
+    \underbrace{(\ve{I} - \ve{DL}^{-1}\ve{MS})}_{\mathbf{A}}\phi &= Q\nonumber
     \end{align}
-
+    
+    Properties of the matrix govern solution behavior
+    
 \end{frame}
 
 %------------------------------------------------------
@@ -327,36 +330,7 @@
 \end{frame}
 
 %------------------------------------------------------
-\begin{frame}{So Does Solver Choice}
-
-    \begin{columns}
-    \begin{column}{0.45\textwidth}
-        There are many ways to \textcolor{dgreen}{solve} this problem
-        \begin{itemize}
-        \item Inner iteration methods
-        \item Outer iteration methods
-        \item Eigenvalue iteration methods
-        \item Preconditioners
-        \end{itemize}
-    
-        \textcolor{dgreen}{Solution} method choices result in different
-        numerical properites and/or solution strategies
-  	\end{column}
-   	%
- 	\begin{column}{0.45\textwidth}
- 	   \begin{center}
- 	   \begin{figure}
- 	   \includegraphics[height=2.75in,clip]{solverLayers}
-       \end{figure}
- 	   \end{center}
-  	\end{column}
-	\end{columns}
-	
-\end{frame}
-% All of the discretization choices and all of the solution stratgies create a complex set of choices
-
-%------------------------------------------------------
-\begin{frame}{Oh, and Physics}
+\begin{frame}{So Does Physics}
 
     The physics of any specific problem also has a large impact on the
     problem's properties and solution strategies
@@ -382,6 +356,35 @@
 	\end{columns}
        
 \end{frame}
+
+%------------------------------------------------------
+\begin{frame}{Properties Affect Solver Choice}
+
+    \begin{columns}
+    \begin{column}{0.45\textwidth}
+        There are many ways to \textcolor{dgreen}{solve} this problem
+        \begin{itemize}
+        \item Inner iteration methods
+        \item Outer iteration methods
+        \item Eigenvalue iteration methods
+        \item Preconditioners
+        \end{itemize}
+    
+        \textcolor{dgreen}{Solution} method choices result in different
+        behaviors for different systems
+  	\end{column}
+   	%
+ 	\begin{column}{0.45\textwidth}
+ 	   \begin{center}
+ 	   \begin{figure}
+ 	   \includegraphics[height=2.75in,clip]{solverLayers}
+       \end{figure}
+ 	   \end{center}
+  	\end{column}
+	\end{columns}
+	
+\end{frame}
+% All of the discretization choices and all of the solution stratgies create a complex set of choices
 
 %------------------------------------------------------
 \begin{frame}{Plug-And-Play Research Environment}
@@ -491,12 +494,18 @@
     \textcolor{dgreen}{Contact PyNE}
     \begin{itemize}
     \item Website: \href{http://pyne.io/}{\texttt{http://pyne.io/}}
+    
     \item User's Mailing List: \href{pyne-users@googlegroups.com}
     {\texttt{pyne-users@googlegroups.com}}
+    
     \item Developer's List: \href{pyne-dev@googlegroups.com}
     {\texttt{pyne-dev@googlegroups.com}}
+    
     \item GitHub: \href{https://github.com/pyne/pyne}
     {\texttt{https://github.com/pyne/pyne}}
+    
+    \item Tutorial: \href{http://pyne.io/tutorial/index.html}
+    {\texttt{http://pyne.io/tutorial/index.html}}
     \end{itemize}
     
     \vspace*{2 em}

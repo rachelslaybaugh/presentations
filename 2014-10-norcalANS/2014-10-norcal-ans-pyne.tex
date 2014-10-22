@@ -66,6 +66,8 @@
 \newcommand{\<}[1]{\begin{column}{#1}}
 \renewcommand{\>}{\end{column}}
 
+\usepackage{cutwin}
+
 % adding slide numbers
 \addtobeamertemplate{navigation symbols}{}{%
     \usebeamerfont{footline}%
@@ -117,7 +119,7 @@
   	\begin{column}{0.4\textwidth}
 	    \begin{itemize}
         \item PyNE \cite{pyne}: what is it?
-        \item Demo
+        \item PyNE Demo
         \item Current initiatives
         \item PyNE as a research tool
         \item Get involved!
@@ -140,16 +142,16 @@
 \section{PyNE \cite{pyne}: what is it?}
 \begin{frame}{What is PyNE?}
 
-    PyNE is \textit{the} open source nuclear engineering toolkit.
+    PyNE is \textcolor{dgreen}{the} open source nuclear engineering toolkit.
     \vspace*{1em}
     \begin{itemize}
-    \item PyNE is a \textit{library of composable tools} used to build 
+    \item PyNE is a \textcolor{dgreen}{library of composable tools} used to build 
     nuclear science and engineering applications
-    \item It is \textit{permissively licensed} (2-clause BSD)
-    \item It supports both a \textit{C++} and a \textit{Python} API
-    \item The name 'PyNE' is a bit of a misnomer since most of the code 
+    \item It is \textcolor{dgreen}{permissively licensed} (2-clause BSD)
+    \item It supports both a \textcolor{dgreen}{C++} and a \textcolor{dgreen}{Python} API
+    \item The name `PyNE' is a bit of a misnomer since most of the code 
     base is in C++ but most daily usage happens in Python
-    \item \textit{v0.4} is the current, stable release
+    \item \textcolor{dgreen}{v0.4} is the current, stable release
     \item As an organization, PyNE was born in April 2011 
     (however, core parts of PyNE have existed since 2007)
     \end{itemize}
@@ -160,18 +162,18 @@
 \begin{frame}{What are the Goals of PyNE?}
 
     \begin{columns}
-    \begin{column}{0.4\textwidth}
+    \begin{column}{0.45\textwidth}
         To help nuclear engineers:
         \begin{itemize}
-        \item be more \textit{productive} (don't reinvent the wheel!)
-        \item have the best \textit{solvers}
-        \item have a clear and useful \textit{API}
+        \item be more \textcolor{dgreen}{productive} (don't reinvent the wheel!)
+        \item have the best \textcolor{dgreen}{solvers}
+        \item have a clear and useful \textcolor{dgreen}{API}
         \item write really great code
-        \item \textit{teach} the next generation
+        \item \textcolor{dgreen}{teach} the next generation
         \end{itemize}
   	\end{column}
    	%
- 	\begin{column}{0.5\textwidth}
+ 	\begin{column}{0.45\textwidth}
  	   \begin{center}
  	   \begin{figure}
  	   \includegraphics[height=1.25in,clip]{data_sources_thumb}  \\
@@ -183,20 +185,13 @@
 
 \end{frame}
 
-%Python for Nuclear Engineering, or PyNE (http://pyne.io/), is a collaborative, open source project consisting of a collection of
-%computational tools pertinent to nuclear engineering analysis and simulations.
-%PyNE primarily provides a common Python interface for code written in C++,
-%Python, and Fortran. This allows fundamental components of PyNE to easily be
-%combined to form powerful and complex programs. These fundamental components
-%include canonical nuclide and reaction naming conventions, material handling,
-%nuclear data and cross-section reading, mesh operations, and
-%physics-code-specific input and output parsing.
-%
-%This presentation will begin with a discussion about the background and philosophy behind PyNE and include a demonstration of how PyNE could be used in a project. I will also cover some of the current developments, with a focus of how I'm using PyNE as a tool for my research in computational methods for neutral particle transport. 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Demo}
 \begin{frame}{What Can PyNE Do?}
+
+    The idea is to be able to easily combine components and avoid redeveloping
+    utilities someone else has developed.
 
     \begin{itemize}
     \item Nuclear data and cross-section reading/processing
@@ -208,12 +203,16 @@
     \item There's more, and the list continues to grow
     \end{itemize}
     
-    The idea is to be able to easily combine components and avoid redeveloping
-    utilities someone else has developed.
+\end{frame}
+
+%------------------------------------------------------
+\begin{frame}{PyNE Demo}
     
     \begin{center}
-    \textbf{Demos}: (1) Data sources \hspace*{3 em} (2) Enrichment
-    \end{center}
+ 	\begin{figure}
+ 	\includegraphics[height=2.75in,clip]{Gallery}
+    \end{figure}
+ 	\end{center}
 
 \end{frame}
 
@@ -223,11 +222,11 @@
 \begin{frame}{What are we Working on Now?}
 
     The biggest push: V\&V $\rightarrow$ methodically making PyNE compliant 
-    with the QA standards we've ratified, based on the ASME NQA-1 standards
+    with the QA standards we've ratified, which are based on the ASME NQA-1 standards
     \cite{pyne_vnv}
 
     \vspace*{1 em}
-    Many other items (large and small) in our "ticket" list
+    Many other items (large and small) in our ``ticket" list
     
     \begin{center}
  	\begin{figure}
@@ -241,14 +240,16 @@
 \begin{frame}{Verification and Validation}
 
     \textbf{Verification}: Have we built the software correctly?\\
-    \textbf{Validation}: Have we built the right software?
+    \textbf{Validation}: Have we built the correct software?
     
     \vspace*{1 em}
     Strategies employed by PyNE:
+   
     \begin{itemize}
     \item Version control
     \item Formal review process
-    \item Documentation: theory manual, user's guide, developer's guide, API
+    \item Documentation: theory manual, user's guide, developer's guide, API, 
+    ticket system
     \item Test suite
     \item Continuous Integration
     \end{itemize}
@@ -263,23 +264,21 @@
     \textbf{Insight}: PyNE lets us access the physics, have real materials, 
     add mesh, and handle many details easily...
     
-    \vspace{1 em}
+    	\pause
+    \vspace{2 em}
     \textbf{Idea}: perfect environment for investigating numerical methods that 
     are impacted by materials, mesh, etc. 
     
-    \vspace{1 em}
+    	\pause
+    \vspace{2 em}
     \textbf{My Plan:} Plug-And-Play Solver Research Environment
-
- 	\begin{figure}
-    \includegraphics[height=3cm]{pyne-icon-big}
-	\end{figure}
     
 \end{frame}
 
 %------------------------------------------------------
 \begin{frame}{What Are We Sovling?}
 
-    I study how to solve the Boltzmann neutral particle transport equation
+    I study how to solve the steady state, neutral particle Boltzmann transport equation
     more efficiently:
     %   
     \begin{align}
@@ -290,7 +289,7 @@
      \vOmega' \cdot \vOmega) \psi(\vec{r}, \vOmega', E')  \nonumber
     \end{align}
 
-    Converted to operator form:
+    Discretized and converted to operator form:
     \begin{align}
     \mathbf{L} \psi &= \mathbf{MS}\phi + \frac{1}{k}\mathbf{MF}\phi \nonumber\\
     \phi &= \mathbf{D}\psi \nonumber
@@ -299,10 +298,10 @@
 \end{frame}
 
 %------------------------------------------------------
-\begin{frame}{How Do We Discretize It?}
+\begin{frame}{Discretizion Has an Impact}
 
     \begin{columns}
-    \begin{column}{0.5\textwidth}
+    \begin{column}{0.45\textwidth}
         \begin{center}
  	    \begin{figure}
  	    \includegraphics[height=1.75in,clip]{../figs/spatial-discretiztation2}
@@ -310,8 +309,9 @@
  	    \end{center}
   	\end{column}
    	%
- 	\begin{column}{0.4\textwidth}
-        There are many many ways to \textbf{\textcolor{dgreen}{discretize}} this problem
+ 	\begin{column}{0.5\textwidth}
+        There are many ways to \textcolor{dgreen}{discretize} the six dimensions of 
+        phase space
         \begin{itemize}
         \item Spatial discretization methods
         \item Angular quadratures
@@ -319,7 +319,7 @@
         \end{itemize}
     
         \vspace*{1 em}
-        Each \textbf{\textcolor{dgreen}{discretization}} scheme results in different 
+        \textcolor{dgreen}{Discretization} schemes and resolution choices can impact 
         numerical properites and/or solution strategies
   	\end{column}
 	\end{columns}
@@ -327,26 +327,26 @@
 \end{frame}
 
 %------------------------------------------------------
-\begin{frame}{How Do We Solve It?}
+\begin{frame}{So Does Solver Choice}
 
     \begin{columns}
-    \begin{column}{0.4\textwidth}
-        There are many many ways to \textbf{\textcolor{dgreen}{solve}} this problem
+    \begin{column}{0.45\textwidth}
+        There are many ways to \textcolor{dgreen}{solve} this problem
         \begin{itemize}
         \item Inner iteration methods
         \item Outer iteration methods
-       \item Eigenvalue iteration methods
+        \item Eigenvalue iteration methods
         \item Preconditioners
         \end{itemize}
     
-        Each \textbf{\textcolor{dgreen}{solution}} method results in different
-       numerical properites and/or solution strategeies
+        \textcolor{dgreen}{Solution} method choices result in different
+        numerical properites and/or solution strategies
   	\end{column}
    	%
- 	\begin{column}{0.5\textwidth}
+ 	\begin{column}{0.45\textwidth}
  	   \begin{center}
  	   \begin{figure}
- 	   \includegraphics[height=2.5in,clip]{solverLayers}
+ 	   \includegraphics[height=2.75in,clip]{solverLayers}
        \end{figure}
  	   \end{center}
   	\end{column}
@@ -359,7 +359,7 @@
 \begin{frame}{Oh, and Physics}
 
     The physics of any specific problem also has a large impact on the
-    problem's properties
+    problem's properties and solution strategies
     
     \begin{columns}
     \begin{column}{0.45\textwidth}
@@ -386,11 +386,7 @@
 %------------------------------------------------------
 \begin{frame}{Plug-And-Play Research Environment}
 
-    \textbf{Insight}: PyNE lets us access the physics, have real materials, 
-    and handle many details easily...
-    
-    \vspace{1 em}
-    \textbf{Idea}: perfect for an investigation environment
+    Wouldn't it be great to have 
     
     \begin{itemize}
     \item Easy to add solver components for each part of phase space
@@ -402,15 +398,56 @@
     
 \end{frame}
 
+%------------------------------------------------------
+\begin{frame}{Current Status}
+
+    A collection of 3D spatial solver choices are available
+
+    
+    \renewcommand\windowpagestuff{%
+    \includegraphics[height=1in,clip]{../figs/spatial-cell}
+    \raggedright}
+    \opencutright
+    \vfill
+
+    \begin{cutout}{9}{0.7\textwidth}{0pt}{2}
+    \begin{itemize}
+    \item DGFEM: Lagrange, Complete; Simple Corner Balance; AHOTN; Linear Nodal;
+     Linear-Linear; Diamond Difference type
+    
+    \item Originally written in Fortran (Sebastian Schunert and Yousry Azmy,
+    \textcolor{cardinal}{NC State})
+
+    \hspace*{2 em}[PyNE's first Fortran!]
+    
+    \item Wrapped with f2py (Josh Howland, \textcolor{byellow}{Berkeley})
+    \item Accessible via PyNE interface   
+    \item Examples, tests, documentation
+    \end{itemize}
+    \end{cutout}
+    
+\end{frame}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Get involved!}
 \begin{frame}{Why Would I Get Involved?}
 
-As a \underline{\textcolor{byellow}{\textbf{user}}} you could do your work or research with PyNE.  Even if you have your own software that looks and behaves similarly to some aspects of PyNE, using PyNE will mean that you no longer have to develop AND maintain that functionality.
+    As a \textcolor{byellow}{\textbf{user}} 
+    \begin{itemize}
+    \item You could do your work or research with PyNE
+    \item Even if you have your own software that looks and behaves similarly to some aspects of PyNE, using PyNE will mean that you no longer have to develop AND maintain that functionality
+    \end{itemize}        
 
-\vspace*{2 em}
-As a \underline{\textcolor{byellow}{\textbf{developer}}} you should be selfish.  Contribute to PyNE in ways that support the work that you are doing. If a feature you want is not in PyNE right now, chances are that other people want to see that feature too! This will help your future self as much as future other people.
+    \vspace*{1 em}
+    As a \textcolor{byellow}{\textbf{developer}} 
+    \begin{itemize}
+    \item You should be selfish
+    \item Contribute to PyNE in ways that support the work that you are doing
+    \item If a feature you want is not in PyNE right now, chances are that other 
+    people want to see that feature too
+    \item This will help your future self as much as future other people
+    \end{itemize}    
 
 \end{frame}
 
@@ -419,10 +456,13 @@ As a \underline{\textcolor{byellow}{\textbf{developer}}} you should be selfish. 
 
     \textcolor{byellow}{Contact PyNE}
     \begin{itemize}
-    \item Website: \href{http://pyne.io/}{http://pyne.io/}
-    \item User's Mailing List: \href{pyne-users@googlegroups.com}{pyne-users@googlegroups.com}
-    \item Developer's List: \href{pyne-dev@googlegroups.com}{pyne-dev@googlegroups.com}
-    \item GitHub: \href{https://github.com/pyne/pyne}{https://github.com/pyne/pyne}
+    \item Website: \href{http://pyne.io/}{\texttt{http://pyne.io/}}
+    \item User's Mailing List: \href{pyne-users@googlegroups.com}
+    {\texttt{pyne-users@googlegroups.com}}
+    \item Developer's List: \href{pyne-dev@googlegroups.com}
+    {\texttt{pyne-dev@googlegroups.com}}
+    \item GitHub: \href{https://github.com/pyne/pyne}
+    {\texttt{https://github.com/pyne/pyne}}
     \end{itemize}
     
     \vspace*{2 em}

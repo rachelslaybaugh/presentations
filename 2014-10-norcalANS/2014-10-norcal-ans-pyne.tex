@@ -33,7 +33,7 @@
 
 \setbeamercolor*{lower separation line head}{bg=CoolBlack} 
 \setbeamercolor*{normal text}{fg=black,bg=white} 
-\setbeamercolor*{alerted text}{fg=red} 
+\setbeamercolor*{alerted text}{fg=byellow} % just testing; I think this looks better
 \setbeamercolor*{example text}{fg=black} 
 \setbeamercolor*{structure}{fg=black} 
  
@@ -104,7 +104,7 @@
 \title{The PyNE Software Library: Why and How?}
 %\subtitle{}
 \author{
-        \includegraphics[height=2cm]{../bk}\\R.\ N.\ Slaybaugh \\ Univ.\ of Cal.\ Berkeley}
+        \includegraphics[height=2cm]{../bk-eps-converted-to}\\R.\ N.\ Slaybaugh \\ Univ.\ of Cal.\ Berkeley}
 
 \date{ANS Nor Cal Meeting \\ 22 October 2014\\ Alfred's Stakehouse, San Francisco, CA}
 \titlepage
@@ -117,7 +117,9 @@
   	\begin{column}{0.4\textwidth}
 	    \begin{itemize}
         \item PyNE \cite{pyne}: what is it?
-        \item Demo
+        \begin{itemize}
+            \item Demo
+        \end{itemize}
         \item Current initiatives
         \item PyNE as a research tool
         \item Get involved!
@@ -149,7 +151,7 @@
     nuclear science and engineering applications
     \item It is \textit{permissively licensed} (2-clause BSD)
     \item It supports both a \textit{C++} and a \textit{Python} API
-    \item The name 'PyNE' is a bit of a misnomer since most of the code 
+    \item The name `PyNE' is a bit of a misnomer since most of the code 
     base is in C++ but most daily usage happens in Python
     \item \textit{v0.4} is the current, stable release
     \item As an organization, PyNE was born in April 2011 
@@ -165,11 +167,11 @@
     \begin{column}{0.4\textwidth}
         To help nuclear engineers:
         \begin{itemize}
-        \item be more \textit{productive} (don't reinvent the wheel!)
-        \item have the best \textit{solvers}
-        \item have a clear and useful \textit{API}
-        \item write really great code
-        \item \textit{teach} the next generation
+        \item be more \alert{productive} (don't reinvent the wheel!)
+        \item have the \alert{best solvers}
+        \item have a \alert{clear and useful API}
+        \item write really \alert{great code}
+        \item \alert{teach} the next generation
         \end{itemize}
   	\end{column}
    	%
@@ -212,10 +214,16 @@
     
     The idea is to be able to easily combine components and avoid redeveloping
     utilities someone else has developed.
-    
-    \begin{center}
-    \textbf{Demos}: (1) Data sources \hspace*{3 em} (2) Enrichment
-    \end{center}
+
+\end{frame}
+
+%------------------------------------------------------
+\begin{frame}{Demos}
+
+    \begin{enumerate}
+        \item Data sources
+        \item Enrichment % TODO maybe add screenshots?
+    \end{enumerate}
 
 \end{frame}
 
@@ -228,7 +236,7 @@
     \begin{itemize}
     \item Adding theory descriptions for each piece
     \item Documenting our V\&V process
-    \item Slowling removing the "VnVWarning: pyne.nucname is not yet V\&V compliant" as
+    \item Slowling removing the ``VnVWarning: pyne.nucname is not yet V\&V compliant'' as
     things become qualified
     \end{itemize}
 
@@ -260,29 +268,43 @@
 \section{Get involved!}
 \begin{frame}{Why Would I Get Involved?}
 
-As a \underline{\textcolor{byellow}{\textbf{user}}} you could do your work or research with PyNE.  Even if you have your own software that looks and behaves similarly to some aspects of PyNE, using PyNE will mean that you no longer have to develop AND maintain that functionality.
+\begin{block}{As a \alert{user}:}
+\begin{itemize}
+    \item Do your work or research with PyNE.
+    \item Even if you have similar software: When using PyNE, you do not have to develop/maintain everything yourself.
+\end{itemize}
+\end{block}
 
-\vspace*{2 em}
-As a \underline{\textcolor{byellow}{\textbf{developer}}} you should be selfish.  Contribute to PyNE in ways that support the work that you are doing. If a feature you want is not in PyNE right now, chances are that other people want to see that feature too! This will help your future self as much as future other people.
+\vspace*{1 em}
+
+\begin{block}{As a \alert{developer}:}
+\begin{itemize}
+    \item \emph{Be selfish!} Contribute to PyNE in ways that support your own work.
+    \item PyNE is missing a feature? -- You are probably not the only one who wants it.
+    \item Help your future self and others.
+\end{itemize}
+\end{block}
 
 \end{frame}
 
 %------------------------------------------------------
 \begin{frame}{How Can I Get Involved?}
 
-    \underline{\textcolor{byellow}{Contact PyNE}}
+    \begin{block}{Contact PyNE}
     \begin{itemize}
-    \item Website: \href{http://pyne.io/}{http://pyne.io/}
-    \item User's Mailing List: \href{pyne-users@googlegroups.com}{pyne-users@googlegroups.com}
-    \item Developer's List: \href{pyne-dev@googlegroups.com}{pyne-dev@googlegroups.com}
-    \item GitHub: \href{https://github.com/pyne/pyne}{https://github.com/pyne/pyne}
+    \item Website: \url{http://pyne.io/}
+    \item User's Mailing List: \href{mailto:pyne-users@googlegroups.com}{\nolinkurl{pyne-users@googlegroups.com}}
+    \item Developer's List: \href{mailto:pyne-dev@googlegroups.com}{\nolinkurl{pyne-dev@googlegroups.com}}
+    \item GitHub: \url{https://github.com/pyne/pyne}
     \end{itemize}
+    \end{block}
     
     \vspace*{2 em}
-    \underline{\textcolor{byellow}{What goes into PyNE?}}
 
+    \begin{block}{What goes into PyNE?}
     Anything that is not export controllable, proprietary, 
-    or under HIPPA restrictions!  (If you have questions, ask)
+    or under HIPPA restrictions!  (If you have questions, \emph{ask})
+    \end{block}
   
 \end{frame}
 
@@ -290,10 +312,10 @@ As a \underline{\textcolor{byellow}{\textbf{developer}}} you should be selfish. 
 \begin{frame}[fragile]{PyNE In the Literature}
 
     \begin{itemize}
-    \item Intro: "PyNE: Python For Nuclear Engineering" \cite{pyne_intro}
+    \item Intro: ``PyNE: Python For Nuclear Engineering'' \cite{pyne_intro}
     \item Progress reports: \cite{scopatz_pyne}, \cite{pyne_progress}
     \item In research: \cite{Biondo2014}, \cite{MarquezDamian2014280}, \cite{Scopatz2013a}
-    \item V\&V: "Quality Assurance within the PyNE Open Source \\Toolkit" \cite{pyne_vnv}
+    \item V\&V: ``Quality Assurance within the PyNE Open Source \\Toolkit'' \cite{pyne_vnv}
     \item Poster at SciPy: \cite{scipy}
     \end{itemize}
   

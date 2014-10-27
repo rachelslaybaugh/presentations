@@ -197,7 +197,7 @@
 		\phi^{\dagger}(\ve{r},E) = \frac{\int \psi(\vOmega, \ve{r},E) \psi^{\dagger}(\vOmega, \ve{r},E) d\vOmega}{\int \psi(\vOmega, \ve{r},E)  d\vOmega}
 		\end{equation}
 
-	\item The space- and energy-dependent importance map will be normalized and source biasing parameters will be generated in a manner similar to the current implementation of hybrid methods
+	\item The space- and energy-dependent importance map will be normalized and source biasing parameters will be generated in the same manner as the current implementation of FW-CADIS
 	\item Immediately useful; widely applicable
 	\end{itemize}
 
@@ -208,6 +208,7 @@
 \begin{frame}[fragile]
   \frametitle{Lagrange Discrete Ordinate Equations}
 
+    Cory Ahrens from Colorado School of Mines
 	\begin{itemize}
 	\item Re-derivation of $S_N$ with an interpolatory quadrature framework
 	\item Allows evaluation at directions not on quadrature set
@@ -226,11 +227,11 @@
   \frametitle{Other (potential) projects}
 
   	\begin{itemize}
-  	\item Continuing development of MC on GPU
+  	\item Continuing development of MC on GPU (Warp)
   	\item Contributing methods to PyNE; investigating a long term research relationship 
-	\item 3D shielding optimization: applicable to SMRs 
 	\item Using CASL codes to compute neutron flux spectra for a Westinghouse PWR 
-	\item Investigating use of hybrid methods for interrogation of SNM with neutron time-correlations 
+	\item 3D shielding optimization: applicable to SMRs 
+	%\item Investigating use of hybrid methods for interrogation of SNM with neutron time-correlations 
 	%\item Using SP$_N$ in multigrid preconditioner in Denovo 
 	\end{itemize}
 	

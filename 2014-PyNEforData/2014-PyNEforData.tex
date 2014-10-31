@@ -1,4 +1,4 @@
-\documentclass[xcolor=x11names,compress]{beamer}
+ \documentclass[xcolor=x11names,compress]{beamer}
 
 %% General document %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage{graphicx}
@@ -93,7 +93,7 @@
 % title stuff for footer
 \title{The PyNE Software Library}
 \author{R.\ N.\ Slaybaugh}
-\date{22 October 2014}
+\date{27 October 2014}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
@@ -103,41 +103,41 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
-\title{The PyNE Software Library: Why and How?}
+\title{The PyNE Software Library}
 %\subtitle{}
 \author{
         \includegraphics[height=2cm]{../bk-eps-converted-to}\\R.\ N.\ Slaybaugh \\ Univ.\ of Cal.\ Berkeley}
 
-\date{ANS Nor Cal Meeting \\ 22 October 2014\\ Alfred's Stakehouse, San Francisco, CA}
+\date{Nuclear Data Week\\ 6 November 2014\\ Brookhaven National Laboratory}
 \titlepage
 \end{frame}
 
 %------------------------------------------------------
-\begin{frame}{Outline}
-
-	\begin{columns}
-  	\begin{column}{0.5\textwidth}
-	    \begin{itemize}
-        \item PyNE \cite{pyne}: what is it?
-        
-        (Python for Nuclear Engineering)
-        \item PyNE Demo
-        \item Current initiatives
-        \item PyNE as a research tool
-        \item Get involved!
-	    \end{itemize}
-  	\end{column}
- 	%
- 	\begin{column}{0.4\textwidth}
- 	   \begin{center}
- 	   \begin{figure}
-       \includegraphics[height=4cm]{../figs/pyne-icon-big}
-	   \end{figure}
- 	   \end{center}
-  	\end{column}
-	\end{columns}
-
-\end{frame}
+%\begin{frame}{Outline}
+%
+%	\begin{columns}
+%  	\begin{column}{0.5\textwidth}
+%	    \begin{itemize}
+%        \item PyNE \cite{pyne}: what is it?
+%        
+%        (Python for Nuclear Engineering)
+%        \item PyNE Demo
+%        \item Current initiatives
+%        \item PyNE as a research tool
+%        \item Get involved!
+%	    \end{itemize}
+%  	\end{column}
+% 	%
+% 	\begin{column}{0.4\textwidth}
+% 	   \begin{center}
+% 	   \begin{figure}
+%       \includegraphics[height=4cm]{pyne-icon-big}
+%	   \end{figure}
+% 	   \end{center}
+%  	\end{column}
+%	\end{columns}
+%
+%\end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -178,8 +178,7 @@
  	\begin{column}{0.45\textwidth}
  	   \begin{center}
  	   \begin{figure}
- 	   \includegraphics[height=1.25in,clip]{data_sources_thumb}  \\
-       \includegraphics[height=1.25in,clip]{half_life_thumb}
+       \includegraphics[height=2cm]{../figs/pyne-icon-big}
 	   \end{figure}
  	   \end{center}
   	\end{column}
@@ -205,17 +204,6 @@
     \item There's more, and the list continues to grow
     \end{itemize}
     
-\end{frame}
-
-%------------------------------------------------------
-\begin{frame}{PyNE Demo}
-    
-    \begin{center}
- 	\begin{figure}
- 	\includegraphics[height=2.75in,clip]{Gallery}
-    \end{figure}
- 	\end{center}
-
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -256,213 +244,6 @@
     \item Continuous Integration
     \end{itemize}
 
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{PyNE as a research tool}  
-\begin{frame}{PyNE as a research tool}
-
-    \textbf{Insight}: PyNE lets us access the physics, have real materials, 
-    add mesh, and handle many details easily...
-    
-    	\pause
-    \vspace{2 em}
-    \textbf{Idea}: perfect environment for investigating numerical methods that 
-    are impacted by materials, mesh, etc. 
-    
-    	\pause
-    \vspace{2 em}
-    \textbf{My Plan:} Plug-And-Play Solver Research Environment
-    
-\end{frame}
-
-%------------------------------------------------------
-\begin{frame}{What Are We Sovling?}
-
-    I study how to solve the steady state, neutral particle Boltzmann transport equation
-    more efficiently:
-    %   
-    \begin{align}
-    [\vOmega \cdot \nabla + \Macro(\vec{r}, E)] &\psi(\vec{r}, \vOmega, E)  =  + q(\vec{r}, \vOmega, E) \nonumber\\
-     &\int_0^{\infty} dE' \int_{4\pi} d\vOmega' \:\Macro_{s}(\vec{r}, E' \to E,
-     \vOmega' \cdot \vOmega) \psi(\vec{r}, \vOmega', E') \nonumber
-    \end{align}
-
-    Discretize, then convert to operator form:
-    \begin{align}
-    \mathbf{L} \psi &= \mathbf{MS}\phi + \mathbf{Q} \nonumber\\
-    \phi &= \mathbf{D}\psi \nonumber \\
-    \underbrace{(\ve{I} - \ve{DL}^{-1}\ve{MS})}_{\mathbf{A}}\phi &= Q\nonumber
-    \end{align}
-    
-    Properties of the matrix govern solution behavior
-    
-\end{frame}
-
-%------------------------------------------------------
-\begin{frame}{Discretizion Has an Impact}
-
-    \begin{columns}
-    \begin{column}{0.45\textwidth}
-        \begin{center}
- 	    \begin{figure}
- 	    \includegraphics[height=1.75in,clip]{../figs/spatial-discretiztation2}
-        \end{figure}
- 	    \end{center}
-  	\end{column}
-   	%
- 	\begin{column}{0.5\textwidth}
-        There are many ways to \textcolor{dgreen}{discretize} the six dimensions of 
-        phase space
-        \begin{itemize}
-        \item Spatial discretization methods
-        \item Angular quadratures
-        \item Energy group structures
-        \end{itemize}
-    
-        \vspace*{1 em}
-        \textcolor{dgreen}{Discretization} schemes and resolution choices can impact 
-        numerical properites and/or solution strategies
-  	\end{column}
-	\end{columns}
- 
-\end{frame}
-
-%------------------------------------------------------
-\begin{frame}{So Does Physics}
-
-    The physics of any specific problem also has a large impact on the
-    problem's properties and solution strategies
-    
-    \begin{columns}
-    \begin{column}{0.45\textwidth}
- 	   \begin{center}
- 	   \begin{figure}
- 	   \includegraphics[height=1.75in,clip]{../figs/Fe-D2O-C}
- 	   \caption{Iron-D2O-Graphite block energy S matrix; Evans et al.}
-       \end{figure}
- 	   \end{center}
-  	\end{column}
-   	%
- 	\begin{column}{0.45\textwidth}
- 	   \begin{center}
- 	   \begin{figure}
- 	   \includegraphics[height=1.75in,clip]{../figs/Fe-D2O-C-space-energy}
- 	   \caption{Iron-D2O-Graphite energy-space-angle S matrix; Evans et al.}
-       \end{figure}
- 	   \end{center}
-  	\end{column}
-	\end{columns}
-       
-\end{frame}
-
-%------------------------------------------------------
-\begin{frame}{Properties Affect Solver Choice}
-
-    \begin{columns}
-    \begin{column}{0.45\textwidth}
-        There are many ways to \textcolor{dgreen}{solve} this problem
-        \begin{itemize}
-        \item Inner iteration methods
-        \item Outer iteration methods
-        \item Eigenvalue iteration methods
-        \item Preconditioners
-        \end{itemize}
-    
-        \textcolor{dgreen}{Solution} method choices result in different
-        behaviors for different systems
-  	\end{column}
-   	%
- 	\begin{column}{0.45\textwidth}
- 	   \begin{center}
- 	   \begin{figure}
- 	   \includegraphics[height=2.75in,clip]{solverLayers}
-       \end{figure}
- 	   \end{center}
-  	\end{column}
-	\end{columns}
-	
-\end{frame}
-% All of the discretization choices and all of the solution stratgies create a complex set of choices
-
-%------------------------------------------------------
-\begin{frame}{Plug-And-Play Research Environment}
-
-    Make collections of \textcolor{dgreen}{interchangeable pieces} for each component
-    needed to construct a transport solver
-    
-    \vspace*{1em}
-    Researchers can then 
-    \begin{itemize}
-    \item \textcolor{dgreen}{Assemble} a transport solver to fit their needs
-    \item \textcolor{dgreen}{Add} their own new methods and investigate how 
-    they interact with different solver combinations
-    \end{itemize}
-
-    \vspace*{1em}
-    Implementing this in PyNE provides access to 
-    \begin{itemize}
-    \item PyNE's \textcolor{dgreen}{resources} such as nuclear data, materials, 
-    and mesh tools  
-    \item A flexible and robust \textcolor{dgreen}{development environment} 
-    \item A well-managed \textcolor{dgreen}{API}
-    \end{itemize}
-
-\end{frame}
-
-%------------------------------------------------------
-\begin{frame}{Current Status}
-
-    A collection of 3D spatial solver choices are available
-
-    \renewcommand\windowpagestuff{%
-    \includegraphics[height=1in,clip]{../figs/spatial-cell}
-    \raggedright}
-    \opencutright
-    \vfill
-    \begin{cutout}{9}{0.7\textwidth}{0pt}{2}
-    \begin{itemize}
-    \item DGFEM: Lagrange, Complete; Simple Corner Balance; AHOTN; Linear Nodal;
-     Linear-Linear; Diamond Difference type
-    
-    \item Originally written in Fortran (Sebastian Schunert and Yousry Azmy,
-    \textcolor{cardinal}{NC State})
-
-    \hspace*{2 em}[PyNE's first Fortran!]
-    
-    \item Wrapped with f2py (Josh Howland, \textcolor{byellow}{Berkeley})
-    \item Accessible via PyNE interface   
-    \item Examples, tests, documentation
-    \end{itemize}
-    \end{cutout}
-    
-\end{frame}
-
-%------------------------------------------------------
-\begin{frame}{Next Steps}
-
-    \begin{columns}
-    \begin{column}{0.5\textwidth}
-        \begin{itemize}
-        \item Establish plug-in framework
-        \item Retool spatial solvers as necessary
-        \item Add quadrature sets
-        \item Implement/access the most common solvers
-        \item Add preconditioners
-        \end{itemize}
-  	\end{column}
-   	%
- 	\begin{column}{0.4\textwidth}
-        \begin{center}
- 	    \begin{figure}
- 	    \includegraphics[height=2in,clip]{../figs/PWR-maps}
- 	    \caption{PWR Flux Maps from Denovo; Joubert et al.}
-        \end{figure}
- 	    \end{center}
-  	\end{column}
-	\end{columns}
-    
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

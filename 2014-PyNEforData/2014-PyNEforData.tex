@@ -104,12 +104,37 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
 \title{The PyNE Software Library}
-\subtitle{A Framework for ENSDF}
+\subtitle{A Framework for ENSDF?}
 \author{
 \includegraphics[height=2cm]{../bk-eps-converted-to}\\R.\ N.\ Slaybaugh \\ Univ.\ of Cal.\ Berkeley}
 
 \date{Nuclear Data Week\\ 6 November 2014\\ Brookhaven National Laboratory}
 \titlepage
+\end{frame}
+
+%------------------------------------------------------
+\begin{frame}{PyNE can be \underline{the} ENSDF processing tool}
+
+	\begin{columns}
+  	\begin{column}{0.45\textwidth}
+ 	   \begin{center}
+ 	   \begin{figure}
+       \includegraphics[height=5cm]{../figs/pyne-icon-big}
+       \caption{Python for Nuclear Engineering}
+	   \end{figure}
+ 	   \end{center}
+  	\end{column}
+ 	%
+ 	\begin{column}{0.45\textwidth}
+ 	   \begin{center}
+ 	   \begin{figure}
+       \includegraphics[height=5cm]{../figs/person-with-tool}
+       \caption{Can be \underline{the} tool for ENSDF processing}
+	   \end{figure}
+ 	   \end{center}
+  	\end{column}
+	\end{columns}
+
 \end{frame}
 
 %------------------------------------------------------
@@ -119,8 +144,6 @@
   	\begin{column}{0.5\textwidth}
 	    \begin{itemize}
           \item PyNE \cite{pyne}: what is it?
-        
-          (Python for Nuclear Engineering)
           \item PyNE as an ENSDF framework
           \item Other current initiatives
           \item Get involved!
@@ -180,16 +203,13 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{PyNE as an ENSDF framework}
-%\begin{frame}{ENSDF and PyNE}
-%
-%
-%
-%\end{frame}
-
 %------------------------------------------------------
 \begin{frame}{Nuclear Data in PyNE}
+
+    PyNE already has some nuclear data support:
+    \vspace*{1 em}
     \begin{itemize}
-      \item ENSDF level and decay data
+      \item ENSDF \alert{level} and \alert{decay} data
       \begin{itemize}
         \item parser
         \item conversion to hdf5
@@ -206,7 +226,7 @@
 \begin{frame}{Nuclear Data in PyNE}
 
 	\begin{columns}[T]
-  	\begin{column}{0.5\textwidth}
+  	\begin{column}{0.45\textwidth}
   	    \begin{center}
   	    \textbf{Structure Data}
   	    \end{center}
@@ -217,7 +237,7 @@
         \end{itemize}
   	\end{column}
  	%
- 	\begin{column}{0.5\textwidth}
+ 	\begin{column}{0.45\textwidth}
         \begin{center}
   	    \textbf{Decay Data}
   	    \end{center}
@@ -242,9 +262,21 @@
 %------------------------------------------------------
 \begin{frame}{Expanding into an ENSDF framework}
 
-    \begin{itemize}
-        \item List of what we need to do
-    \end{itemize}
+    Three iniatives:
+    \begin{enumerate}
+        \item Add handling of ENSDF \alert{reaction} data
+        
+        \item Wrap ENSDF \alert{Analysis} and(?) \alert{Utility} programs
+        \begin{itemize}
+            \item NSDFLIB
+            \item ALPHAD, BrIcc, DELTA, GABS, GTOL, HSICC, LOGFT,
+            PANDORA, RadList, RULER
+            \item ADDGAM, Avetools, Visual Averaging Library, ENSDAT 
+            and ComTrans, FMTCK, TREND (or replace through Python)
+        \end{itemize}
+        
+        \item Add comparison utilities (based on \alert{community input})
+    \end{enumerate}
     
 \end{frame}
 

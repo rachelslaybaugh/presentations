@@ -264,18 +264,18 @@
 
     Three iniatives:
     \begin{enumerate}
-        \item Add handling of ENSDF \alert{reaction} data
+      \item Add handling of ENSDF \alert{reaction} data
+       
+      \item Wrap ENSDF \alert{Analysis} and(?) \alert{Utility} programs
+      \begin{itemize}
+        \item NSDFLIB
+        \item ALPHAD, BrIcc, DELTA, GABS, GTOL, HSICC, LOGFT, PANDORA,
+        RadList, RULER
+        \item ADDGAM, Avetools, Visual Averaging Library, ENSDAT and 
+        ComTrans, FMTCK, TREND (or replace through Python)
+      \end{itemize}
         
-        \item Wrap ENSDF \alert{Analysis} and(?) \alert{Utility} programs
-        \begin{itemize}
-            \item NSDFLIB
-            \item ALPHAD, BrIcc, DELTA, GABS, GTOL, HSICC, LOGFT,
-            PANDORA, RadList, RULER
-            \item ADDGAM, Avetools, Visual Averaging Library, ENSDAT 
-            and ComTrans, FMTCK, TREND (or replace through Python)
-        \end{itemize}
-        
-        \item Add comparison utilities (based on \alert{community input})
+      \item Add comparison utilities (based on \alert{community input})
     \end{enumerate}
     
 \end{frame}
@@ -317,6 +317,26 @@
       \item Test suite
       \item Continuous Integration
     \end{itemize}
+
+\end{frame}
+
+%------------------------------------------------------
+\begin{frame}{GND and Fudge Support?}
+
+    We have an open \href{https://github.com/pyne/pyne/issues/236}{ticket}
+    for working with \alert{Fudge} to: 
+
+    \vspace*{1 em}
+
+    \begin{itemize}
+      \item Create a cross section data source for GND backed by Fudge
+      \item Create an ENDF data source backed by Fudge
+      \item Investigate their processing routines
+      \item Have a GND viewer (if Fudge doesn't)
+    \end{itemize}
+    
+    There's no specific timeline...\\ \hspace*{2em} but PyNE developers are aware/
+    interested
 
 \end{frame}
 

@@ -249,7 +249,7 @@
             \item 11 788 betas
             \item 2 552 alphas
           \end{itemize}
-          \item 3868 unique primary decays
+          \item 3 868 unique primary decays
         \end{itemize}
   	\end{column}
 	\end{columns}
@@ -258,21 +258,44 @@
     Let's look at a \alert{quick example}!
 
 \end{frame}
-%------------------------------------------------------
 
+%------------------------------------------------------
+\begin{frame}{Expanding into an ENSDF framework}
+
+    Three iniatives:
+    \begin{enumerate}
+      \item Add handling of ENSDF \alert{reaction} data
+       
+      \item Wrap ENSDF \alert{Analysis} and(?) \alert{Utility} programs
+      \begin{itemize}
+        \item NSDFLIB
+        \item ALPHAD, BrIcc, DELTA, GABS, GTOL, HSICC, LOGFT, PANDORA,
+        RadList, RULER
+        \item ADDGAM, Avetools, Visual Averaging Library, ENSDAT and 
+        ComTrans, FMTCK, TREND (or replace through Python)
+      \end{itemize}
+        
+      \item Add comparison utilities (based on \alert{community input})
+    \end{enumerate}
+    
+\end{frame}
+
+%------------------------------------------------------
 \begin{frame}{Consistency in ENSDF N and PN records}
+
+    An issue reported by a PyNE developer and \alert{now corrected}:
+    \vspace*{1 em}
     \begin{itemize}
         \item N record has photon intensity normalization (NR) and branching ratio (BR)
-        \item PN record has entry for NRxBR
-        \item ENSDF manual "recommends" NRxBR
-        \item NRxBR is not always consistent (or meaningful)
+        \item PN record has entry for NR x BR
+        \item ENSDF manual "recommends" NR x BR
+        \item NR x BR is not always consistent (or meaningful)
         \item Consistency not checked with current tools
         \item 18 records contained significant inconsistencies
         \begin{itemize}
-            \item NRxBR = 1 or NRxBR = 0 or mismatch $>$ 1\%
-            \item including $^{241}$ Pu $\alpha$-decay
+            \item NR x BR = 1 or NR x BR = 0 or mismatch $>$ 1\%
+            \item including $^{241}$Pu $\alpha$-decay
         \end{itemize}
-        \item This issue was reported and fixed
         % Full list
         % 27NA    28NE B-N DECAY                2006TR02                  11NDS    2011
         % 29MG    31NA B-2N DECAY               1993KL02                  12NDS    2012
@@ -296,34 +319,41 @@
 
 \end{frame}
 
-\begin{frame}{Consistency in ENSDF N and PN records ....}
-    %This "changes in the last month" snapshot includes most of the records above
-    \includegraphics[height=5.5cm]{ensdf_updates}
-\end{frame}
 %------------------------------------------------------
-\begin{frame}{Expanding into an ENSDF framework}
+\begin{frame}{Consistency in ENSDF N and PN records}
+   
+    \begin{figure}
+      \includegraphics[height=5.5cm]{ensdf_updates}
+      \caption{This "changes in the last month" snapshot includes most of 
+      the records above}
+    \end{figure}
 
-    Three iniatives:
-    \begin{enumerate}
-      \item Add handling of ENSDF \alert{reaction} data
-       
-      \item Wrap ENSDF \alert{Analysis} and(?) \alert{Utility} programs
-      \begin{itemize}
-        \item NSDFLIB
-        \item ALPHAD, BrIcc, DELTA, GABS, GTOL, HSICC, LOGFT, PANDORA,
-        RadList, RULER
-        \item ADDGAM, Avetools, Visual Averaging Library, ENSDAT and 
-        ComTrans, FMTCK, TREND (or replace through Python)
-      \end{itemize}
-        
-      \item Add comparison utilities (based on \alert{community input})
-    \end{enumerate}
-    
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Other current initiatives}
+\begin{frame}{GND and Fudge Support}
+
+    We are \href{https://github.com/pyne/pyne/issues/236}{planning to add an interface}
+    for \alert{Fudge} to: 
+
+    \vspace*{1 em}
+
+    \begin{itemize}
+      \item Create a cross section data source for GND backed by Fudge
+      \item Create an ENDF data source backed by Fudge
+      \item Investigate their processing routines
+      \item Have a GND viewer (if Fudge doesn't)
+    \end{itemize}
+    
+    \vspace*{1 em}
+    The Fudge interface should happen after their next release\\
+    \hspace*{1.5 em}(waiting on licensing issues)
+
+\end{frame}
+
+%------------------------------------------------------
 \begin{frame}{What else is happening in PyNE?}
 
     The biggest push: \alert{V\&V} $\rightarrow$ methodically making PyNE compliant
@@ -358,26 +388,6 @@
       \item Test suite
       \item Continuous Integration
     \end{itemize}
-
-\end{frame}
-
-%------------------------------------------------------
-\begin{frame}{GND and Fudge Support?}
-
-    We have an open \href{https://github.com/pyne/pyne/issues/236}{ticket}
-    for working with \alert{Fudge} to: 
-
-    \vspace*{1 em}
-
-    \begin{itemize}
-      \item Create a cross section data source for GND backed by Fudge
-      \item Create an ENDF data source backed by Fudge
-      \item Investigate their processing routines
-      \item Have a GND viewer (if Fudge doesn't)
-    \end{itemize}
-    
-    The Fudge interface should happen after their next release\\
-    \hspace*{1.5 em}(waiting on licensing issues)
 
 \end{frame}
 

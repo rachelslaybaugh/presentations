@@ -131,142 +131,104 @@
     \underbrace{(\ve{I} - \ve{DL}^{-1}\ve{MS})}_{\mathbf{A}}\phi &= \mathbf{Q}\nonumber
     \end{align}
     
-    \textcolor{dgreen}{Properties of the matrix} govern solution behavior
+    \textcolor{dgreen}{Linear Algebra} now runs the show
     
 \end{frame}
 
 
-%------------------------------------------------------
-\begin{frame}{Properties Affect Solver Choice}
-
-    \begin{columns}
-    \begin{column}{0.45\textwidth}
-     
-        \textcolor{dgreen}{Properties of the matrix} influence solver choices
-        \begin{itemize}
-        \item Inner iteration methods
-        \item Outer iteration methods
-        \item Eigenvalue iteration methods
-        \item Preconditioners
-        \end{itemize}
+% ------------------------------------------------------
+\begin{frame}{What Drives the Challenges and Solutions?}
     
-        Method choices are also driven by \textcolor{dgreen}{hardware} considerations
-  	\end{column}
-   	%
- 	\begin{column}{0.45\textwidth}
+    \vspace*{1 em}
+    	\textcolor{dgreen}{Properties of the matrix} govern solution behavior
+    	
+    \begin{columns}
+    \begin{column}{0.55\textwidth}     
  	   \begin{center}
  	   \begin{figure}
- 	   \includegraphics[height=2.75in,clip]{../2014-10-norcalANS/solverLayers}
+ 	   \includegraphics[height=2.25in,clip]{../figs/u235-xsecs}
+       \end{figure}
+ 	   \end{center}
+  	\end{column}
+   	%
+ 	\begin{column}{0.4\textwidth}
+ 	   \begin{center}
+ 	   \begin{figure}     
+ 	   \includegraphics[height=1.in, width=1.25in, clip]{../figs/Fe-D2O-C}
+ 	   \end{figure}
+ 	   \begin{figure} 
+ 	   \includegraphics[height=1.in,clip]{../figs/Fe-D2O-C-space-energy}
        \end{figure}
  	   \end{center}
   	\end{column}
 	\end{columns}
 	
 \end{frame}
-% All of the discretization choices and all of the solution stratgies create a complex set of choices
 
 %------------------------------------------------------
-\begin{frame}{Algorithms + Architecture + Application}
-
-    \begin{columns}
-    \begin{column}{0.5\textwidth}
+\begin{frame}{What Drives the Challenges and Solutions?}
     
+    \begin{columns}
+    \begin{column}{0.3\textwidth}
  	   \begin{center}
  	   \begin{figure}     
- 	   \includegraphics[height=1.25in, width=1.25in, clip]{../figs/multigridFig}
+ 	   \includegraphics[height=1.25in,clip]{../figs/Intel-Xeon-Phi-Board}
  	   \end{figure}
+ 	   \end{center}
+    \end{column}
+   	%
+ 	\begin{column}{0.8\textwidth}
+ 	   \begin{center}
  	   \begin{figure} 
  	   \includegraphics[height=1in,clip]{../figs/GPU}
        \end{figure}
  	   \end{center}
-
-  	\end{column}
-   	%
- 	\begin{column}{0.5\textwidth}
- 	   \begin{center}
- 	   \begin{figure}
- 	   \includegraphics[height=2.75in,clip]{../figs/PWR-maps}
-       \end{figure}
- 	   \end{center}
   	\end{column}
 	\end{columns}
+	
+	\begin{center}
+ 	\begin{figure}
+ 	\includegraphics[height=0.75in,clip]{../figs/Titan}
+    \end{figure}
+ 	\end{center}
+ 	
+ 	\textcolor{dgreen}{Architecture} influences algorithm choices and data management
 	
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}{What is PyNE?}
+\begin{frame}{Research, Tools, Applications}
 
-    PyNE is an open source \alert{library of composable tools} used to build 
-    nuclear science and engineering applications. \\
-    \textbf{Goals:}
-    
     \begin{columns}
     \begin{column}{0.45\textwidth}
-        \begin{itemize}
-        \item be more \alert{productive} (don't reinvent the wheel!)
-        \item have the \alert{best solvers}
-        \item have a clear and useful API
-        \item write really \alert{great code}
-        \item \alert{teach} the next generation
-        \end{itemize}
+       \begin{center}
+ 	   \begin{figure}
+       \includegraphics[height=2cm]{../figs/pyne-icon-big}
+	   \end{figure}
+ 	   \end{center}
+ 	   %
+       \begin{center}
+ 	   \begin{figure}
+       \includegraphics[height=3.5cm]{../figs/denovo-pwr}
+	   \end{figure}
+ 	   \end{center}
+ 	\end{column}
+   	%
+ 	\begin{column}{0.45\textwidth}
+ 	\href{http://pyne.io/}{\texttt{PyNE}} Goals:
+       \begin{itemize}
+       \item be more \alert{productive} (don't reinvent the wheel!)
+       \item have the \alert{best solvers}
+       \item have a clear and useful API
+       \item write really \alert{great code}
+       \item \alert{teach} the next generation
+       \end{itemize}
     It is permissively licensed (2-clause BSD)\\
     \vspace{0.5 em}
     It supports both a \alert{C++} and a \textcolor{dgreen}{Python} API
   	\end{column}
-   	%
- 	\begin{column}{0.45\textwidth}
- 	   \begin{center}
- 	   \begin{figure}
-       \includegraphics[height=4cm]{../figs/pyne-icon-big}
-	   \end{figure}
- 	   \end{center}
-  	\end{column}
 	\end{columns}
-
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{PyNE as a research tool}  
-\begin{frame}{PyNE as a research tool}
-
-    \textbf{Insight}: PyNE lets us access the physics, have real materials, 
-    add mesh, and handle many details easily...
-
-    \vspace{2 em}
-    \textbf{Idea}: perfect environment for investigating numerical methods that 
-    are impacted by materials, mesh, etc. 
-
-    \vspace{2 em}
-    \textbf{My Plan:} Plug-And-Play Solver Research Environment
-    
-\end{frame}
-
-
-
-%------------------------------------------------------
-\begin{frame}{Plug-And-Play Research Environment}
-
-    Make collections of \textcolor{dgreen}{interchangeable pieces} for each component
-    needed to construct a transport solver
-    
-    \vspace*{1em}
-    Researchers can then 
-    \begin{itemize}
-    \item \textcolor{dgreen}{Assemble} a transport solver to fit their needs
-    \item \textcolor{dgreen}{Add} their own new methods and investigate how 
-    they interact with different solver combinations
-    \end{itemize}
-
-    \vspace*{1em}
-    Implementing this in PyNE provides access to 
-    \begin{itemize}
-    \item PyNE's \textcolor{dgreen}{resources} such as nuclear data, materials, 
-    and mesh tools  
-    \item A flexible and robust \textcolor{dgreen}{development environment} 
-    \item A well-managed \textcolor{dgreen}{API}
-    \end{itemize}
 
 \end{frame}
 

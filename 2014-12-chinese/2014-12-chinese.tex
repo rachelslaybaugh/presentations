@@ -124,8 +124,7 @@
     \begin{column}{0.55\textwidth}     
  	   \begin{center}
  	   \begin{figure}
- 	   %\includegraphics[height=2.25in,clip]{../figs/u235-xsecs}
- 	   \includegraphics[height=1.5in,clip]{../figs/isfsi}
+ 	   \includegraphics[height=1.5in,clip]{../figs/cargo-container}
        \end{figure}
  	   \end{center}
   	\end{column}
@@ -133,12 +132,8 @@
  	\begin{column}{0.4\textwidth}
  	   \begin{center}
  	   \begin{figure}     
- 	   %\includegraphics[height=1.in, width=1.25in, clip]{../figs/Fe-D2O-C}
  	   \includegraphics[height=1.5in,clip]{../figs/denovo-pwr}
  	   \end{figure}
- 	   %\begin{figure} 
- 	   %\includegraphics[height=1.in,clip]{../figs/Fe-D2O-C-space-energy}
-       %\end{figure}
  	   \end{center}
   	\end{column}
     \end{columns}
@@ -174,6 +169,8 @@
 % ------------------------------------------------------
 \begin{frame}{What Drives the Challenges and Solutions?}
     	
+    	\alert{Data} determines matrix properties, memory needs, and solution flow
+    	
     \begin{columns}
     \begin{column}{0.55\textwidth}     
  	   \begin{center}
@@ -191,7 +188,6 @@
  	   \end{figure}
  	   \begin{figure} 
  	   \includegraphics[height=1in,clip]{../figs/random-walk}
- 	   %http://spiff.rit.edu/classes/phys440/lectures/walk/walk.html
        \end{figure}
  	   \end{center}
   	\end{column}
@@ -226,31 +222,32 @@
     \end{figure}
  	\end{center}
  	
- 	\textcolor{dgreen}{Architecture} influences algorithm choices and data management
+ 	\alert{Architecture} influences algorithm choices and data management
 	
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}{WARP \cite{warp}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{MC on GPU: WARP \cite{warp}}
 	\begin{itemize}
 	\item{Weaving All the Random Particles}
-	%\pause
+	\pause
 	\item{Originally developed by Dr. Ryan Bergmann; current development by Kelly Rowland}
-	%\pause
+	\pause
 	\item{3D continuous-energy Monte Carlo neutron transport code developed
-	     for efficient implementation of the algorithm on GPUs}
+	     for efficient implementation on \alert{GPUs}}
 	\item{Can calculate multiplication factors, flux tallies, fission source
-	     distributions for time-independent problems}
+	     distributions for steady-state problems}
 	\item{Run in either criticality or fixed-source mode}
-	\item{Simulates neutron transport in unrestricted arrangements of parallelpipeds,
-	     hexagonal prisms, cylinders, spheres}
-	%\pause
-	\item{Now developing delta tracking \cite{woodcock}}
+	\item{Permits unrestricted arrangements of parallelpipeds, hexagonal prisms, 
+	     cylinders, spheres}
+	\pause
+	\item{Now developing \alert{delta tracking} \cite{woodcock}}
 	\end{itemize}
 \end{frame}
 
 %------------------------------------------------------
-\begin{frame}{Successful Performance With Reactors}
+\begin{frame}{WARP's Demonstrated Success}
  
     \begin{center}
  	\begin{figure}     
@@ -267,8 +264,40 @@
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}[fragile]
-  \frametitle{Current Hybrid Methods are Insufficient}
+  \frametitle{Deterministic Scaling and Performance}
+
+	\begin{columns}
+  	\begin{column}{0.5\textwidth}
+     \begin{itemize}
+     \item Collaboration with deterministic code, \alert{Denovo} \cite{Evans2010} 
+     \item Methods in Denovo scale very well using
+       \begin{itemize}
+       \item Krylov solvers, 
+       \item optimized communication, and 
+       \item parallelization in energy
+       \end{itemize}
+       \vspace*{1 em}
+     \item Basic methods research tools being developed in \alert{PyNE} \cite{pyne2014}
+     \end{itemize}
+  	\end{column}
+ 	%
+ 	\begin{column}{0.5\textwidth}
+ 	 \begin{center}
+ 	 \begin{figure}
+ 	 \includegraphics[height=3 in,clip]{../figs/FxdSrcKrylovStrongScaling}  
+ 	 \end{figure}
+ 	 \end{center}
+  	\end{column}
+	\end{columns}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]
+  \frametitle{Hybrid Methods are Insufficient for Non-Proliferation Work}
 
 	\begin{itemize}
 	\item MC VR parameters created from adjoint deterministic flux that is a
@@ -279,6 +308,7 @@
 	  \item very large (tens or hundreds of GB)
 	  \item more costly and complex to use in MC simulation
       \end{itemize}	   
+      \vspace*{1 em}
 	\item Drawback: within a given space/energy cell, the map provides the
 	      \emph{average} importance of a particle moving in \emph{any direction}
 	      through the cell -- excluding information about how particles move
@@ -289,7 +319,7 @@
 
 % --------------------------------------------------------------
 \begin{frame}[fragile]
-  \frametitle{Especially For Some Security Apps \cite{Peplow2012}}
+  \frametitle{Example Inefficient VR Map \cite{Peplow2012}}
 
 	\begin{columns}
   	\begin{column}{0.5\textwidth}
@@ -311,6 +341,50 @@
   	\end{column}
 	\end{columns}
 
+\end{frame}
+
+% --------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{New, Angle-Informed Hybrid Methods in Development}
+
+	\begin{itemize}
+	\item Using new integration strategy to get scalar flux for use in 
+	      FW-CADIS \cite{Peplow2012}
+	\item Implementing LDO method \cite{Ahrens2014} in Denovo
+	  \begin{itemize}
+	  \item Re-derivation of $S_N$ with an interpolatory quadrature framework
+	  \item Allows evaluation at directions not on quadrature set
+	  \item No need to store spherical harmonic moments
+	  \item May be useful for more accurately capturing strong anisotropies
+	  \end{itemize}
+	\end{itemize}
+	
+	\begin{center}
+ 	\begin{figure}
+ 	\includegraphics[height=1in,clip]{../figs/isfsi}
+    \end{figure}
+ 	\end{center}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]
+  \frametitle{Advanced Methods for HPC in Non-Proliferation}
+
+	\begin{itemize}
+	\item 
+	\end{itemize}
+
+\end{frame}
+
+% --------------------------------------------------------------
+\begin{frame}[fragile]{Questions?}
+
+    \begin{center}
+    \includegraphics[height=3in,clip]{../questions-comic}  
+    \end{center}
+  
 \end{frame}
 
 % --------------------------------------------------------------

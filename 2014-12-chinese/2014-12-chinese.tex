@@ -111,7 +111,8 @@
 %------------------------------------------------------
 \begin{frame}{What Are We Sovling?}
 
-    My group studies how to solve the steady state, neutral particle Boltzmann transport equation more efficiently:
+    My group studies how to solve the steady state, neutral particle Boltzmann
+    transport equation more efficiently:
     %   
     \begin{align}
     [\vOmega \cdot \nabla + \Macro(\vec{r}, E)] &\psi(\vec{r}, \vOmega, E)  =  q(\vec{r}, \vOmega, E) + \nonumber\\
@@ -172,9 +173,6 @@
 
 % ------------------------------------------------------
 \begin{frame}{What Drives the Challenges and Solutions?}
-    
-    \vspace*{1 em}
-    	\textcolor{dgreen}{Properties of the matrix} govern solution behavior and data handling strategies
     	
     \begin{columns}
     \begin{column}{0.55\textwidth}     
@@ -188,10 +186,12 @@
  	\begin{column}{0.4\textwidth}
  	   \begin{center}
  	   \begin{figure}     
- 	   \includegraphics[height=1.in, width=1.25in, clip]{../figs/Fe-D2O-C}
+ 	   \includegraphics[height=1.25in, width=1.25in, clip]{../figs/Fe-D2O-C-space-energy}
+ 	   %Evans
  	   \end{figure}
  	   \begin{figure} 
- 	   \includegraphics[height=1.in,clip]{../figs/Fe-D2O-C-space-energy}
+ 	   \includegraphics[height=1in,clip]{../figs/random-walk}
+ 	   %http://spiff.rit.edu/classes/phys440/lectures/walk/walk.html
        \end{figure}
  	   \end{center}
   	\end{column}
@@ -234,38 +234,62 @@
 \begin{frame}{WARP \cite{warp}}
 	\begin{itemize}
 	\item{Weaving All the Random Particles}
-	\pause
+	%\pause
 	\item{Originally developed by Dr. Ryan Bergmann; current development by Kelly Rowland}
-	\pause
-	\item{3D continuous-energy Monte Carlo neutron transport code developed for efficient implementation of the algorithm on GPUs}
-	\item{Can calculate multiplication factors, flux tallies, fission source distributions for time-independent problems}
+	%\pause
+	\item{3D continuous-energy Monte Carlo neutron transport code developed
+	     for efficient implementation of the algorithm on GPUs}
+	\item{Can calculate multiplication factors, flux tallies, fission source
+	     distributions for time-independent problems}
 	\item{Run in either criticality or fixed-source mode}
-	\item{Simulates neutron transport in unrestricted arrangements of parallelpipeds, hexagonal prisms, cylinders, spheres}
-	\pause
-	\item{Now includes error estimation for $k_{eff}$ values!}
+	\item{Simulates neutron transport in unrestricted arrangements of parallelpipeds,
+	     hexagonal prisms, cylinders, spheres}
+	%\pause
+	\item{Now developing delta tracking \cite{woodcock}}
 	\end{itemize}
 \end{frame}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%------------------------------------------------------
+\begin{frame}{Successful Performance With Reactors}
+ 
+    \begin{center}
+ 	\begin{figure}     
+ 	\includegraphics[height=1.5in,clip]{../figs/assembly-fiss-6}
+ 	\end{figure}
+ 	\end{center}   
+ 	
+ 	\begin{center}
+ 	\begin{figure}     
+ 	\includegraphics[height=1.5in,clip]{../figs/assembly-spec-6}
+ 	\end{figure}
+ 	\end{center} 
+ 
+\end{frame}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}[fragile]
-  \frametitle{Current global hybrid methods are insufficient}
+  \frametitle{Current Hybrid Methods are Insufficient}
 
 	\begin{itemize}
-	\item MC VR parameters created from adjoint deterministic flux that is a function of \emph{space and energy only}
-	\item Angular dependence of the importance function is not retained, otherwise the map would be
+	\item MC VR parameters created from adjoint deterministic flux that is a
+	      function of \emph{space and energy only}
+	\item Angular dependence of the importance function is not retained, otherwise
+	      the map would be
 	  \begin{itemize}
 	  \item very large (tens or hundreds of GB)
 	  \item more costly and complex to use in MC simulation
       \end{itemize}	   
-	\item Drawback: within a given space/energy cell, the map provides the \emph{average} importance of a particle moving in \emph{any direction} through the cell -- excluding information about how particles move \underline{toward} the objective
+	\item Drawback: within a given space/energy cell, the map provides the
+	      \emph{average} importance of a particle moving in \emph{any direction}
+	      through the cell -- excluding information about how particles move
+	      \underline{toward} the objective
 	\end{itemize}
 
 \end{frame}
 
 % --------------------------------------------------------------
 \begin{frame}[fragile]
-  \frametitle{Current hybrid methods are insufficient}
+  \frametitle{Especially For Some Security Apps \cite{Peplow2012}}
 
 	\begin{columns}
   	\begin{column}{0.5\textwidth}

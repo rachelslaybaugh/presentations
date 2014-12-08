@@ -113,31 +113,6 @@
 \end{frame}
 
 %------------------------------------------------------
-\begin{frame}{PyNE can be \underline{the} ENSDF processing tool}
-
-	\begin{columns}
-  	\begin{column}{0.45\textwidth}
- 	   \begin{center}
- 	   \begin{figure}
-       \includegraphics[height=5cm]{../figs/pyne-icon-big}
-       \caption{Python for Nuclear Engineering}
-	   \end{figure}
- 	   \end{center}
-  	\end{column}
- 	%
- 	\begin{column}{0.45\textwidth}
- 	   \begin{center}
- 	   \begin{figure}
-       \includegraphics[height=5cm]{../figs/person-with-tool}
-       \caption{Can be \underline{the} tool for ENSDF processing}
-	   \end{figure}
- 	   \end{center}
-  	\end{column}
-	\end{columns}
-
-\end{frame}
-
-%------------------------------------------------------
 \begin{frame}{Outline}
 
 	\begin{columns}
@@ -145,6 +120,7 @@
 	    \begin{itemize}
           \item PyNE \cite{pyne}: what is it?
           \item PyNE as an ENSDF framework
+          \item PyNE and other nuclear-related data
           \item Other current initiatives
           \item Get involved!
 	    \end{itemize}
@@ -172,7 +148,7 @@
       \item PyNE is a \alert{library of composable tools} used to build
       nuclear science and engineering applications
       \item It is \alert{permissively licensed} (2-clause BSD)
-      \item It supports both a \alert{c++} and a \alert{Python} API
+      \item It supports both a \alert{c++} and \alert{Python} API
       \item The name `PyNE' is a bit of a misnomer since most of the code
       base is in c++ but most daily usage happens in Python
       \item \alert{v0.4} is the current, stable release
@@ -191,7 +167,7 @@
         \begin{itemize}
         \item be more \alert{productive} (don't reinvent the wheel!)
         \item have the \alert{best solvers}
-        \item have a \alert{clear and useful API}
+        \item have a \alert{clear and useful} API
         \item write really \alert{great code}
         \item \alert{teach} the next generation
         \end{itemize}
@@ -236,16 +212,16 @@
     PyNE already has some nuclear data support:
     \vspace*{1 em}
     \begin{itemize}
-      \item ENSDF \alert{level} and \alert{decay} data
+      \item \alert{ENSDF} level and decay data
       \begin{itemize}
         \item parser
         \item conversion to hdf5
         \item access in c++ and Python
       \end{itemize}
-      \item European Activation File cross sections
-      \item Atomic mass data (KAERI)
-      \item ENDF format cross section reader
-      \item ACE format cross section reader
+      \item European Activation File (\alert{EAF}) cross sections
+      \item Atomic \alert{mass} data (KAERI)
+      \item \alert{ENDF} format cross section reader
+      \item \alert{ACE} format cross section reader
     \end{itemize}
 \end{frame}
 
@@ -269,7 +245,7 @@
   	    \textbf{Decay Data}
   	    \end{center}
         \begin{itemize}
-          \item Energy, intensity, initial, and final levels for:
+          \item Energy, intensity, and initial and final levels for:
           \begin{itemize}
             \item 116 598 gamma lines
             \item 13 230 electron capture/beta +

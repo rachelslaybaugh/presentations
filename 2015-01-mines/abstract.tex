@@ -1,0 +1,27 @@
+%Talk for Colorado School of Mines, January 2015.
+
+\documentclass[12pt]{article}
+\usepackage{fullpage}
+\usepackage{paralist}
+
+\title{Hybrid Methods for Shielding Challenges: Self-Shielding and Strong Anisotropies}
+\author{R.\ N.\ Slaybaugh \\ Univ.\ of Cal.\ Berkeley}
+\date{7 January 2015}
+
+\begin{document}
+
+\maketitle
+
+\section*{Abstract}
+
+Continued demand for accurate and computationally efficient transport methods to solve optically thick, fixed-source transport problems has inspired research on variance reduction techniques for Monte Carlo (MC). Methods that use deterministic results to create variance reduction maps for MC constitute a dominant branch of this research, with FW-CADIS being a particularly successful example. However, locations in which energy and spatial self-shielding are combined, such as thin plates embedded in concrete, challenge FW-CADIS. In these cases the deterministic flux cannot appropriately capture transport behavior, and the associated variance reduction parameters result in high variance in and following the plate. 
+
+This work presents a new method that improves performance in transport calculations that contain regions of combined space and energy self-shielding without significant impact on the solution quality in other parts of the problem. This method is based on FW-CADIS, and applies a Resonance Factor correction to the adjoint source. The impact of the Resonance Factor method is investigated in this work through an example problem. It is clear that this new method dramatically improves performance in terms of lowering the maximum 95\% confidence interval relative error and reducing the compute time. Based on this work, we recommend that this method be used when the accuracy of the solution in the presence of combined space and energy self-shielding is important.
+
+
+%\section*{Biography}
+%Dr. Slaybaugh received a BS in Nuclear Engineering from Penn State in 2006 where she served as a licensed nuclear reactor operator. Dr. Slaybaugh went on to the University of Wisconsin – Madison to earn an MS in 2008 and a PhD in 2011 in the same field, as well as a certificate in Energy Analysis and Policy. For her PhD she researched acceleration methods for massively parallel deterministic neutron transport codes. Her focus was on fixed source solvers, eigenvalue solvers, and preconditioners that could efficiently scale to hundreds of thousands of cores. Dr. Slaybaugh then worked with hybrid (deterministic-Monte Carlo) methods for shielding applications at Bettis Laboratory while teaching at the University of Pittsburgh as an adjunct faculty member. 
+%
+%Throughout her career Dr. Slaybaugh has been engaged in software carpentry education and training. She is continuing and expanding these activities in her new role as an Assistant Professor of Nuclear Engineering at UC – Berkeley. At Berkeley Prof. Slaybaugh is building a research program based in computational methods and applied to existing and advanced nuclear reactors, nuclear non-proliferation and security, and shielding applications. 
+
+\end{document}

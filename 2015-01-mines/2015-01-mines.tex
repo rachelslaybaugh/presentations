@@ -192,6 +192,7 @@ Define response with function $f(\ve{r}, E)$ in volume $V_d$ as
   \end{column}
 \end{columns}
 \vspace*{1 em}
+\pause
 If we let $q^{\dagger} = f(\ve{r}, E)$ then
 %
 \begin{equation}
@@ -228,7 +229,7 @@ Birth weights match weight targets, making this the \underline{C}onsistent \unde
 % --------------------------------------------------------------
 %\subsection{FW-CADIS}
 \begin{frame}[fragile]
-  \frametitle{FW-CADIS}
+  \frametitle{FW-CADIS \cite{Wagner2007}}
 
 \begin{itemize}
 \item We often what to optimize solutions in all of phase space\\
@@ -259,6 +260,7 @@ Birth weights match weight targets, making this the \underline{C}onsistent \unde
   \end{column}
 \end{columns}
 \vspace*{1 em}
+\pause
 For example
 %
 \begin{equation}
@@ -280,7 +282,7 @@ For example
   	\begin{figure}
   	\begin{center}
   		\includegraphics[height=2in,clip]{../figs/dlvn}
-		\caption{Dog Legged Void Neutron Shielding Benchmark}
+		\caption{Dog Legged Void Neutron shielding benchmark}
 	\end{center}
   	\end{figure}
   	\end{column}
@@ -289,7 +291,7 @@ For example
  	\begin{figure}
   	\begin{center}
   		\includegraphics[height=2in,clip]{../figs/dlvn-lowVR}
-  		\caption{MC 95\% CI RE using FW-CADIS, DLVN}
+  		\caption{MC 95\% CI RE using FW-CADIS, DLVN \cite{Slaybaugh2013}}
   	\end{center}
   	\end{figure}
   	\end{column}
@@ -314,7 +316,7 @@ For example
 		\item Energy self-shielding +
 		\item Spatial self-shielding
 		\end{itemize}
-		\item High relative error through location of Interest
+		\item High relative error through location of interest
 		\item \textbf{Need} new methods based on FW-CADIS
 		\item E.g., Resonance Factor method (uses different cross section processing)
 		\end{itemize}
@@ -325,7 +327,7 @@ For example
   	\begin{center}
   	\begin{figure}
   		\includegraphics[height=2in,clip]{../figs/plate-badVR}
-  		\caption{MC 95\% CI RE using FW-CADIS, Plate}
+  		\caption{MC 95\% CI RE using FW-CADIS, plate}
   	\end{figure}
   	\end{center}
   	\end{column}
@@ -339,7 +341,7 @@ For example
 \section{Self-Shielding}
 %\subsection{Cross Section Processing}
 \begin{frame}[fragile]
-  \frametitle{Cross Section Processing}
+  \frametitle{Cross Section Processing \cite{Bondarenko1964}}
 
 	\begin{itemize}
 	\item General Case
@@ -349,6 +351,7 @@ For example
  	 \label{eq:baseBondarenko}
  	\end{equation} 
  	
+ 	\pause
  	\item Bondarenko method uses a background cross section
  	\begin{equation}
   	\micro_0^{(j)} = \frac{1}{N_j} \sum_{m \ne j} \micro_{t}^{(m)} N_m 
@@ -361,6 +364,7 @@ For example
   \label{eq:ssfact}
 	\end{equation}
 
+    \pause
 	\item W(u) changed to include the  spectral difference assumption and effect of other isotopes
 	\end{itemize}
 	
@@ -646,7 +650,7 @@ A sufficiently accurate PARTISN solution would be better (probably), but prohibi
 % --------------------------------------------------------------
 %\subsection{Resonance Factor Method}
 \begin{frame}[fragile]
-  \frametitle{Resonance Factor Method}
+  \frametitle{Resonance Factor Method \cite{Wilson2015}}
   	Apply renormalization factor to FW-CADIS source $q^{\dagger}_{FWC}$: 
 	%
 	\begin{equation}
@@ -890,5 +894,10 @@ M = 1 & 534.80 & 2.69e-1 & 2.44e-2 & 2.58e-2 & 3.13\\\hline
   
 \end{frame}
 
+% --------------------------------------------------------------
+\begin{frame}[allowframebreaks]{References}
+	\bibliographystyle{unsrt}
+	\bibliography{2015-01-mines}
+\end{frame}
 
 \end{document}

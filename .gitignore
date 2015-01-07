@@ -4,6 +4,7 @@
 *.aux
 *.nav
 *.log
+*.pdf
 *.snm
 *.synctex.gz
 *.tex.bak

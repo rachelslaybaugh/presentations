@@ -27,7 +27,7 @@
 
 \setbeamercolor*{lower separation line head}{bg=CoolBlack} 
 \setbeamercolor*{normal text}{fg=black,bg=white} 
-\setbeamercolor*{alerted text}{fg=red} 
+\setbeamercolor*{alerted text}{fg=dgreen} 
 \setbeamercolor*{example text}{fg=black} 
 \setbeamercolor*{structure}{fg=black} 
  
@@ -99,7 +99,7 @@
 		\item Problem Investigation
 		\item Resonance Factor Method
 		\item Results
-		\item Summary and Conclusions
+		\item Wrap-up
   	\end{itemize}
 	\item MC importances for problems with strong anisotropies
 	\item Other potential projects
@@ -167,10 +167,10 @@
 %\subsection{CADIS}
 \begin{frame}[fragile]
   \frametitle{Forward-Adjoint Relationship}
-Define response with function $f(\ve{r}, E)$ in volume $V_d$ as
+Define response with function $f(\ve{r}, E)$ in volume $V_r$ as
 %
 \begin{equation}
- R = \int_E \int_{V_f} f(\ve{r}, E) \phi(\ve{r}, E) dV dE 
+ R = \int_E \int_{V_r} f(\ve{r}, E) \phi(\ve{r}, E) dV dE 
  \label{eq:Response}
 \end{equation}
 %
@@ -327,7 +327,7 @@ For example
   	\begin{center}
   	\begin{figure}
   		\includegraphics[height=2in,clip]{../figs/plate-badVR}
-  		\caption{MC 95\% CI RE using FW-CADIS, plate}
+  		\caption{MC 95\% CI RE using FW-CADIS, plate \cite{Wilson2015}}
   	\end{figure}
   	\end{center}
   	\end{column}
@@ -363,8 +363,6 @@ For example
   	 \micro_0^{(j)}}\rangle}
   \label{eq:ssfact}
 	\end{equation}
-
-    \pause
 	\item W(u) changed to include the  spectral difference assumption and effect of other isotopes
 	\end{itemize}
 	
@@ -387,7 +385,8 @@ For example
 		\item Small $\sigma_0$ = resonance case	
 		\end{itemize}
 	\end{itemize}
-	
+
+    \pause	
 	\begin{itemize}
 	\item Add correction for `thin slab' of resonance material in 
 	`thick slab' of moderator
@@ -437,10 +436,10 @@ For example
   \begin{center}
     \begin{tabu}{| X | X | X |}\hline
       Variable & PARTISN & MC21\\\hline\hline
-	Deterministic Mesh & 0.5 cm unif; 0.25 cm in $x$ over 24 to 29 cm & 1 cm uniform \\\hline
+	Deterministic Mesh & 0.5 cm unif; 0.25 cm in x over 24 to 29 cm & 1 cm uniform \\\hline
 	Tally mesh & N/A & 1 cm uniform \\\hline
 	N particles & N/A & $1 \times 10^{10}$\\\hline
-	Energy structure & 58 grps & 27 grps / continuous\\\hline
+	Energy structure & 58 grps & 27 grps / cont.\\\hline
 	Angular quad & QR-18-252 & QR-8-36\\\hline
 	Scattering order & $P_3$ & $P_3$\\\hline
 	Convergence & 0.01 & 0.05\\\hline
@@ -623,20 +622,20 @@ F2e11 & 2e11 & 18,367.67 & 3.43e-1 & 4.00e-3 & 4.62e-4 & 3.40\\\hline
   
 	\begin{itemize}
 	\item Behavior is related to space and energy self-shielding
-	
-	\item Using these items did not improve PARTISN
+	\pause
+	\item Using these items did not improve PARTISN:
 	 \begin{itemize}
 	 \item finer quadrature
 	 \item higher scattering order
 	 \item more theoretically-accurate mean chord length
 	 \end{itemize}
-	 
-	\item Using these items in imp map creation did not reduce REs
+	\pause 
+	\item Using these items in imp map creation did not reduce REs:
 	 \begin{itemize}
 	 \item finer spatial mesh in the problem area
 	 \item finer energy group structure to create the importance map
 	 \end{itemize}
-	 
+	\pause 
 	\item The high RE in and following the plate is present when using different codes and different methods to produce VR parameters, and exists when a different resonance material is used.
 	\end{itemize}
 
@@ -664,7 +663,7 @@ A sufficiently accurate PARTISN solution would be better (probably), but prohibi
  	 \item $\phi_{res(\micro_0)}(\ve{r},E)$ is forward flux using a small background xsec
  	 \item $\phi_{dilute(\micro_0)}(\ve{r},E)$ is forward flux using a large background xsec
 	\end{itemize}
-	
+	\pause
 	The resulting adjoint flux is used to make importances
 	\vspace*{1 em}
 	
@@ -688,7 +687,7 @@ A sufficiently accurate PARTISN solution would be better (probably), but prohibi
  	\label{eq:newResponse} \\
   	 &\approx \int_E \int_{V} \Bigl(\frac{\phi_{res(\micro_0)}(\ve{r},E)}{\phi_{dilute(\micro_0)}(\ve{r},E)}\Bigr)^M dV dE \:. \nonumber
 	\end{align}
-	%
+	\pause
 	The expanded version of importance map in plate becomes:
 	%
 	\begin{equation}
@@ -723,7 +722,7 @@ base & 849.77 & 8.10e-1 & 1.02e-2 & 1.79e-3 & 11.3\\
 %
 58 g & 954.89 & 5.22e-1 & 9.33e-3 & 3.85e-3 & 12.0\\
 %
-M = 1 & 534.80 & 2.69e-1 & 2.44e-2 & 2.58e-2 & 3.13\\\hline
+M = 1 & \alert{534.80} & 2.69e-1 & 2.44e-2 & \alert{2.58e-2} & 3.13\\\hline
     \end{tabular}
  	 \end{center}
 	\end{table}
@@ -746,7 +745,7 @@ M = 1 & 534.80 & 2.69e-1 & 2.44e-2 & 2.58e-2 & 3.13\\\hline
 % --------------------------------------------------------------
 %\subsection{Summary and Conclusions}
 \begin{frame}[fragile]
-  \frametitle{Summary and Conclusions}
+  \frametitle{Resonance Factor wrap-up}
   
   \begin{itemize}
   \item Space and energy self-shielding make variance reduction difficult
@@ -757,7 +756,7 @@ M = 1 & 534.80 & 2.69e-1 & 2.44e-2 & 2.58e-2 & 3.13\\\hline
    \begin{itemize}
    \item Finer spatial mesh, energy group structure, or angular quadrature; higher order scattering expansion; or Bondarenko method
    \end{itemize}
-   
+  \pause 
   \item New method
    \begin{itemize}
   	\item Adds a factor accounting for resonances to FW-CADIS adjoint source
@@ -786,6 +785,7 @@ M = 1 & 534.80 & 2.69e-1 & 2.44e-2 & 2.58e-2 & 3.13\\\hline
 	 \item Reactor facilities
 	 \item Active interrogation 
 	 \end{itemize}
+	\pause
 	\item These are difficult to capture with current tools:
 	 \begin{itemize}
 	 \item Ray effects with deterministic
@@ -814,8 +814,8 @@ M = 1 & 534.80 & 2.69e-1 & 2.44e-2 & 2.58e-2 & 3.13\\\hline
   \frametitle{Current hybrid methods are insufficient}
 
 	\begin{itemize}
-	\item MC VR parameters created from adjoint deterministic flux that is a function of space and energy only
-	\item Angular dependence of the importance function is not retained, otherwise the map would be very large (tens or hundreds of GB) and more costly and complex to use in the Monte Carlo simulation
+	\item MC VR parameters created from adjoint deterministic flux that is a function of space and energy only \vspace*{1 em}
+	\item Angular dependence of the importance function is not retained, otherwise the map would be very large (tens or hundreds of GB) and more costly and complex to use in the Monte Carlo simulation \vspace*{1 em}
 	\item Drawback: within a given space/energy cell, the map provides the average importance of a particle moving in any direction through the cell -- excluding information about how particles move toward the objective
 	\end{itemize}
 
@@ -851,15 +851,17 @@ M = 1 & 534.80 & 2.69e-1 & 2.44e-2 & 2.58e-2 & 3.13\\\hline
 \begin{frame}[fragile]
   \frametitle{Better hybrid methods are needed}
 
-	\begin{itemize}
-	\item We can use angular information to improve performance
+We may be able to use angular information to improve performance; two ideas: \vspace*{1 em}
+
+	\begin{enumerate}
+	\item More effectively capture angles in scalar flux creation
 		\begin{equation}
 		\phi^{\dagger}(\ve{r},E) = \frac{\int \psi(\vOmega, \ve{r},E) \psi^{\dagger}(\vOmega, \ve{r},E) d\vOmega}{\int \psi(\vOmega, \ve{r},E)  d\vOmega}
 		\end{equation}
 
-	\item The space- and energy-dependent importance map will be normalized and source biasing parameters will be generated in a manner similar to the current implementation of hybrid methods
-	\item Immediately useful; widely applicable
-	\end{itemize}
+	\item Use a formulation that is more flexible in the ways that 
+	it handles quadrature: new LDO equations \cite{Ahrens2014}
+	\end{enumerate}
 
 \end{frame}
 
@@ -867,17 +869,15 @@ M = 1 & 534.80 & 2.69e-1 & 2.44e-2 & 2.58e-2 & 3.13\\\hline
 
 % --------------------------------------------------------------
 % --------------------------------------------------------------
-\section{Other Projects}
 \begin{frame}[fragile]
-  \frametitle{Other (potential) projects}
+  \frametitle{Better hybrid methods are needed}
 
   	\begin{itemize}
-  	\item Continuing development of MC on GPU
-	\item 3D shielding optimization: applicable to SMRs 
-	\item Parallelization of open source deterministic code, Detran 
-	\item Investigating use of hybrid methods for interrogation of SNM with neutron time-correlations 
-	\item Using SP$_N$ in multigrid preconditioner in Denovo 
-	\item Contributing methods to PyNE; investigating a long term research relationship
+    \item The space- and energy-dependent importance map will be normalized and 
+    source biasing parameters will be generated in a manner similar to the current
+     implementation of hybrid methods \vspace*{1 em}
+	\item Immediately useful; widely applicable \vspace*{1 em}
+	\item We will study both strategies and characterize the impact
 	\end{itemize}
 	
 \end{frame}

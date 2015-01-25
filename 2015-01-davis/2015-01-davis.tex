@@ -113,6 +113,25 @@
 \section{\scshape Hybrid Methods}
 %\subsection{Motivation}
 \begin{frame}[fragile]
+  \frametitle{Boltzmann Transport Equation}
+
+\begin{align}
+  [\vOmega \cdot \nabla + \Macro(\vec{r}, E)] &\psi(\vec{r}, \vOmega, E)  = \chi(E) \int_0^{\infty} dE' \:\nu \Macro_{f}(\vec{r}, E') \int_{4\pi} d\vOmega' \:\psi(\vec{r}, \vOmega', E')  \nonumber \\
+   &+ \int_0^{\infty} dE' \int_{4\pi} d\vOmega' \:\Macro_{s}(\vec{r}, E' \to E, \vOmega' \cdot \vOmega) \psi(\vec{r}, \vOmega', E')  \nonumber
+\end{align}
+
+\noindent where the quantities are at location $\vec{r}$, traveling in directions $\hat{\Omega}$, and at energy E and are defined as:
+\begin{itemize}
+  \item $\psi(\vec{r}, \hat{\Omega}, E)$ is the angular neutron flux in neutrons per unit length squared per steradian, 
+  \item $\Sigma_x$ is the probability of interaction $x$ in inverse length,
+  \item $\chi(E)$ is the fission spectrum and specifies the energy distribution of neutrons born from fission, and
+  \item $\nu$ is the average number of neutrons released per fission 
+\end{itemize}
+
+\end{frame}
+
+% --------------------------------------------------------------
+\begin{frame}[fragile]
   \frametitle{Solving the TE}
 
 \begin{columns}

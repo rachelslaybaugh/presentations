@@ -84,7 +84,10 @@
 % --------------------------------------------------------------
 \begin{frame}[fragile]{Outline}
   \frametitle{Outline}
-  \begin{itemize}
+
+\begin{columns}
+  \begin{column}{0.5\textwidth}
+    \begin{itemize}
     \item Hybrid methods overview
     \begin{itemize}
      	\item Motivation
@@ -93,8 +96,23 @@
 		\item Challenges
     \end{itemize}
 	\item MC importances for problems with strong anisotropies
-	\item 
+	\begin{itemize}
+     	\item Current methods and past efforts
+		\item Possible solutions
+		\item Application problems
+    \end{itemize}
+	\item Status and plans
   \end{itemize}
+  \end{column}
+  \begin{column}{0.5\textwidth}
+  	\begin{figure}
+  	\begin{center}
+  		\includegraphics[height=1.1in,clip]{../figs/labyrinth-dr}
+		%\caption{}
+	\end{center}
+  	\end{figure}
+  \end{column}
+\end{columns}
 
 \end{frame}
 
@@ -302,14 +320,9 @@ For example
 		\begin{itemize}
 		\item FW-CADIS only includes space and energy, 
 			\textit{not angle}
-		\item One pathological case:
-		\begin{itemize}
-		\item Energy self-shielding +
-		\item Spatial self-shielding
-		\end{itemize}
+		\item An example case: fission spectrum source with long streaming path
 		\item High relative error through location of interest
-		\item \textbf{Need} new methods based on FW-CADIS
-		\item E.g., Resonance Factor method (uses different cross section processing)
+		\item Capturing angular behavior will alleviate this issue
 		\end{itemize}
 	\end{center}
   	\end{column}
@@ -357,7 +370,7 @@ For example
  	 \begin{center}
  	 \begin{figure}
  	 \includegraphics[height=2in,clip]{../figs/pwr}  
- 	 \caption{PWR, 1 CPU-month, FW-CADIS  for mesh-tally (500K cells)}
+ 	 \caption{PWR relative error \cite{Pantelias2013}}
  	 \end{figure}
  	 \end{center}
 
@@ -407,50 +420,61 @@ For example
 
 % --------------------------------------------------------------
 \begin{frame}[fragile]
-  \frametitle{Many Attempts at Resolution; Mixed Success}
+  \frametitle{Many Attempts at Resolution $\rightarrow$ \\ 
+  \hspace*{3em} Limited Success}
 
 	\begin{itemize}
-	\item Automatic WW generator
-	\item AVATAR
-	\item LIFT
-	\item Cooper and Larsen's global weight windows
+	\item Automatic WW generator \cite{MCNP2008}
+	\item AVATAR \cite{vanRiper1997}
+	\item LIFT \cite{Turner1997}
+	\item Cooper and Larsen's global weight windows \cite{Cooper2001}
 	\item CADIS/FW-CADIS
-	\item Resonance Factor method
+	\item Resonance Factor method \cite{Wilson2015}
 	\end{itemize}
+	
+\vspace*{1 em}
+\textit{Better hybrid methods are needed}; two ideas.
 
 \end{frame}
 
 % --------------------------------------------------------------
 \begin{frame}[fragile]
-  \frametitle{Better hybrid methods are needed}
+  \frametitle{Integration weighting}
 
-We may be able to use angular information to improve performance; two ideas: \vspace*{1 em}
+    Different integration plan effectively capture angles in scalar flux creation	
+	\begin{align*}
+		\phi^{\dagger}(\ve{r},E) &= \int \psi^{\dagger}(\vOmega, 
+		\ve{r},E) d\vOmega \qquad  \qquad \qquad \text{original}\\
+		 %
+		\phi^{\dagger}(\ve{r},E) &= \frac{\int \psi(\vOmega, \ve{r},E)
+		 \psi^{\dagger}(\vOmega, \ve{r},E) d\vOmega}{\int \psi(\vOmega, 
+		 \ve{r},E)  d\vOmega} \qquad \text{new}
+	\end{align*}
 
+    Major challenges and areas of investigation:
 	\begin{enumerate}
-	\item More effectively capture angles in scalar flux creation
-		\begin{equation}
-		\phi^{\dagger}(\ve{r},E) = \frac{\int \psi(\vOmega, \ve{r},E) \psi^{\dagger}(\vOmega, \ve{r},E) d\vOmega}{\int \psi(\vOmega, \ve{r},E)  d\vOmega}
-		\end{equation}
-
-	\item Use a formulation that is more flexible in the ways that 
-	it handles quadrature: new LDO equations \cite{Ahrens2014}
+	\item Data storage and handling (many GBs)
+	\item How sensitive to the quality of the discrete ordinates calculation?
+	\item More, less, or differently sensitive to ray effects?
 	\end{enumerate}
 
 \end{frame}
 
 % --------------------------------------------------------------
 \begin{frame}[fragile]
-  \frametitle{Lagrange Discrete Ordinate Equations}
+  \frametitle{Lagrange discrete ordinate equations}
 
-    Cory Ahrens from Colorado School of Mines
+    Use a formulation that is more flexible in the ways that 
+	it handles quadrature: new LDO equations \cite{Ahrens2014}
+	\vspace*{1 em}
+	
+    with Cory Ahrens from Colorado School of Mines
 	\begin{itemize}
 	\item Re-derivation of $S_N$ with an interpolatory quadrature framework
 	\item Allows evaluation at directions not on quadrature set
 	\item No need to store spherical harmonic moments
 	\item May be useful for more accurately capturing strong anisotropies
 	\end{itemize}
-	
-	Use as standalone or in FW-CADIS?
 
 \end{frame}
 
@@ -461,8 +485,8 @@ We may be able to use angular information to improve performance; two ideas: \vs
 
   	\begin{itemize}
     \item The space- and energy-dependent importance map will be normalized and 
-    source biasing parameters will be generated in a manner similar to the current
-     implementation of hybrid methods \vspace*{1 em}
+     source biasing parameters will be generated in a manner the same ways as
+     the current implementation of hybrid methods \vspace*{1 em}
 	\item Immediately useful; widely applicable \vspace*{1 em}
 	\item We will study both strategies and characterize the impact
 	\end{itemize}

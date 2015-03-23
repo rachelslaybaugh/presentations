@@ -88,9 +88,9 @@
 \begin{columns}
   \begin{column}{0.5\textwidth}
     \begin{itemize}
+    \item Motivation
     \item Hybrid methods overview
     \begin{itemize}
-     	\item Motivation
 		\item CADIS
 		\item FW-CADIS
 		\item Challenges
@@ -119,22 +119,48 @@
 
 % --------------------------------------------------------------
 % --------------------------------------------------------------
-\section{\scshape Hybrid Methods}
+\section{\scshape Motivation}
 %\subsection{Motivation}
 \begin{frame}[fragile]
-  \frametitle{Solving the TE}
+  \frametitle{Project motivation}
 
+\begin{columns}
+  \begin{column}{0.55\textwidth}
+	\begin{itemize}
+	\item Need to accurately model radiation for safeguarding and monitoring
+	\item \alert{Challenging}: dense shields; streaming paths
+	\item Current methods are insufficient
+	\item \alert{Goal}: accurate solutions in reasonable time
+	\item New methods can easily be added to existing codes
+	\end{itemize}
+  \end{column}
+  \begin{column}{0.45\textwidth}
+  	\begin{figure}
+  	\begin{center}
+  		\includegraphics[height=1.25in,clip]{../figs/isfsi}
+		%\caption{}
+	\end{center}
+  	\end{figure}
+  \end{column}
+\end{columns}
+
+\end{frame}
+
+% --------------------------------------------------------------
+% --------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Solving the TE}
+%
 \begin{columns}
   \begin{column}{0.5\textwidth}
   \begin{center}
   \underline{Monte Carlo}
   \end{center}
 	\begin{itemize}
-	\item Solution has associated statistical error
-	\item Continuous phase space: ``gold standard answers"
-	\item Can take a long time
-	\item Good for streaming
-	\item Optically thick = slow
+	\item Solution has statistical error
+	\item \textit{Continuous} phase space: ``gold standard answers"
+	\item Can be slow
+	\item Optically thick = \textit{slow}
 	\end{itemize}
   \end{column}
   \begin{column}{0.5\textwidth}
@@ -143,13 +169,19 @@
   \end{center}
 	\begin{itemize}
 	\item Solution equally valid everywhere
-	\item Discretized phase space: drives solution quality
+	\item \textit{Discretized} phase space: drives solution quality
 	\item Can be fast
-	\item Streaming = ray effects
-	\item Good for optically thick
+	\item Streaming = \textit{ray effects}
 	\end{itemize}
   \end{column}
 \end{columns}
+%
+\begin{align}
+\vOmega \cdot \nabla \psi(\vec{r}, E, \vOmega) &+
+\Sigma_t \psi(\vec{r}, E, \vOmega) = S(\vec{r}, E, \vOmega) \:+\nonumber\\
+%
+& \int_{4\pi} d\vOmega' \int_0^{\infty} dE'\: \Sigma_s(E', \vOmega' \rightarrow E, \vOmega) \psi(\vec{r}, E', \vOmega') \nonumber
+\end{align}
 
 \end{frame}
 
@@ -167,24 +199,26 @@
   \begin{itemize}
   	\item \underline{Idea}: can we use deterministic and Monte Carlo methods together to lessen the weaknesses of each?
   \end{itemize}
+  \pause
   $\rightarrow$ \textbf{Hybrid Methods}
 
 \end{frame}
 
 
 % --------------------------------------------------------------
+\section{\scshape Hybrid Methods}
 %\subsection{CADIS}
 \begin{frame}[fragile]
-  \frametitle{Forward-Adjoint Relationship}
+  \frametitle{Forward-adjoint relationship}
 Define response with function $f(\ve{r}, E)$ in volume $V_r$ as
 %
 \begin{equation}
- R = \int_E \int_{V_r} f(\ve{r}, E) \phi(\ve{r}, E) dV dE 
+ R = \int_E \int_{V_r} f(\ve{r}, E) \phi(\ve{r}, E)\: dV dE 
  \label{eq:Response}
 \end{equation}
 %
 \begin{columns}
-  \begin{column}{0.5\textwidth}
+  \begin{column}{0.45\textwidth}
 	\begin{align}
   	H\phi &= q \quad \text{(forward)}\nonumber \\
   	%
@@ -192,7 +226,7 @@ Define response with function $f(\ve{r}, E)$ in volume $V_r$ as
   	\text{(adjoint)}\nonumber
   	\end{align}
   \end{column}
-  \begin{column}{0.5\textwidth}
+  \begin{column}{0.45\textwidth}
   	\begin{align}
   	\langle H\phi, \phi^{\dagger} \rangle &= \langle H^{\dagger} \phi^{\dagger}, \phi \rangle \:, \text{and therefore} \nonumber \\
   	%
@@ -202,10 +236,10 @@ Define response with function $f(\ve{r}, E)$ in volume $V_r$ as
 \end{columns}
 \vspace*{1 em}
 \pause
-If we let $q^{\dagger} = f(\ve{r}, E)$ then
+If we let $q^{\dagger} = f(\ve{r}, E)$, then
 %
 \begin{equation}
- \langle q^{\dagger}, \phi \rangle = \langle f, \phi \rangle = R = \langle q, \phi^{\dagger} \rangle
+ \langle q^{\dagger}, \phi \rangle = \langle f, \phi \rangle = R = \langle q, \phi^{\dagger} \rangle 
  \label{eq:ResponseRedef}
 \end{equation}
 %
@@ -215,23 +249,23 @@ Eq.\ \eqref{eq:ResponseRedef} expresses that $\phi^{\dagger}$ represents the exp
 
 % --------------------------------------------------------------
 \begin{frame}[fragile]
-  \frametitle{CADIS}
+  \frametitle{CADIS \cite{Wagner2007}}
   
   \begin{enumerate}
   \item Define $q^{\dagger}$ as the local response of interest\\
   \item Coarse deterministic calculation to get $\phi^{\dagger}$ and $R$
   \end{enumerate}
 % 
-\begin{align}
+\begin{align*}
   imp(\ve{r}, E) &= \frac{\phi^{\dagger}(\ve{r}, E)}{\langle q(\ve{r}, E), \phi^{\dagger}(\ve{r}, E) \rangle} = \frac{\phi^{\dagger}(\ve{r}, E)}{R} \\
   %
   \hat{q}(\ve{r}, E) &= \frac{\phi^{\dagger}(\ve{r}, E) q(\ve{r}, E)}{R} \\
   %
   w_0(\ve{r}, E) &= \frac{q(\ve{r}, E)}{\hat{q}(\ve{r}, E)} = \frac{R}{\phi^{\dagger}(\ve{r}, E)} 
   \label{eq:Importance}
-\end{align}
+\end{align*}
 
-Birth weights match weight targets, making this the \underline{C}onsistent \underline{A}djoint \underline{D}riven \underline{I}mportance \underline{S}ampling \underline{M}ethod
+Birth weights match weight targets: \underline{C}onsistent \underline{A}djoint \underline{D}riven \underline{I}mportance \underline{S}ampling \underline{M}ethod
 
 \end{frame}
 
@@ -283,8 +317,7 @@ For example
 \begin{frame}[fragile]
   \frametitle{Challenges}
 
-	FW-CADIS works well for \textbf{most} deep penetration
-	shielding problems...
+	FW-CADIS works well for \textbf{most} shielding problems...
 	%
 	\begin{columns}
   	\begin{column}{0.5\textwidth}
@@ -312,27 +345,28 @@ For example
 \begin{frame}[fragile]
   \frametitle{Challenges}
 
-	...but not all of them
+	...but not \textbf{all} of them
 	%
 	\begin{columns}
-  	\begin{column}{0.5\textwidth}
-  	\begin{center}
-		\begin{itemize}
-		\item FW-CADIS only includes space and energy, 
-			\textit{not angle}
-		\item An example case: fission spectrum source with long streaming path
-		\item High relative error through location of interest
-		\item Capturing angular behavior will alleviate this issue
-		\end{itemize}
-	\end{center}
-  	\end{column}
- 	%
- 	\begin{column}{0.5\textwidth}
+  	\begin{column}{0.45\textwidth}
   	\begin{center}
   	\begin{figure}
   		\includegraphics[height=2in,clip]{../figs/plate-badVR}
   		\caption{MC 95\% CI RE using FW-CADIS, plate \cite{Wilson2015}}
   	\end{figure}
+	\end{center}
+  	\end{column}
+ 	%
+ 	\begin{column}{0.5\textwidth}
+  	\begin{center}
+  	\begin{itemize}
+		\item FW-CADIS only includes space and energy, \textit{not angle}
+		\pause
+		\item An example case: fission spectrum source with long streaming path
+		\item High relative error through location of interest
+		\pause
+		\item Capturing angular behavior will help improve the solution
+	\end{itemize}
   	\end{center}
   	\end{column}
 	\end{columns}
@@ -351,7 +385,7 @@ For example
 	\begin{itemize}
 	\item Many important nuclear applications have strong anisotropies
 	 \begin{itemize}
-	 \item Used fuel casks
+	 \item \textbf{Used fuel casks}
 	 \item Reprocessing facilities
 	 \item Reactor facilities
 	 \item Active interrogation 
@@ -385,9 +419,13 @@ For example
   \frametitle{Current hybrid methods are insufficient}
 
 	\begin{itemize}
-	\item MC VR parameters created from adjoint deterministic flux that is a function of space and energy only \vspace*{1 em}
-	\item Angular dependence of the importance function is not retained, otherwise the map would be very large (tens or hundreds of GB) and more costly and complex to use in the Monte Carlo simulation \vspace*{1 em}
-	\item Drawback: within a given space/energy cell, the map provides the average importance of a particle moving in any direction through the cell -- excluding information about how particles move toward the objective
+	\item MC VR parameters created from adjoint deterministic scalar flux that is a function of \textit{space and energy only} \vspace*{1 em}
+	\item Angular dependence of the importance function is not retained, otherwise the map would be 
+	\begin{itemize}
+	  \item very large (tens or hundreds of GB) and
+	  \item  more costly and complex to use in the Monte Carlo simulation 
+	\end{itemize}
+	\item Drawback: within a given space/energy cell, the map provides the average importance of a particle moving in \textit{any direction} through the cell -- excluding information about how particles move \alert{toward the objective}
 	\end{itemize}
 
 \end{frame}
@@ -424,16 +462,16 @@ For example
   \hspace*{3em} Limited Success}
 
 	\begin{itemize}
-	\item Automatic WW generator \cite{MCNP2008}
+	\item Automatic WW generator in MCNP \cite{MCNP2008}
 	\item AVATAR \cite{vanRiper1997}
 	\item LIFT \cite{Turner1997}
 	\item Cooper and Larsen's global weight windows \cite{Cooper2001}
-	\item CADIS/FW-CADIS
+	\item FW/CADIS
 	\item Resonance Factor method \cite{Wilson2015}
 	\end{itemize}
 	
 \vspace*{1 em}
-\textit{Better hybrid methods are needed}; two ideas.
+\textit{Better hybrid methods are needed}; \alert{two ideas}.
 
 \end{frame}
 
@@ -441,7 +479,7 @@ For example
 \begin{frame}[fragile]
   \frametitle{Integration weighting}
 
-    Different integration plan effectively capture angles in scalar flux creation	
+    Different integration plan captures angles in scalar flux creation	
 	\begin{align*}
 		\phi^{\dagger}(\ve{r},E) &= \int \psi^{\dagger}(\vOmega, 
 		\ve{r},E) d\vOmega \qquad  \qquad \qquad \text{original}\\
@@ -451,11 +489,15 @@ For example
 		 \ve{r},E)  d\vOmega} \qquad \text{new}
 	\end{align*}
 
+    \pause
     Major challenges and areas of investigation:
 	\begin{enumerate}
 	\item Data storage and handling (many GBs)
-	\item How sensitive to the quality of the discrete ordinates calculation?
-	\item More, less, or differently sensitive to ray effects?
+	\item More, less, or differently sensitive to 
+	  \begin{itemize}
+	  \item quality of the discrete ordinates calculation?
+	  \item ray effects?
+	  \end{itemize}
 	\end{enumerate}
 
 \end{frame}
@@ -468,10 +510,10 @@ For example
 	it handles quadrature: new LDO equations \cite{Ahrens2014}
 	\vspace*{1 em}
 	
-    with Cory Ahrens from Colorado School of Mines
 	\begin{itemize}
-	\item Re-derivation of $S_N$ with an interpolatory quadrature framework
+	\item Re-derivation of $S_N$ with an \alert{interpolatory quadrature framework}
 	\item Allows evaluation at directions not on quadrature set
+	\item Can use \alert{asymmetric angles}
 	\item No need to store spherical harmonic moments
 	\item May be useful for more accurately capturing strong anisotropies
 	\end{itemize}
@@ -485,10 +527,11 @@ For example
 
   	\begin{itemize}
     \item The space- and energy-dependent importance map will be normalized and 
-     source biasing parameters will be generated in a manner the same ways as
-     the current implementation of hybrid methods \vspace*{1 em}
+     source biasing parameters will be generated in the \alert{same ways} as
+     the current implementation of FW/CADIS \vspace*{1 em}
 	\item Immediately useful; widely applicable \vspace*{1 em}
-	\item We will study both strategies and characterize the impact
+	\item We will study both strategies and characterize the impact\vspace*{1 em}
+	\item Will be available in SCALE \cite{SCALE} and ADVANTG \cite{Pantelias2013}
 	\end{itemize}
 	
 \end{frame}

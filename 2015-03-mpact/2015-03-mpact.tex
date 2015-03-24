@@ -126,14 +126,15 @@ T.\ M.\ Evans and S.\ W.\ Mosher, Oak Ridge National Lab}
      	\item Current methods and past efforts
 		\item Possible solutions
     \end{itemize}
-	\item Status and plans
+	\item Plans and status
   \end{itemize}
   \end{column}
   \begin{column}{0.5\textwidth}
   	\begin{figure}
   	\begin{center}
   		\includegraphics[height=1.1in,clip]{../figs/labyrinth-dr}
-		\caption{Radiation dose rate in challenging geometry}
+		\caption{Radiation dose in challenging geometry}
+		%For particles near the turns in the labyrinth, the importance of the particles to the exit of the labyrinth vary greatly if they are coming out of a wall pointed toward the exit versus heading into a wall and away from the exit. This distinction is not captured by current hybrid methods. 
 	\end{center}
   	\end{figure}
   \end{column}
@@ -376,7 +377,7 @@ For example
   	\begin{column}{0.45\textwidth}
   	\begin{center}
   	\begin{figure}
-  		\includegraphics[height=2in,clip]{../figs/plate-badVR}
+  		\includegraphics[height=2in,clip]{../figs/streaming-Air}
   		\caption{MC 95\% CI RE using FW-CADIS, plate \cite{Wilson2015}}
   	\end{figure}
 	\end{center}
@@ -489,7 +490,9 @@ For example
 	\begin{itemize}
 	\item Automatic WW generator in MCNP \cite{MCNP2008}
 	\item AVATAR \cite{vanRiper1997}
+	%in many cases in which anisotropies are important, including angular information will improve calculation efficiency. However, these results also showed that the simple angular CADIS implementation is not accurate enough to provide the improvement necessary to be able to efficiently execute the used fuel cask calculations we would like to perform to improve facility monitoring design and operation. 
 	\item LIFT \cite{Turner1997}
+	%derived from the zero-variance method and  uses an approximation of the adjoint flux that is piecewise continuous in angle. LIFT only captures linearly anisotropic scattering, which is not enough for our needs and is somewhat difficult to use
 	\item Cooper and Larsen's global weight windows \cite{Cooper2001}
 	\item FW/CADIS
 	\item Resonance Factor method \cite{Wilson2015}
@@ -515,6 +518,8 @@ For example
 		 \psi^{\dagger}(\vOmega, \ve{r},E) d\vOmega}{\int \psi(\vOmega, 
 		 \ve{r},E)  d\vOmega} \qquad \text{new}
 	\end{align*}
+%Note that these two calculations can be completed concurrently. Then, the adjoint scalar fluxes will be computed by angularly integrating the product of the forward and adjoint angular fluxes to account for the directions in which the particles will actually be traveling at any given location/energy:
+%will provide importance values that more accurately reflect the average importance of particles that will be transported in the final Monte Carlo calculation, yielding faster Monte Carlo run times.
 
     \pause
     Major challenges and areas of investigation:
@@ -565,18 +570,35 @@ For example
 
 % --------------------------------------------------------------
 % --------------------------------------------------------------
-\section{\scshape Status and Plan}
+\section{\scshape Plan and Status}
 \begin{frame}[fragile]
-  \frametitle{Status and plan}
+  \frametitle{Plan and status}
 
-
-	
-\end{frame}
-
-% --------------------------------------------------------------
-\begin{frame}[fragile]
-  \frametitle{Application problems}
-
+    \begin{enumerate}
+    \item Implementation: underway
+      \begin{itemize}
+      \item Focusing on software best-practices
+      \item Large data handling is \alert{broader outcome}
+      \item Graduate student working in Denovo \cite{Evans2010}
+      \end{itemize} 
+      \vspace*{0.5em}
+      \pause
+    \item Testing: initiating
+      \begin{itemize}
+      \item Compare to existing methods
+      \item Study performance around angular discretization
+      \item Undergrad learning to run existing methods; 
+      researcher starting in June; grad student planning tests
+      \end{itemize}
+      \vspace*{0.5em}
+      \pause
+    \item Impact characterization: planned
+      \begin{itemize}
+      \item Investigate performance for one used fuel canister
+      \item Investigate performance for array of used fuel canisters
+      \item \alert{Goal}: improved material control and accountability
+      \end{itemize}
+    \end{enumerate}
 
 	
 \end{frame}

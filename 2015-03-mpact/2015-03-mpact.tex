@@ -72,28 +72,29 @@
   \tikz\node[draw,rounded corners,align=center,] {#1};}%
 
 \setbeamerfont{author in head/foot}{size={\fontsize{3pt}{4pt}\selectfont}}
-\author[Subham \& Mithun \& Karthikeyan \& Shantikumar]
-{%
-   \texorpdfstring{
-        \begin{columns}
-            \column{.25\linewidth}
-            \centering
-            \includegraphics[height=3cm]{../bk-eps-converted-to}
-            \column{.25\linewidth}
-            \centering
-            \RBox{R.\ N.\ Slaybaugh\\
-            Univ.\ of Cal.\ Berkeley}\\[1ex]
-            \RBox{T.\ M. Evans,\\
-            S.\ W.\ Mosher, and\\
-            D.\ E.\ Peplow\\
-            Oak Ridge National Lab}
-        \end{columns}
-   }
-   {Subham Soni S., Karthikeyanm, Shantikumar L.,  Mithun C.K.}
-}
-\title{Improved Hybrid Modeling of Used Fuel Storage Facilities}
-%\author{\includegraphics[height=2cm]
-%{../bk-eps-converted-to}\\R.\ N.\ Slaybaugh \\ Univ.\ of Cal.\ Berkeley}
+%\author[Subham \& Mithun \& Karthikeyan \& Shantikumar]
+%{%
+%   \texorpdfstring{
+%        \begin{columns}
+%            \column{.25\linewidth}
+%            \centering
+%            \includegraphics[height=3cm]{../bk-eps-converted-to}
+%            \column{.25\linewidth}
+%            \centering
+%            \RBox{R.\ N.\ Slaybaugh\\
+%            Univ.\ of Cal.\ Berkeley}\\[1ex]
+%            \RBox{T.\ M.\ Evans, and\\
+%            S.\ W.\ Mosher\\
+%            Oak Ridge National Lab}
+%        \end{columns}
+%   }
+%   {Subham Soni S., Karthikeyanm, Shantikumar L.,  Mithun C.K.}
+%}
+\title{Improved Hybrid Modeling}
+\subtitle{of Used Fuel Storage Facilities}
+\author{\includegraphics[height=2cm]
+{../bk-eps-converted-to}\\R.\ N.\ Slaybaugh, Univ.\ of Cal.\ Berkeley\\[1ex]
+T.\ M.\ Evans and S.\ W.\ Mosher, Oak Ridge National Lab}
 \date{25 March 2015 \\ DOE MPACT Meeting}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -124,7 +125,6 @@
 	\begin{itemize}
      	\item Current methods and past efforts
 		\item Possible solutions
-		\item Application problems
     \end{itemize}
 	\item Status and plans
   \end{itemize}
@@ -133,7 +133,7 @@
   	\begin{figure}
   	\begin{center}
   		\includegraphics[height=1.1in,clip]{../figs/labyrinth-dr}
-		%\caption{}
+		\caption{Radiation dose rate in challenging geometry}
 	\end{center}
   	\end{figure}
   \end{column}
@@ -163,7 +163,7 @@
   	\begin{figure}
   	\begin{center}
   		\includegraphics[height=1.25in,clip]{../figs/isfsi}
-		%\caption{}
+		\caption{Used fuel storage pad}
 	\end{center}
   	\end{figure}
   \end{column}
@@ -419,7 +419,7 @@ For example
 	 \begin{itemize}
 	 \item Ray effects with deterministic
 	 \item Too slow with analog MC
-	 \item Insufficient acceleration of MC with hybrid
+	 \item Insufficient acceleration of MC with current hybrid
 	 \end{itemize}
 	\end{itemize}
   	\end{column}
@@ -439,7 +439,7 @@ For example
 
 
 % --------------------------------------------------------------
-\section{Strong Anisotropies}
+\section{\scshape Strong Anisotropies}
 \begin{frame}[fragile]
   \frametitle{Current hybrid methods are insufficient}
 
@@ -448,7 +448,7 @@ For example
 	\item Angular dependence of the importance function is not retained, otherwise the map would be 
 	\begin{itemize}
 	  \item very large (tens or hundreds of GB) and
-	  \item  more costly and complex to use in the Monte Carlo simulation 
+	  \item  more costly and complex to use in the MC simulation 
 	\end{itemize}
 	\item Drawback: within a given space/energy cell, the map provides the average importance of a particle moving in \textit{any direction} through the cell -- excluding information about how particles move \alert{toward the objective}
 	\end{itemize}
@@ -494,9 +494,11 @@ For example
 	\item FW/CADIS
 	\item Resonance Factor method \cite{Wilson2015}
 	\end{itemize}
+    All of these have worked in \textit{some} situations\\
+    They often require \textit{significant} user expertise	
 	
-\vspace*{1 em}
-\textit{Better hybrid methods are needed}; \alert{two ideas}.
+    \vspace*{1 em}
+    \underline{Better hybrid methods are needed}: \alert{two ideas}.
 
 \end{frame}
 
@@ -560,20 +562,20 @@ For example
 	
 \end{frame}
 
+
 % --------------------------------------------------------------
+% --------------------------------------------------------------
+\section{\scshape Status and Plan}
 \begin{frame}[fragile]
-  \frametitle{Application problems}
+  \frametitle{Status and plan}
 
 
 	
 \end{frame}
 
-
 % --------------------------------------------------------------
-% --------------------------------------------------------------
-\section{Status and Plan}
 \begin{frame}[fragile]
-  \frametitle{Status and plan}
+  \frametitle{Application problems}
 
 
 	

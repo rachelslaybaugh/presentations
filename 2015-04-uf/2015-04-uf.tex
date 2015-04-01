@@ -85,25 +85,36 @@
 % --------------------------------------------------------------
 \begin{frame}[fragile]{Outline}
   \frametitle{Outline}
-  \begin{itemize}
+
+\begin{columns}
+  \begin{column}{0.6\textwidth}
+    \begin{itemize}
     \item Hybrid methods overview
     \begin{itemize}
-     	\item Motivation
-		\item CADIS
-		\item FW-CADIS
+    		\item Motivation
+		\item CADIS and FW-CADIS
 		\item Challenges
     \end{itemize}
-	\item MC importances in the presence of space and energy self-shielding
+    	\item MC importances with space and energy self-shielding
 	\begin{itemize}
-    		\item Cross Section Processing
-		\item Problem Investigation
-		\item Resonance Factor Method
-		\item Results
-		\item Wrap-up
+    		\item Cross section Processing
+		\item Problem investigation
+		\item Resonance factor method
+		\item Results and wrap-up
   	\end{itemize}
-	\item MC importances for problems with strong anisotropies
-	\item Other potential projects
+	\item MC importances with strong anisotropies
   \end{itemize}
+  \end{column}
+  \begin{column}{0.4\textwidth}
+  	\begin{figure}
+  	\begin{center}
+  		\includegraphics[height=2in,clip]{../figs/plate-geometry}
+		\caption{Geometry with space and energy self-shielding}
+		%For particles near the turns in the labyrinth, the importance of the particles to the exit of the labyrinth vary greatly if they are coming out of a wall pointed toward the exit versus heading into a wall and away from the exit. This distinction is not captured by current hybrid methods. 
+	\end{center}
+  	\end{figure}
+  \end{column}
+\end{columns}
 
 \end{frame}
 
@@ -113,19 +124,45 @@
 \section{\scshape Hybrid Methods}
 %\subsection{Motivation}
 \begin{frame}[fragile]
-  \frametitle{Solving the TE}
+  \frametitle{Project motivation}
 
+\begin{columns}
+  \begin{column}{0.55\textwidth}
+	\begin{itemize}
+	\item Need to accurately model radiation for shielding
+	\item \alert{Challenging}: dense shields; streaming paths
+	\item Current methods are insufficient
+	\item \alert{Goal}: accurate solutions in reasonable time
+	\item New methods can easily be added to existing codes
+	\end{itemize}
+  \end{column}
+  \begin{column}{0.45\textwidth}
+  	\begin{figure}
+  	\begin{center}
+  		\includegraphics[height=1.25in,clip]{../figs/isfsi}
+		\caption{Used fuel storage pad}
+	\end{center}
+  	\end{figure}
+  \end{column}
+\end{columns}
+
+\end{frame}
+
+
+% --------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Solving the TE}
+%
 \begin{columns}
   \begin{column}{0.5\textwidth}
   \begin{center}
   \underline{Monte Carlo}
   \end{center}
 	\begin{itemize}
-	\item Solution has associated statistical error
-	\item Continuous phase space: ``gold standard answers"
-	\item Can take a long time
-	\item Good for streaming
-	\item Optically thick = slow
+	\item Solution has statistical error
+	\item \textit{Continuous} phase space: ``gold standard answers"
+	\item Can be slow
+	\item Optically thick = \textit{slow}
 	\end{itemize}
   \end{column}
   \begin{column}{0.5\textwidth}
@@ -134,15 +171,22 @@
   \end{center}
 	\begin{itemize}
 	\item Solution equally valid everywhere
-	\item Discretized phase space: drives solution quality
+	\item \textit{Discretized} phase space: drives solution quality
 	\item Can be fast
-	\item Streaming = ray effects
-	\item Good for optically thick
+	\item Streaming = \textit{ray effects}
 	\end{itemize}
   \end{column}
 \end{columns}
+%
+\begin{align}
+\vOmega \cdot \nabla \psi(\vec{r}, E, \vOmega) &+
+\Sigma_t \psi(\vec{r}, E, \vOmega) = S(\vec{r}, E, \vOmega) \:+\nonumber\\
+%
+& \int_{4\pi} d\vOmega' \int_0^{\infty} dE'\: \Sigma_s(E', \vOmega' \rightarrow E, \vOmega) \psi(\vec{r}, E', \vOmega') \nonumber
+\end{align}
 
 \end{frame}
+
 
 % --------------------------------------------------------------
 \begin{frame}[fragile]
@@ -158,6 +202,7 @@
   \begin{itemize}
   	\item \underline{Idea}: can we use deterministic and Monte Carlo methods together to lessen the weaknesses of each?
   \end{itemize}
+  \pause
   $\rightarrow$ \textbf{Hybrid Methods}
 
 \end{frame}
@@ -300,45 +345,60 @@ For example
 \end{frame}
 
 % --------------------------------------------------------------
+% --------------------------------------------------------------
 \begin{frame}[fragile]
   \frametitle{Challenges}
 
-	...but not all of them
+	...but not \textbf{all} of them
 	%
 	\begin{columns}
-  	\begin{column}{0.5\textwidth}
+  	\begin{column}{0.45\textwidth}
   	\begin{center}
-		\begin{itemize}
-		\item FW-CADIS only includes space and energy, 
-			\textit{not angle}
-		\item One pathological case:
-		\begin{itemize}
-		\item Energy self-shielding +
-		\item Spatial self-shielding
-		\end{itemize}
-		\item High relative error through location of interest
-		\item \textbf{Need} new methods based on FW-CADIS
-		\item E.g., Resonance Factor method (uses different cross section processing)
-		\end{itemize}
+  	\begin{figure}
+  		\includegraphics[height=2in,clip]{../figs/streaming-Air}
+  		\caption{MC 95\% CI RE using FW-CADIS, plate \cite{Wilson2015}}
+  	\end{figure}
 	\end{center}
   	\end{column}
  	%
  	\begin{column}{0.5\textwidth}
   	\begin{center}
-  	\begin{figure}
-  		\includegraphics[height=2in,clip]{../figs/plate-badVR}
-  		\caption{MC 95\% CI RE using FW-CADIS, plate \cite{Wilson2015}}
-  	\end{figure}
+  	\begin{itemize}
+		\item FW-CADIS only includes space and energy, \textit{not angle}
+		\pause
+		\item An example case: 
+		\begin{itemize}
+		    \item Energy self-shieding + 
+		    \item Spatial self-shielding
+		\end{itemize}
+		\item High relative error through location of interest
+		\pause
+		\item \textbf{Need} new method based on FW-CADIS
+	\end{itemize}
   	\end{center}
   	\end{column}
 	\end{columns}
-  
+
 \end{frame}
 
 
 % --------------------------------------------------------------
 % --------------------------------------------------------------
 \section{\scshape Self-Shielding}
+\begin{frame}[fragile]
+  \frametitle{Self-Shielding (quick aside)}
+
+	\begin{itemize}
+	\item \underline{Spatial self-shielding} occurs at interface locations between materials with different absorption/transport properties. There is a reduction in flux in the absorbing material, which results in fewer total absorptions in that spatial location; the location \textit{shields} itself. \vspace*{1em}
+	
+	\item \underline{Energy self-shielding} occurs at resonance peaks. There is a reduction in flux due to the large absorption cross section. This results in fewer total absorptions over that energy range (flux is depressed). Thus, the resonance peak \textit{shields} itself.
+%Reference https://www.physicsforums.com/threads/energy-self-shielding.724795/
+	\end{itemize}
+
+\end{frame}
+
+
+% --------------------------------------------------------------
 %\subsection{Cross Section Processing}
 \begin{frame}[fragile]
   \frametitle{Cross Section Processing \cite{Bondarenko1964}}
@@ -810,16 +870,22 @@ M = 1 & \alert{534.80} & 2.69e-1 & 2.44e-2 & \alert{2.58e-2} & 3.13\\\hline
 
 
 % --------------------------------------------------------------
+\section{\scshape Strong Anisotropies}
 \begin{frame}[fragile]
   \frametitle{Current hybrid methods are insufficient}
 
 	\begin{itemize}
-	\item MC VR parameters created from adjoint deterministic flux that is a function of space and energy only \vspace*{1 em}
-	\item Angular dependence of the importance function is not retained, otherwise the map would be very large (tens or hundreds of GB) and more costly and complex to use in the Monte Carlo simulation \vspace*{1 em}
-	\item Drawback: within a given space/energy cell, the map provides the average importance of a particle moving in any direction through the cell -- excluding information about how particles move toward the objective
+	\item MC VR parameters created from adjoint deterministic scalar flux that is a function of \textit{space and energy only} \vspace*{1 em}
+	\item Angular dependence of the importance function is not retained, otherwise the map would be 
+	\begin{itemize}
+	  \item very large (tens or hundreds of GB) and
+	  \item  more costly and complex to use in the MC simulation 
+	\end{itemize}
+	\item Drawback: within a given space/energy cell, the map provides the average importance of a particle moving in \textit{any direction} through the cell -- excluding information about how particles move \alert{toward the objective}
 	\end{itemize}
 
 \end{frame}
+
 
 % --------------------------------------------------------------
 \begin{frame}[fragile]
@@ -849,35 +915,85 @@ M = 1 & \alert{534.80} & 2.69e-1 & 2.44e-2 & \alert{2.58e-2} & 3.13\\\hline
 
 % --------------------------------------------------------------
 \begin{frame}[fragile]
-  \frametitle{Better hybrid methods are needed}
+  \frametitle{Many attempts at resolution $\rightarrow$ \\ 
+  \hspace*{3em} Limited Success}
 
-We may be able to use angular information to improve performance; two ideas: \vspace*{1 em}
+	\begin{itemize}
+	\item Automatic WW generator in MCNP \cite{MCNP2008}
+	\item AVATAR \cite{vanRiper1997}
+	%in many cases in which anisotropies are important, including angular information will improve calculation efficiency. However, these results also showed that the simple angular CADIS implementation is not accurate enough to provide the improvement necessary to be able to efficiently execute the used fuel cask calculations we would like to perform to improve facility monitoring design and operation. 
+	\item LIFT \cite{Turner1997}
+	%derived from the zero-variance method and  uses an approximation of the adjoint flux that is piecewise continuous in angle. LIFT only captures linearly anisotropic scattering, which is not enough for our needs and is somewhat difficult to use
+	\item Cooper and Larsen's global weight windows \cite{Cooper2001}
+	\item FW/CADIS
+	\item Resonance Factor method \cite{Wilson2015}
+	\end{itemize}
+    All of these have worked in \textit{some} situations\\
+    They often require \textit{significant} user expertise	
+	
+    \vspace*{1 em}
+    \underline{Better hybrid methods are needed}: \alert{two ideas}.
 
+\end{frame}
+
+% --------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Integration weighting}
+
+    Different integration plan captures angles in scalar flux creation	
+	\begin{align*}
+		\phi^{\dagger}(\ve{r},E) &= \int \psi^{\dagger}(\vOmega, 
+		\ve{r},E) d\vOmega \qquad  \qquad \qquad \text{original}\\
+		 %
+		\phi^{\dagger}(\ve{r},E) &= \frac{\int \psi(\vOmega, \ve{r},E)
+		 \psi^{\dagger}(\vOmega, \ve{r},E) d\vOmega}{\int \psi(\vOmega, 
+		 \ve{r},E)  d\vOmega} \qquad \text{new}
+	\end{align*}
+%Note that these two calculations can be completed concurrently. Then, the adjoint scalar fluxes will be computed by angularly integrating the product of the forward and adjoint angular fluxes to account for the directions in which the particles will actually be traveling at any given location/energy:
+%will provide importance values that more accurately reflect the average importance of particles that will be transported in the final Monte Carlo calculation, yielding faster Monte Carlo run times.
+
+    \pause
+    Major challenges and areas of investigation:
 	\begin{enumerate}
-	\item More effectively capture angles in scalar flux creation
-		\begin{equation}
-		\phi^{\dagger}(\ve{r},E) = \frac{\int \psi(\vOmega, \ve{r},E) \psi^{\dagger}(\vOmega, \ve{r},E) d\vOmega}{\int \psi(\vOmega, \ve{r},E)  d\vOmega}
-		\end{equation}
-
-	\item Use a formulation that is more flexible in the ways that 
-	it handles quadrature: new LDO equations \cite{Ahrens2014}
+	\item Data storage and handling (many GBs)
+	\item More, less, or differently sensitive to 
+	  \begin{itemize}
+	  \item quality of the discrete ordinates calculation?
+	  \item ray effects?
+	  \end{itemize}
 	\end{enumerate}
 
 \end{frame}
 
-
-
-% --------------------------------------------------------------
 % --------------------------------------------------------------
 \begin{frame}[fragile]
-  \frametitle{Better hybrid methods are needed}
+  \frametitle{Lagrange discrete ordinate equations}
+
+    Use a formulation that is more flexible in the ways that 
+	it handles quadrature: new LDO equations \cite{Ahrens2014}
+	\vspace*{1 em}
+	
+	\begin{itemize}
+	\item Re-derivation of $S_N$ with an \alert{interpolatory quadrature framework}
+	\item Allows evaluation at directions not on quadrature set
+	\item Can use \alert{asymmetric angles}
+	\item No need to store spherical harmonic moments
+	\item May be useful for more accurately capturing strong anisotropies
+	\end{itemize}
+
+\end{frame}
+
+% --------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Method implementation}
 
   	\begin{itemize}
     \item The space- and energy-dependent importance map will be normalized and 
-    source biasing parameters will be generated in a manner similar to the current
-     implementation of hybrid methods \vspace*{1 em}
+     source biasing parameters will be generated in the \alert{same ways} as
+     the current implementation of FW/CADIS \vspace*{1 em}
 	\item Immediately useful; widely applicable \vspace*{1 em}
-	\item We will study both strategies and characterize the impact
+	\item We will study both strategies and characterize the impact\vspace*{1 em}
+	\item Will be available in SCALE \cite{SCALE} and ADVANTG \cite{Pantelias2013}
 	\end{itemize}
 	
 \end{frame}

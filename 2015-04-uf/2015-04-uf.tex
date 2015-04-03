@@ -218,7 +218,7 @@ Define response with function $f(\ve{r}, E)$ in volume $V_r$ as
 \begin{equation}
  R = \int_E \int_{V_r} f(\ve{r}, E) \phi(\ve{r}, E) dV dE 
  \label{eq:Response}
-\end{equation}
+\end{equation}\pause
 %
 \begin{columns}
   \begin{column}{0.5\textwidth}
@@ -246,7 +246,7 @@ If we let $q^{\dagger} = f(\ve{r}, E)$, then
  \label{eq:ResponseRedef}
 \end{equation}
 %
-Eq.\ \eqref{eq:ResponseRedef} expresses that $\phi^{\dagger}$ represents the expected contribution of a source particle to the response given the source, $q$.
+Eq.\ \eqref{eq:ResponseRedef} expresses that $\phi^{\dagger}$ represents the expected contribution of a source particle to the response.
 
 \end{frame}
 
@@ -282,7 +282,7 @@ Birth weights match weight targets: \underline{C}onsistent \underline{A}djoint \
 \begin{itemize}
 \item We often what to optimize solutions in all of phase space\\
 \item In this case the adjoint source needs to be a global forward solution: \underline{F}orward \underline{W}eighted-CADIS
-\end{itemize}
+\end{itemize}\pause
 %
 \begin{columns}
   \begin{column}{0.5\textwidth}
@@ -308,7 +308,6 @@ Birth weights match weight targets: \underline{C}onsistent \underline{A}djoint \
   \end{column}
 \end{columns}
 \vspace*{1 em}
-\pause
 For example
 %
 \begin{equation}
@@ -323,8 +322,7 @@ For example
 \begin{frame}[fragile]
   \frametitle{Challenges}
 
-	FW-CADIS works well for \textbf{most} deep penetration
-	shielding problems...
+	FW-CADIS works well for \textbf{most} shielding problems...
 	%
 	\begin{columns}
   	\begin{column}{0.5\textwidth}
@@ -359,7 +357,7 @@ For example
   	\begin{column}{0.45\textwidth}
   	\begin{center}
   	\begin{figure}
-  		\includegraphics[height=2in,clip]{../figs/streaming-Air}
+  		\includegraphics[height=2in,clip]{../figs/plate-badVR}
   		\caption{MC 95\% CI RE using FW-CADIS, plate \cite{Wilson2015}}
   	\end{figure}
 	\end{center}
@@ -368,16 +366,16 @@ For example
  	\begin{column}{0.5\textwidth}
   	\begin{center}
   	\begin{itemize}
-		\item FW-CADIS only includes space and energy, \textit{not angle} \vspace*{0.5 em}
-		\pause
-		\item An example case: 
+  		\item An example case: 
 		\begin{itemize}
 		    \item Energy self-shieding + 
 		    \item Spatial self-shielding
 		\end{itemize}
 		\item High relative error through location of interest \vspace*{0.5 em}
 		\pause
-		\item \textbf{Need} new method based on FW-CADIS
+		\item FW-CADIS only includes space and energy, \textit{not angle} \vspace*{0.5 em}
+		\pause
+		\item We're also using multigroup x-secs
 	\end{itemize}
   	\end{center}
   	\end{column}
@@ -387,19 +385,19 @@ For example
 
 
 % --------------------------------------------------------------
-% --------------------------------------------------------------
+%% --------------------------------------------------------------
 \section{\scshape Self-Shielding}
-\begin{frame}[fragile]
-  \frametitle{Self-shielding (quick aside)}
-
-	\begin{itemize}
-	\item \underline{Spatial self-shielding} occurs at interface locations between materials with different absorption/transport properties. There is a reduction in flux in the absorbing material, which results in fewer total absorptions in that spatial location; the location \textit{shields} itself. \vspace*{1em}
-	
-	\item \underline{Energy self-shielding} occurs at resonance peaks. There is a reduction in flux due to the large absorption cross section. This results in fewer total absorptions over that energy range (flux is depressed). Thus, the resonance peak \textit{shields} itself.
-%Reference https://www.physicsforums.com/threads/energy-self-shielding.724795/
-	\end{itemize}
-
-\end{frame}
+%\begin{frame}[fragile]
+%  \frametitle{Self-shielding (quick aside)}
+%
+%	\begin{itemize}
+%	\item \underline{Spatial self-shielding} occurs at interface locations between materials with different absorption/transport properties. There is a reduction in flux in the absorbing material, which results in fewer total absorptions in that spatial location; the location \textit{shields} itself. \vspace*{1em}
+%	
+%	\item \underline{Energy self-shielding} occurs at resonance peaks. There is a reduction in flux due to the large absorption cross section. This results in fewer total absorptions over that energy range (flux is depressed). Thus, the resonance peak \textit{shields} itself.
+%%Reference https://www.physicsforums.com/threads/energy-self-shielding.724795/
+%	\end{itemize}
+%
+%\end{frame}
 
 
 % --------------------------------------------------------------

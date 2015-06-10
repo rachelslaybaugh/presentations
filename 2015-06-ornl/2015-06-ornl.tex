@@ -84,7 +84,7 @@
 \end{frame}
 
 
-% As you prepare your presentation, keep in mind that most of the students won’t have a radiation transport background so a couple slides on “what radiation transport is”, “why its needed”, and “where it’s used” would be nice :).
+% As you prepare your presentation, keep in mind that most of the students won’t have a radiation transport background so a couple slides on “what radiation transport is”, “why it's needed”, and “where it’s used” would be nice :).
 
 % --------------------------------------------------------------
 \begin{frame}[fragile]{Outline}
@@ -120,9 +120,34 @@
 
 \end{frame}
 
+
 % --------------------------------------------------------------
 % --------------------------------------------------------------
 \section{\scshape Hybrid Methods}
+%\subsection{Motivation}
+\begin{frame}[fragile]
+  \frametitle{Boltzmann transport equation}
+
+\textit{Where} are all the neutrons? \textit{Why} do we care?
+\pause
+\begin{align}
+\vOmega \cdot \nabla \psi(\vec{r}, E, \vOmega) &+
+\Sigma_t \psi(\vec{r}, E, \vOmega) = S(\vec{r}, E, \vOmega) \:+\nonumber\\
+%
+& \int_{4\pi} d\vOmega' \int_0^{\infty} dE'\: \Sigma_s(E', \vOmega' \rightarrow E, \vOmega) \psi(\vec{r}, E', \vOmega') \nonumber
+\end{align}
+
+\begin{itemize}
+\item $\psi(\vec{r}, E, \vOmega)$ is the angular neutron flux in neutrons per unit length squared per steradian,
+\item $\Sigma$s are the probabilities of interaction (total or scattering) with units of inverse length,
+\item $S(\vec{r}, E, \vOmega)$ is a fixed source, and
+\item $\phi(\vec{r}, E)$ (used later) is the scalar neutron flux
+\end{itemize}
+
+\end{frame}
+
+% --------------------------------------------------------------
+%\section{\scshape Hybrid Methods}
 %\subsection{Motivation}
 \begin{frame}[fragile]
   \frametitle{Project motivation}
@@ -148,30 +173,6 @@
 
 \end{frame}
 
-
-% --------------------------------------------------------------
-% --------------------------------------------------------------
-%\section{\scshape Hybrid Methods}
-%\subsection{Motivation}
-\begin{frame}[fragile]
-  \frametitle{Boltzmann transport equation}
-
-\textit{Where} are all the neutrons? \textit{Why} do we care?
-\pause
-\begin{align}
-\vOmega \cdot \nabla \psi(\vec{r}, E, \vOmega) &+
-\Sigma_t \psi(\vec{r}, E, \vOmega) = S(\vec{r}, E, \vOmega) \:+\nonumber\\
-%
-& \int_{4\pi} d\vOmega' \int_0^{\infty} dE'\: \Sigma_s(E', \vOmega' \rightarrow E, \vOmega) \psi(\vec{r}, E', \vOmega') \nonumber
-\end{align}
-
-\begin{itemize}
-\item $\psi(\vec{r}, E, \vOmega)$ is the angular neutron flux in neutrons per unit length squared per steradian,
-\item $\Sigma$s are the probabilities of interaction (total or scattering) with units of inverse length, and
-\item $S(\vec{r}, E, \vOmega)$ is a fixed source
-\end{itemize}
-
-\end{frame}
 
 % --------------------------------------------------------------
 \begin{frame}[fragile]
@@ -300,8 +301,8 @@ Birth weights match weight targets: \underline{C}onsistent \underline{A}djoint \
   \frametitle{FW-CADIS \cite{Wagner2007}}
 
 \begin{itemize}
-\item We often what to optimize solutions in all of phase space\\
-\item In this case the adjoint source needs to be a global forward solution: \underline{F}orward \underline{W}eighted-CADIS
+\item We often want to optimize solutions in \textbf{all} of phase space\\
+\item Then, the adjoint source needs to be a global forward solution: \underline{F}orward \underline{W}eighted-CADIS
 \end{itemize}\pause
 %
 \begin{columns}
@@ -407,17 +408,17 @@ For example
 % --------------------------------------------------------------
 %% --------------------------------------------------------------
 \section{\scshape Self-Shielding}
-%\begin{frame}[fragile]
-%  \frametitle{Self-shielding (quick aside)}
-%
-%	\begin{itemize}
-%	\item \underline{Spatial self-shielding} occurs at interface locations between materials with different absorption/transport properties. There is a reduction in flux in the absorbing material, which results in fewer total absorptions in that spatial location; the location \textit{shields} itself. \vspace*{1em}
-%	
-%	\item \underline{Energy self-shielding} occurs at resonance peaks. There is a reduction in flux due to the large absorption cross section. This results in fewer total absorptions over that energy range (flux is depressed). Thus, the resonance peak \textit{shields} itself.
-%%Reference https://www.physicsforums.com/threads/energy-self-shielding.724795/
-%	\end{itemize}
-%
-%\end{frame}
+\begin{frame}[fragile]
+  \frametitle{Self-shielding (quick aside)}
+
+	\begin{itemize}
+	\item \underline{Spatial self-shielding} occurs at interface locations between materials with different absorption/transport properties. There is a reduction in flux in the absorbing material, which results in fewer total absorptions in that spatial location; the location \textit{shields} itself. \vspace*{1em}
+	
+	\item \underline{Energy self-shielding} occurs at resonance peaks. There is a reduction in flux due to the large absorption cross section. This results in fewer total absorptions over that energy range (flux is depressed). Thus, the resonance peak \textit{shields} itself.
+%Reference https://www.physicsforums.com/threads/energy-self-shielding.724795/
+	\end{itemize}
+
+\end{frame}
 
 
 % --------------------------------------------------------------
@@ -500,7 +501,7 @@ For example
 	\item 53 cm $\times$ 50 cm $\times$ 140 cm 
 	\item Uniform in x except plate (25-28 cm in x; 30-130 cm in z)
 	\item Uniform in y
-	\item U-235 fission spectrum; homogenized U, Zr, and H2O
+	\item U-235 fission spectrum; homogenized U, Zr, and H$_2$O
 	\vspace*{1 em}
 	\item MC21, MCNP, and PARTISN
 	\item ENDF/B-VII data (all codes)
@@ -735,7 +736,7 @@ F2e11 & 2e11 & 18,367.67 & 0.343 & 4.00e-3 & 4.62e-4 & 3.40\\\hline
 	\end{itemize}
 
 
-A sufficiently accurate PARTISN solution would be better (probably), but prohibitively expensive.
+A sufficiently-accurate PARTISN solution would be better (probably), but prohibitively expensive.
   
 \end{frame}
 
@@ -744,6 +745,10 @@ A sufficiently accurate PARTISN solution would be better (probably), but prohibi
 %\subsection{Resonance Factor Method}
 \begin{frame}[fragile]
   \frametitle{Resonance factor method \cite{Wilson2015}}
+  
+  \alert{New Method} developed to deal with this. 
+  \vspace{0.5 em}
+  
   	Apply renormalization factor to FW-CADIS source $q^{\dagger}_{FWC}$: 
 	%
 	\begin{equation}
@@ -760,11 +765,8 @@ A sufficiently accurate PARTISN solution would be better (probably), but prohibi
 	\pause
 	\vspace*{1 em}
 	The resulting adjoint flux is used to make importances
-
 	
 	%Implementation: use $\phi_{res(\micro_0)}(\ve{r},E)$  in all locations where $\phi$ would be used in the FW-CADIS method
-	
-	
 	
 \end{frame}
 
@@ -1042,7 +1044,7 @@ M = 1 & \alert{534.80} & 0.269 & 2.44e-2 & \alert{2.58e-2} & 3.13\\\hline
 % --------------------------------------------------------------
 \begin{frame}[allowframebreaks]{References}
 	\bibliographystyle{unsrt}
-	\bibliography{2015-04-uf}
+	\bibliography{2015-06-ornl}
 \end{frame}
 
 \end{document}

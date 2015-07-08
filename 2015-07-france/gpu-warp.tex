@@ -112,12 +112,12 @@
 	\pause
 	\item{Compared to more common central processing units (CPUs), GPUs have higher aggregate memory
 	bandwidth, much higher floating-point operations per second (FLOPS), and lower energy consumption
-	per FLOP \cite{warp2015}}
+	per FLOP \cite{warp}}
 	\pause
 	\item{CPU-optimized parallel algorithms are not directly portable to GPUs}
 	\pause
 	\item{Particle transport codes need to be rewritten to execute efficiently on GPUs 
-	\cite{warp2015}}
+	\cite{warp}}
 	\end{itemize}
 \end{frame}
 
@@ -130,11 +130,11 @@
 	locations throughout their histories}
 		\begin{itemize}
 		\pause
-		\item{WARP, originally developed at UC Berkeley, employs ray tracing \cite{warp2015}}
+		\item{WARP, originally developed at UC Berkeley, employs ray tracing \cite{warp}}
 		\end{itemize}
 	\pause
 	\item{Woodcock delta-tracking is another, slightly different, method for following neutrons 
-	\cite{serp_delta}}
+	\cite{serpent}}
 		\begin{itemize}
 		\pause
 		\item{Has been implemented in CPU-based codes, but never before on a GPU-based code}
@@ -148,7 +148,7 @@
 
 % --------------------------------------------------------------
 \section{\scshape WARP}
-\begin{frame}{WARP \cite{warp2015}}
+\begin{frame}{WARP \cite{warp}}
 	\begin{itemize}
 	\pause
 	\item{``Weaving All the Random Particles"}
@@ -170,7 +170,7 @@
 
 
 % --------------------------------------------------------------
-\begin{frame}{Ray Tracing in WARP \cite{warp2015}}
+\begin{frame}{Ray Tracing in WARP \cite{warp}}
 	\begin{itemize}
 	\pause
 	\item{WARP uses the NVIDIA OptiX ray tracing framework for geometry representation}
@@ -181,14 +181,14 @@
 		\item{Allows for user-written applications}
 		\pause
 		\item{OptiX engine composed of host-based API that defines ray tracing data structures 
-		combined with a CUDA C-based programming system that handles the rays \cite{optix_man}}
+		combined with a CUDA C-based programming system that handles the rays \cite{optix-man}}
 		\end{itemize}
 	\end{itemize}
 \end{frame}
 
 
 % --------------------------------------------------------------
-\begin{frame}{Ray Tracing in WARP \cite{warp2015}}
+\begin{frame}{Ray Tracing in WARP \cite{warp}}
 	\pause
 	\begin{itemize}
 	\item{Material information updated only when sampled interaction distance greater than nearest
@@ -212,7 +212,7 @@
 
 
 % --------------------------------------------------------------
-\begin{frame}{Material Query in WARP \cite{warp2015}}
+\begin{frame}{Material Query in WARP \cite{warp}}
 \pause
 \begin{columns}
 	\column{0.475\linewidth}
@@ -246,7 +246,7 @@
 
 
 % --------------------------------------------------------------
-\begin{frame}{Issues with Ray Tracing \cite{warp2015}}
+\begin{frame}{Issues with Ray Tracing \cite{warp}}
 	\begin{itemize}
 	\pause
 	\item{Cell descriptions are mathematically exact, but are represented by inexact numbers}
@@ -274,7 +274,7 @@
 
 
 % --------------------------------------------------------------
-\begin{frame}{Issues with Ray Tracing \cite{warp2015}}
+\begin{frame}{Issues with Ray Tracing \cite{warp}}
 	\begin{itemize}
 	\pause
 	\item{Material query inaccuracies can be caused by scene epsilon in certain geometric 
@@ -299,7 +299,7 @@
 
 
 % --------------------------------------------------------------
-\begin{frame}{Issues with Ray Tracing \cite{warp2015}}
+\begin{frame}{Issues with Ray Tracing \cite{warp}}
 	\begin{itemize}
 	\pause
 	\item{One other issue in using the algorithm occurs when cells have coincident surfaces}
@@ -331,7 +331,7 @@
 	\pause
 	\item{Introduced by Woodcock in the 1960's}
 	\pause
-	\item{Employed in Serpent in combination with ray tracing \cite{serp_delta}}
+	\item{Employed in Serpent in combination with ray tracing \cite{serpent}}
 	\pause
 	\item{Neutron path lengths are sampled as:}
 		\begin{equation*}
@@ -350,7 +350,7 @@
 
 
 % --------------------------------------------------------------
-\begin{frame}{Virtual Collisions and the Majorant Cross Section \cite{serp_delta}}
+\begin{frame}{Virtual Collisions and the Majorant Cross Section \cite{serpent}}
 	\begin{itemize}
 	\pause
 	\item{``Virtual collisions" are scattering reactions that preserve neutron energy and direction}
@@ -378,7 +378,7 @@
 
 
 % --------------------------------------------------------------
-\begin{frame}{More on the Majorant \cite{serp_delta}}
+\begin{frame}{More on the Majorant \cite{serpent}}
 	\begin{equation*}
         \begin{aligned}
         \Sigma_{maj}(E) &= \Sigma'_{tot,1}(E) = \Sigma'_{tot,2}(E) = \ldots = \Sigma'_{tot,M}(E) \\
@@ -407,7 +407,7 @@
 
 
 % --------------------------------------------------------------
-\begin{frame}{Advantages of Delta-tracking \cite{serp_delta}}
+\begin{frame}{Advantages of Delta-tracking \cite{serpent}}
 	\begin{itemize}
 	\pause
 	\item{Random walk can be continued over material boundaries}
@@ -430,7 +430,7 @@
 
 
 % --------------------------------------------------------------
-\begin{frame}{Disadvantages of Delta-tracking \cite{serp_delta}}
+\begin{frame}{Disadvantages of Delta-tracking \cite{serpent}}
 	\begin{itemize}
 	\pause
         \item{Localized heavy absorbers can result in poor efficiency of resampling loop}
@@ -622,7 +622,7 @@
 	\item{Long-term interest is in cases where delta-tracking is faster than ray tracing on CPUs}
 		\begin{itemize}
 		\pause
-		\item{Heterogeneous geometry configurations \cite{serp_delta}}
+		\item{Heterogeneous geometry configurations \cite{serpent}}
 		\end{itemize}
 	\pause
 	\item{Preliminary work has been done to implement delta-tracking for heterogeneous (multiple 
@@ -708,10 +708,10 @@ http://nssc.berkeley.edu/.
 %\end{frame}
 
 % --------------------------------------------------------------
-%\begin{frame}[plain,noframenumbering]{References}
-%	\bibliographystyle{unsrt}
-%	\bibliography{gpu-warp}
-%\end{frame}
+\begin{frame}[plain,noframenumbering]{References}
+	\bibliographystyle{unsrt}
+	\bibliography{gpu-warp}
+\end{frame}
 
 
 %% --------------------------------------------------------------

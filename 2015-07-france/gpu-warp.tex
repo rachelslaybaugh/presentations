@@ -1,5 +1,5 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\documentclass[xcolor=x11names,compress, handout]{beamer}
+\documentclass[xcolor=x11names, compress, handout]{beamer}
 
 \definecolor{CoolBlack}{rgb}{0.0, 0.18, 0.39}
 \definecolor{byellow}{rgb}{0.55037, 0.38821, 0.06142}
@@ -9,13 +9,44 @@
 \usepackage{Tabbing}
 \usetikzlibrary{decorations.fractals}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setbeamerfont{title like}{shape=\scshape}
+\setbeamerfont{frametitle}{shape=\scshape}
+
+\setbeamercolor*{lower separation line head}{bg=CoolBlack}
+\setbeamercolor*{normal text}{fg=black,bg=white}
+\setbeamercolor*{alerted text}{fg=dgreen} % just testing; I think this looks better
+\setbeamercolor*{example text}{fg=black}
+\setbeamercolor*{structure}{fg=black}
+
+\setbeamercolor*{palette tertiary}{fg=black,bg=black!10}
+\setbeamercolor*{palette quaternary}{fg=black,bg=black!10}
+
+% Margins
+\usepackage{changepage}
+
+\mode<presentation>
+{
+  \definecolor{berkeleyblue}{HTML}{003262}
+  \definecolor{berkeleygold}{HTML}{FDB515}
+  \usetheme{Boadilla}      % or try Darmstadt, Madrid, Warsaw, Boadilla...
+  %\usecolortheme{dove} % or try albatross, beaver, crane, ...
+  \setbeamercolor{structure}{fg=berkeleyblue,bg=berkeleygold}
+  \setbeamercolor{palette primary}{fg=berkeleyblue,bg=berkeleygold} % changed this
+  \setbeamercolor{palette secondary}{fg=berkeleyblue,bg=berkeleygold} % changed this
+  \setbeamercolor{palette tertiary}{bg=berkeleyblue,fg=white} % changed this
+  \usefonttheme{structurebold}  % or try serif, structurebold, ...
+  \useinnertheme{circles}
+  \setbeamertemplate{navigation symbols}{}
+  \setbeamertemplate{caption}[numbered]
+  \usebackgroundtemplate{}
+}
 
 %% Beamer Layout %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \useoutertheme[subsection=false,shadow]{miniframes}
-\useinnertheme{default}
-\usefonttheme{serif}
-\usepackage{palatino}
-\usepackage{tabu}
+%\useinnertheme{default}
+%\usefonttheme{serif}
+%\usepackage{palatino}
+%\usepackage{tabu}
 
 % addition of color
 \usepackage{xcolor}
@@ -25,14 +56,6 @@
 \setbeamerfont{title like}{shape=\scshape}
 \setbeamerfont{frametitle}{shape=\scshape}
 
-\setbeamercolor*{lower separation line head}{bg=CoolBlack} 
-\setbeamercolor*{normal text}{fg=black,bg=white} 
-\setbeamercolor*{alerted text}{fg=dgreen} 
-\setbeamercolor*{example text}{fg=black} 
-\setbeamercolor*{structure}{fg=black} 
- 
-\setbeamercolor*{palette tertiary}{fg=black,bg=black!10} 
-\setbeamercolor*{palette quaternary}{fg=black,bg=black!10} 
 
 %\usepackage[sorting=none]{biblatex}
 \usepackage{fancyvrb}
@@ -53,12 +76,12 @@
 \renewcommand{\>}{\end{column}}
 
 % adding slide numbers
-\addtobeamertemplate{navigation symbols}{}{%
-    \usebeamerfont{footline}%
-    \usebeamercolor[fg]{footline}%
-    \hspace{1em}%
-    \insertframenumber/\inserttotalframenumber
-}
+%\addtobeamertemplate{navigation symbols}{}{%
+%    \usebeamerfont{footline}%
+%    \usebeamercolor[fg]{footline}%
+%    \hspace{1em}%
+%    \insertframenumber/\inserttotalframenumber
+%}
 
 % equation stuff
 \usepackage{mathrsfs}
@@ -70,6 +93,10 @@
 %
 %\bibliography{presentation}
 %\setbeamertemplate{bibliography item}[text]
+% title stuff for footer
+\title{Developments in WARP}
+\author{R.\ N.\ Slaybaugh et al.}
+\date{10 July 2015}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -78,12 +105,13 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
-\title[Developments in WARP]{Developments in the GPU-accelerated WARP Monte Carlo Neutron Transport Code}
+\title{Developments in the GPU-accelerated WARP Monte Carlo Neutron Transport Code}
 \author{\includegraphics[height=2cm]
 {../bk-eps-converted-to}\\R.\ N.\ Slaybaugh and K.\ L.\ Rowland, UC Berkeley; \\R.\ M.\ Bergmann, Paul Shearer Institute}
 \date{10 July 2015 \\ Ecole Polytechnique}
 \titlepage
 \end{frame}
+
 
 % --------------------------------------------------------------
 \begin{frame}[fragile]{Outline}
@@ -106,7 +134,6 @@
 \section{\scshape Motivation}
 \begin{frame}{Motivation}
 	\begin{itemize}
-	\pause
 	\item{Graphics processing units (GPUs) have gradually increased in computational power from small,
 	job-specific boards to programmable powerhouses}
 	\pause
@@ -125,7 +152,6 @@
 % --------------------------------------------------------------
 \begin{frame}{Motivation}
 	\begin{itemize}
-	\pause
 	\item{Most Monte Carlo neutron transport codes use ray tracing algorithms to track neutron 
 	locations throughout their histories}
 		\begin{itemize}
@@ -150,7 +176,6 @@
 \section{\scshape WARP}
 \begin{frame}{WARP \cite{warp}}
 	\begin{itemize}
-	\pause
 	\item{``Weaving All the Random Particles"}
 	\pause
 	\item{Originally developed by Dr. Ryan Bergmann}
@@ -172,7 +197,6 @@
 % --------------------------------------------------------------
 \begin{frame}{Ray Tracing in WARP \cite{warp}}
 	\begin{itemize}
-	\pause
 	\item{WARP uses the NVIDIA OptiX ray tracing framework for geometry representation}
 	\pause
 	\item{OptiX is a highly-optimized, scalable framework developed for building applications on GPUs}
@@ -189,7 +213,6 @@
 
 % --------------------------------------------------------------
 \begin{frame}{Ray Tracing in WARP \cite{warp}}
-	\pause
 	\begin{itemize}
 	\item{Material information updated only when sampled interaction distance greater than nearest
 	surface distance}
@@ -213,25 +236,24 @@
 
 % --------------------------------------------------------------
 \begin{frame}{Material Query in WARP \cite{warp}}
-\pause
+
 \begin{columns}
-	\column{0.475\linewidth}
+	\column{0.45\linewidth}
 	\begin{figure}[h!]
-	\includegraphics[width=2.5 in]{../figs/whereami}
-	\caption{The point-in-polygon-like algorithm for determining the entering cell/material number by 
+	\includegraphics[width=2.25 in]{../figs/whereami}
+	\caption*{The point-in-polygon-like algorithm for determining the entering cell/material number by 
 	using ray tracing. \label{whereami}}
 	\end{figure}
-	\column{0.525\linewidth}
+	\column{0.55\linewidth}
 	\begin{itemize}
 	\pause
-	\item{List of surface intersection generated by iteratively ray tracing along neutron direction of
-	flight}
+	\item{List of surface intersection generated by iteratively ray tracing along neutron path}
 	\pause
 	\item{Intersections ordered by proximity}
 	\pause
 	\item{Tracing stopped once ray hits predefined outer cell}
 	\pause
-	\item{Double entires removed from list}
+	\item{Double entries removed}
 	\pause
 	\item{Result is list of cells in which neutron is nested}
 		\begin{itemize}
@@ -248,7 +270,6 @@
 % --------------------------------------------------------------
 \begin{frame}{Issues with Ray Tracing \cite{warp}}
 	\begin{itemize}
-	\pause
 	\item{Cell descriptions are mathematically exact, but are represented by inexact numbers}
 		\begin{itemize}
 		\pause
@@ -276,23 +297,16 @@
 % --------------------------------------------------------------
 \begin{frame}{Issues with Ray Tracing \cite{warp}}
 	\begin{itemize}
-	\pause
 	\item{Material query inaccuracies can be caused by scene epsilon in certain geometric 
 	configurations}
 		\begin{itemize}
 		\pause
 		\item{If object thickness is less than scene epsilon, material query may only count a
 		single intersection of the object}
-		\pause
 		\item{That object's material is then determined instead of the object being skipped}
-		\pause
 		\item{Can be avoided by performing material query in z-direction only}
-		\pause
-		\item{Currently, all objects in WARP are z-aligned prisms or spheres}
-			\begin{itemize}
-			\pause
-			\item{Applicable to reactor geometries}
-			\end{itemize}
+		\item{Currently, all objects in WARP are z-aligned prisms or spheres 
+		      (applicable to reactor geometries)}
 		\end{itemize}
 	\end{itemize}
 \end{frame}
@@ -301,7 +315,6 @@
 % --------------------------------------------------------------
 \begin{frame}{Issues with Ray Tracing \cite{warp}}
 	\begin{itemize}
-	\pause
 	\item{One other issue in using the algorithm occurs when cells have coincident surfaces}
 		\begin{itemize}
 		\pause
@@ -328,10 +341,9 @@
 % --------------------------------------------------------------
 \begin{frame}{Delta-tracking}
 	\begin{itemize}
-	\pause
 	\item{Introduced by Woodcock in the 1960's}
 	\pause
-	\item{Employed in Serpent in combination with ray tracing \cite{serpent}}
+	\item{Employed in Serpent in combination with ray tracing \cite{serpent} (Optimal combination results in 2 -- 10$\times$ speedup)}
 	\pause
 	\item{Neutron path lengths are sampled as:}
 		\begin{equation*}
@@ -352,7 +364,6 @@
 % --------------------------------------------------------------
 \begin{frame}{Virtual Collisions and the Majorant Cross Section \cite{serpent}}
 	\begin{itemize}
-	\pause
 	\item{``Virtual collisions" are scattering reactions that preserve neutron energy and direction}
 		\pause
 		\begin{itemize}
@@ -409,7 +420,6 @@
 % --------------------------------------------------------------
 \begin{frame}{Advantages of Delta-tracking \cite{serpent}}
 	\begin{itemize}
-	\pause
 	\item{Random walk can be continued over material boundaries}
 	\pause
 	\item{Geometry routine is reduced to determining the material at each collision point}
@@ -432,7 +442,6 @@
 % --------------------------------------------------------------
 \begin{frame}{Disadvantages of Delta-tracking \cite{serpent}}
 	\begin{itemize}
-	\pause
         \item{Localized heavy absorbers can result in poor efficiency of resampling loop}
                 \begin{itemize}
                 \pause
@@ -459,7 +468,6 @@
 
 % --------------------------------------------------------------
 \begin{frame}[fragile]{Implementation of Delta-tracking in WARP}
-	\pause
 	Calculation of the majorant cross section:
 	\vspace{5 mm}
 	\pause
@@ -482,7 +490,6 @@
 
 % --------------------------------------------------------------
 \begin{frame}[fragile]{Implementation of Delta-tracking in WARP}
-	\pause
 	Calculation of the total macroscopic cross section:
 	\vspace{5 mm}
 	\pause
@@ -501,7 +508,6 @@
 
 % --------------------------------------------------------------
 \begin{frame}[fragile]{Implementation of Delta-tracking in WARP}
-	\pause
 	Path length sampling:
 	\vspace{2 mm}
 	\pause
@@ -528,7 +534,6 @@
 \section{\scshape Results}
 \begin{frame}{Results}
 	\begin{itemize}
-	\pause
 	\item{All runs done on an NVIDIA GeForce GTX TITAN Black graphics card}
 	\pause
 	\item{20 inactive cycles, 40 active cycles}
@@ -545,7 +550,6 @@
 % --------------------------------------------------------------
 \begin{frame}{Results - Jezebel}
 	\begin{itemize}
-	\pause
 	\item{Bare plutonium sphere, considered a standard criticality test \cite{nea1995}}
 	\pause
 	\item{Geometry configuration is a Pu-239 sphere with a radius of 5.1 cm}
@@ -563,14 +567,15 @@
 \begin{frame}{Results - Jezebel}
 	\begin{figure}[h!]
 	\includegraphics[width=0.9\linewidth]{../figs/godiva}
-	\caption{Normalized flux spectra for the Jezebel configuration generated by both versions of WARP.
+	\caption*{Normalized flux spectra for the Jezebel configuration generated by both versions of WARP.
 	\label{godiva}}
 	\end{figure}
 \end{frame}
 
+
+% --------------------------------------------------------------
 \begin{frame}{Results - Homogenized Block}
 	\begin{itemize}
-	\pause
 	\item{$20\times20\times20$ cm cube}
 	\pause
 	\item{Homogeneous mixture of 10\% $\ce{^{235}U}$ enriched $\ce{UO_2}$ and water at a 1:1 ratio}
@@ -590,7 +595,7 @@
 \begin{frame}{Results - Homogenized Block}
 	\begin{figure}[h!]
 	\includegraphics[width=0.9\linewidth]{../figs/homfuel}
-	\caption{Normalized flux spectra for the homogenized block configuration generated by both 
+	\caption*{Normalized flux spectra for the homogenized block configuration generated by both 
 	versions of WARP. \label{homfuel}}
 	\end{figure}
 \end{frame}
@@ -598,7 +603,6 @@
 
 % --------------------------------------------------------------
 \begin{frame}{Discussion}
-	\pause
 	\begin{itemize}
 	\item{For homogeneous configurations, results are accurate}
 	\pause
@@ -618,7 +622,6 @@
 % --------------------------------------------------------------
 \begin{frame}{Heterogeneous Geometry Configurations}
 	\begin{itemize}
-	\pause
 	\item{Long-term interest is in cases where delta-tracking is faster than ray tracing on CPUs}
 		\begin{itemize}
 		\pause
@@ -637,7 +640,6 @@
 \section{\scshape Summary \& Future Work}
 \begin{frame}{Summary}
 	\begin{itemize}
-	\pause
 	\item{WARP is a GPU-based Monte Carlo code that uses a ray tracing algorithm}
 		\begin{itemize}
 		\pause
@@ -660,7 +662,6 @@
 % --------------------------------------------------------------
 \begin{frame}{Future Work}
 	\begin{itemize}
-	\pause
 	\item{Investigate heterogeneous geometry configurations}
 	\pause
 	\item{Retest delta-tracking if WARP moves to universe-based geometry similar to MCNP and Serpent}
@@ -733,7 +734,7 @@ http://nssc.berkeley.edu/.
 %\begin{frame}[plain,noframenumbering]{Results - Pin Cell (continued)}
 %	\begin{figure}[h!]
 %	\includegraphics[width=0.9\linewidth]{../figs/pincell-fuel}
-%	\caption{Normalized flux spectra for the \textbf{$\ce{UO_2}$ cylinder} in the pin cell 
+%	\caption*{Normalized flux spectra for the \textbf{$\ce{UO_2}$ cylinder} in the pin cell 
 %	configuration generated by both versions of WARP. \label{pincell-fuel}}
 %	\end{figure}
 %\end{frame}
@@ -743,7 +744,7 @@ http://nssc.berkeley.edu/.
 %\begin{frame}[plain,noframenumbering]{Results - Pin Cell (continued)}
 %	\begin{figure}[h!]
 %	\includegraphics[width=0.9\linewidth]{../figs/pincell-water}
-%	\caption{Normalized flux spectra for the \textbf{water} block in the pin cell configuration 
+%	\caption*{Normalized flux spectra for the \textbf{water} block in the pin cell configuration 
 %	generated by both versions of WARP. \label{pincell-water}}
 %	\end{figure}
 %\end{frame}
@@ -767,7 +768,7 @@ http://nssc.berkeley.edu/.
 %\begin{frame}[plain,noframenumbering]{Results - Hex Assembly (continued)}
 %	\begin{figure}[h!]
 %	\includegraphics[width=0.9\linewidth]{../figs/assembly-centerpin}
-%	\caption{Normalized flux spectra for the \textbf{center pin} of a hexagonal array of $\ce{UO_2}$ 
+%	\caption*{Normalized flux spectra for the \textbf{center pin} of a hexagonal array of $\ce{UO_2}$ 
 %	pins in water generated by both versions of WARP. \label{assembly-centerpin}}
 %	\end{figure}
 %\end{frame}
@@ -775,7 +776,7 @@ http://nssc.berkeley.edu/.
 %\begin{frame}[plain,noframenumbering]{Results - Hex Assembly (continued)}
 %	\begin{figure}[h!]
 %	\includegraphics[width=0.9\linewidth]{../figs/assembly-water}
-%	\caption{Normalized flux spectra for the \textbf{water} surrounding a hexagonal array of 
+%	\caption*{Normalized flux spectra for the \textbf{water} surrounding a hexagonal array of 
 %	$\ce{UO_2}$ pins generated by both versions of WARP. \label{assembly-water}}
 %	\end{figure}
 %\end{frame}

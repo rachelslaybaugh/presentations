@@ -153,11 +153,13 @@
 	\item{Woodcock delta-tracking is another, slightly different, method for following neutrons 
 	\cite{serpent}}
 		\begin{itemize}
-		\item{Has been implemented in CPU-based codes, but never before on a GPU-based code}
+		\item{Has been implemented in CPU-based codes, but never before in a GPU-based code}
 		\end{itemize}
 	\pause
-	\item{The purpose of this work is to implement and assess the performance of delta-tracking in a
-	GPU-based Monte Carlo neutron transport code}
+	\item{Much of this talk assess the performance of delta-tracking in a
+	GPU-based Monte Carlo neutron transport code...}
+	\pause
+	\item{...and it closes with possible future directions}
 	\end{itemize}
 \end{frame}
 
@@ -776,26 +778,5 @@ http://nssc.berkeley.edu/.
 	\end{Verbatim}
 \end{frame}
 
-
-% --------------------------------------------------------------
-\begin{frame}[fragile,noframenumbering]{Implementation of Delta-tracking in WARP}
-	Path length sampling:
-	\vspace{2 mm}
-	\begin{Verbatim}[fontsize=\footnotesize]
-	samp_dist = -logf(get_rand(&rn))/majorant;
-	\end{Verbatim}
-	\pause
-	\vspace{2 mm}
-	Boundary conditions are checked, and then rejection sampling is done:
-	\vspace{2 mm}
-	\begin{Verbatim}[fontsize=\footnotesize]
-	float rn1 = get_rand(&rn);
-	if(rn1 > macro_t_total/majorant){this_rxn=800; isdone=0; tope=999999998;}
-	else{this_rxn = 0; isdone = 0;}
-	x += samp_dist * xhat;
-	y += samp_dist * yhat;
-	z += samp_dist * zhat;
-	\end{Verbatim}
-\end{frame}
 
 \end{document}

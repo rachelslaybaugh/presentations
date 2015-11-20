@@ -1,6 +1,6 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\documentclass[xcolor=x11names,compress, handout]{beamer}
+\documentclass[xcolor=x11names,compress]{beamer}
 
 \definecolor{CoolBlack}{rgb}{0.0, 0.18, 0.39}
 \definecolor{byellow}{rgb}{0.55037, 0.38821, 0.06142}
@@ -106,6 +106,7 @@
 		\item Results and wrap-up
   	\end{itemize}
 	\item MC importances with strong anisotropies
+	\item Other Projects
   \end{itemize}
   \end{column}
   \begin{column}{0.4\textwidth}
@@ -333,6 +334,7 @@ Birth weights match weight targets: \underline{C}onsistent \underline{A}djoint \
   \end{column}
 \end{columns}
 \vspace*{1 em}
+\pause
 For example
 %
 \begin{equation}
@@ -368,6 +370,7 @@ For example
   	\end{figure}
   	\end{column}
 	\end{columns}
+	%FW-CADIS was 2 orders of magnitude better than avg fom, 4 orders better than min fom, and required 2 orders of magnitude fewer particles for the same rel error.
   
 \end{frame}
 
@@ -393,14 +396,14 @@ For example
   	\begin{itemize}
   		\item An example case: 
 		\begin{itemize}
-		    \item Energy self-shieding + 
-		    \item Spatial self-shielding
+		    \item Energy self-shielding + 
+		    \item Spatial self-shielding +
+		    \item Angular collimation
 		\end{itemize}
-		\item High relative error through location of interest \vspace*{0.5 em}
-		\pause
 		\item FW-CADIS only includes space and energy, \textit{not angle} \vspace*{0.5 em}
-		\pause
 		\item We're also using multigroup x-secs
+		\pause
+	    \item Result: high relative error through location of interest \vspace*{0.5 em}
 	\end{itemize}
   	\end{center}
   	\end{column}
@@ -411,22 +414,23 @@ For example
 
 % --------------------------------------------------------------
 %% --------------------------------------------------------------
-\section{\scshape Self-Shielding}
-\begin{frame}[fragile]
-  \frametitle{Self-shielding (quick aside)}
-
-	\begin{itemize}
-	\item \underline{Spatial self-shielding} occurs at interface locations between materials with different absorption/transport properties. There is a reduction in flux in the absorbing material, which results in fewer total absorptions in that spatial location; the location \textit{shields} itself. \vspace*{1em}
-	
-	\item \underline{Energy self-shielding} occurs at resonance peaks. There is a reduction in flux due to the large absorption cross section. This results in fewer total absorptions over that energy range (flux is depressed). Thus, the resonance peak \textit{shields} itself.
-%Reference https://www.physicsforums.com/threads/energy-self-shielding.724795/
-	\end{itemize}
-
-\end{frame}
+%\section{\scshape Self-Shielding}
+%\begin{frame}[fragile]
+%  \frametitle{Self-shielding (quick aside)}
+%
+%	\begin{itemize}
+%	\item \underline{Spatial self-shielding} occurs at interface locations between materials with different absorption/transport properties. There is a reduction in flux in the absorbing material, which results in fewer total absorptions in that spatial location; the location \textit{shields} itself. \vspace*{1em}
+%	
+%	\item \underline{Energy self-shielding} occurs at resonance peaks. There is a reduction in flux due to the large absorption cross section. This results in fewer total absorptions over that energy range (flux is depressed). Thus, the resonance peak \textit{shields} itself.
+%%Reference https://www.physicsforums.com/threads/energy-self-shielding.724795/
+%	\end{itemize}
+%
+%\end{frame}
 
 
 % --------------------------------------------------------------
 %\subsection{Cross Section Processing}
+\section{\scshape Self-Shielding}
 \begin{frame}[fragile]
   \frametitle{Cross section processing \cite{Bondarenko1964}}
 
@@ -437,6 +441,8 @@ For example
 	{\langle W(u)\rangle} \:, \quad W(u) = \phi_{\infty}(u) \nonumber
  	 \label{eq:baseBondarenko}
  	\end{equation} 
+ 	% the infinite medium flux resulting from a fission source in moderator with negligible absorption
+ 	% This approach does not hold when resonances are present in a medium
  	
  	\pause
  	\item Bondarenko method uses a background cross section
@@ -450,7 +456,7 @@ For example
   	 \micro_0^{(j)}}\rangle} \nonumber
   \label{eq:ssfact}
 	\end{equation}
-	\item W(u) changed to include the  spectral difference assumption and effect of other isotopes
+	\item W(u) changed to include the spectral difference assumption ($1/\sigma_t$) and effect of other isotopes (adding $\sigma_0$)
 	\end{itemize}
 	
 \end{frame}
@@ -484,6 +490,7 @@ For example
   	&\text{\textcolor{byellow}{thin slab:}}\:\bar{l} \approx \frac{4V}{S} \qquad \text{\textcolor{byellow}{no effect:}}\:\bar{l} \approx \text{large} \nonumber
 	\end{align}
 	\end{itemize}
+	%the mean chord length, which represents the average uncollided path length of the neutron in the slab.
   
 \end{frame}
 
@@ -569,7 +576,7 @@ For example
 
 % --------------------------------------------------------------
 \begin{frame}[fragile]
-  \frametitle{Deterministic MC mismatch}
+  \frametitle{Deterministic MC mismatch: flux}
  \begin{figure}[p]
    \begin{center}
      \includegraphics[width=3.8in,clip]{../figs/NSE13-109R1-PlateFluxExcel}
@@ -595,7 +602,7 @@ For example
 
 % --------------------------------------------------------------
 \begin{frame}[fragile]
-  \frametitle{Deterministic MC mismatch}
+  \frametitle{Deterministic MC mismatch: spectra}
  \begin{figure}[p]
    \begin{center}
      \includegraphics[width=3.8in,clip]{../figs/NSE13-109R1-PlateExitSpectra}
@@ -620,7 +627,7 @@ For example
 	* Energy Structure: 	\> 58 vs.\ 27 groups
 	\end{tabbing}
 	
-	\item CADIS in 2 cm area following plate
+	%\item CADIS in 2 cm area following plate
 %	\end{itemize}
 %	%
 %	\begin{columns}
@@ -628,7 +635,7 @@ For example
 %	\begin{itemize}
 	\item Physics
 		\begin{itemize}
-		\item Polyethylene follow-on
+		%\item Polyethylene follow-on
 		\item Cr plate (diff.\ res.\ mat.)
 		\item Air in plate (no res.\ mat.)
 		\end{itemize}
@@ -655,7 +662,7 @@ For example
   	\item Angular quadrature $\rightarrow$ \textit{no differences} with impact
 	\item Scattering order $\rightarrow$ (nearly) \textit{no change}
   	\end{itemize}
-  	
+  	\pause
   \begin{center}
     \begin{tabu}{|l|r|r|r|r|r|r|}\hline
       Case & N & CPU-hrs & Max RE & Avg RE & Min F & Avg F\\\hline
@@ -677,17 +684,6 @@ F2e11 & 2e11 & 18,367.67 & 0.343 & 4.00e-3 & 4.62e-4 & 3.40\\\hline
 
 % --------------------------------------------------------------
 \begin{frame}[fragile]
-  \frametitle{CADIS, poly follow}
- \begin{figure}[p]
-   \begin{center}
-     \includegraphics[width=3.8in,clip]{../figs/cadis-poly}
-   \end{center}
- \end{figure}
-\end{frame}
-
-
-% --------------------------------------------------------------
-\begin{frame}[fragile]
   \frametitle{Resonance streaming}
    \begin{figure}[p]
    \begin{center}
@@ -701,28 +697,9 @@ F2e11 & 2e11 & 18,367.67 & 0.343 & 4.00e-3 & 4.62e-4 & 3.40\\\hline
 
 % --------------------------------------------------------------
 \begin{frame}[fragile]
-  \frametitle{MAVRIC}
-  
-  \begin{itemize}
-  \item We also ran this problem with and without the plate in MAVRIC (a multigroup MC code in SCALE)
-  \item MAVRIC has more advanced cross section processing options
-  \item Used 27 g and 200 g; in one 200 g case the plate had tailored x-secs every 10-cm \vspace*{0.5em}
-  \pause
-  \item Without plate case was correct
-  \item 27 g $\rightarrow$ completely \textit{missed} the behavior
-  \item Both 200 g cases $\rightarrow$ \textit{same} high relative error
-  \end{itemize}
-  
-\end{frame}
-
-
-% --------------------------------------------------------------
-\begin{frame}[fragile]
   \frametitle{Investigation summary}
   
 	\begin{itemize}
-	\item Behavior is related to space and energy self-shielding
-	\pause
 	\item These items did not improve PARTISN:
 	 \begin{itemize}
 	 \item finer quadrature
@@ -736,11 +713,15 @@ F2e11 & 2e11 & 18,367.67 & 0.343 & 4.00e-3 & 4.62e-4 & 3.40\\\hline
 	 \item finer energy group structure
 	 \end{itemize}
 	\pause 
-	\item The high RE in and following the plate is present when using different codes and different methods to produce VR parameters, and exists when a different resonance material is used.
+	%\item The high RE in and following the plate is present when using different codes and different methods to produce VR parameters, and exists when a different resonance material is used.	
+	\item Behavior is related to space and energy self-shielding
 	\end{itemize}
+\pause
+\vspace*{1 em}
+A sufficiently-accurate PARTISN solution would (probably) be better, but prohibitively expensive.
 
-
-A sufficiently-accurate PARTISN solution would be better (probably), but prohibitively expensive.
+\vspace*{1 em}
+So, we had to come up with something else...
   
 \end{frame}
 
@@ -753,7 +734,7 @@ A sufficiently-accurate PARTISN solution would be better (probably), but prohibi
   \alert{New Method} developed to deal with this. 
   \vspace{0.5 em}
   
-  	Apply renormalization factor to FW-CADIS source $q^{\dagger}_{FWC}$: 
+  	Apply renormalization factor to FW-CADIS source, $q^{\dagger}_{FWC}$: 
 	%
 	\begin{equation}
    	q^{\dagger}(\ve{r},E) = \Bigl(\frac{\phi_{res(\micro_0)}(\ve{r},E)}{\phi_{dilute(\micro_0)}(\ve{r},E)}\Bigr)^M q^{\dagger}_{FWC}  \nonumber
@@ -762,11 +743,11 @@ A sufficiently-accurate PARTISN solution would be better (probably), but prohibi
 	%
 	where
 	\begin{itemize}
-  	\item M is problem-dependent constant 
+  	\item M is a problem-dependent constant 
  	 \item $\phi_{res(\micro_0)}(\ve{r},E)$ is forward flux with small background x-sec
  	 \item $\phi_{dilute(\micro_0)}(\ve{r},E)$ is forward flux with large background x-sec
 	\end{itemize}
-	\pause
+
 	\vspace*{1 em}
 	The resulting adjoint flux is used to make importances
 	
@@ -940,11 +921,17 @@ M = 1 & \alert{534.80} & 0.269 & 2.44e-2 & \alert{2.58e-2} & 3.13\\\hline
  	 \begin{center}
  	 \begin{figure}
  	 \includegraphics[height=2in,clip]{../figs/boat-map}  
- 	 \caption{Target weight window values for 14.1 MeV neutrons}
+ 	 \caption{CADIS target weight window values for 14.1 MeV neutrons}
  	 \end{figure}
  	 \end{center}
   	\end{column}
 	\end{columns}
+	% Note the color scale of this problem. Red = low importance, purple = high importance
+
+%The importance map made for particles traveling in any direction will not be representative of the importance of particles moving in specific directions. For beam source problems, CADIS should incorporate angular information and produce importances that are dependent on particle direction. 
+
+%An importance map for this problem should show that regions closer to the HEU center are more important, regions of the boat further from the center less important, and regions deep in the water even less important. For points along the beam between the source and the boat, the importance should be constant; a source particle is just as likely to get to the HEU from anywhere in its flight path because scatter and attenuation in the air is small. 
+
 
 \end{frame}
 
@@ -973,7 +960,7 @@ M = 1 & \alert{534.80} & 0.269 & 2.44e-2 & \alert{2.58e-2} & 3.13\\\hline
 
 % --------------------------------------------------------------
 \begin{frame}[fragile]
-  \frametitle{Integration weighting}
+  \frametitle{Integration weighting (MMM)}
 
     Different integration plan captures angles in scalar flux creation	
 	\begin{align*}
@@ -1036,6 +1023,67 @@ M = 1 & \alert{534.80} & 0.269 & 2.44e-2 & \alert{2.58e-2} & 3.13\\\hline
 
 % --------------------------------------------------------------
 % --------------------------------------------------------------
+\section{\scshape Other Projects}
+\begin{frame}[fragile]
+  \frametitle{Other projects: MC}
+  
+Monte Carlo on advanced architectures
+
+  	\begin{itemize}
+  	\item WARP, developed at Berkeley, for GPGPUs
+  	\item Investigating delta-tracking vs.\ ray tracing
+  	\item Up next: MC on MICs
+	\end{itemize}	
+	\begin{center}
+ 	 \begin{figure}
+ 	 \includegraphics[height=1.5in,clip]{assembly-fiss-6}  
+ 	 \caption{WARP fission source locations, hex assembly}
+ 	 \end{figure}
+ 	\end{center}
+  
+\end{frame}	
+
+
+% --------------------------------------------------------------
+% --------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Other projects: ETA}
+  
+Energy Tuning Assembly design, optimization, and use
+
+  	\begin{itemize}
+  	\item Developing meta-heuristic optimization techniques % based on swarm intelligence and evolutionary algorithms 
+  	to automate the design process for ETAs
+  	\item Optimizing for spectra with forensics applications
+  	\item To be fielded on 88" cyclotron and/or NIF
+	\end{itemize}	
+	\begin{center}
+ 	 \begin{figure}
+ 	 \includegraphics[height=1.5in,clip]{ETA-Obj-100g}  
+ 	 \caption{ETA-produced spectrum (MCNP) and the objective}
+ 	 \end{figure}
+ 	\end{center}
+  
+\end{frame}	
+
+
+% --------------------------------------------------------------
+% --------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Other projects: just starting}
+
+  	\begin{itemize}
+  	\item $\alpha$-eigenvalue acceleration methods 
+  	\item Nuclear data processing and multigroup cross section generation
+  	\item Non-classical Botlzmann transport equation applied to BWRs
+  	\item PyNE development: nuclear data processing, better burnup methods  	
+  	\item Multiphysics in collaboration with CIET?
+	\end{itemize}	
+  
+\end{frame}
+
+% --------------------------------------------------------------
+% --------------------------------------------------------------
 \section*{}
 \begin{frame}[fragile]
   \frametitle{Questions?}
@@ -1051,4 +1099,33 @@ M = 1 & \alert{534.80} & 0.269 & 2.44e-2 & \alert{2.58e-2} & 3.13\\\hline
 	\bibliography{2015-06-ornl}
 \end{frame}
 
+
+% --------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{CADIS, poly follow}
+ \begin{figure}[p]
+   \begin{center}
+     \includegraphics[width=3.8in,clip]{../figs/cadis-poly}
+   \end{center}
+ \end{figure}
+\end{frame}
+
 \end{document}
+
+
+
+% --------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{MAVRIC}
+  
+  \begin{itemize}
+  \item We also ran this problem with and without the plate in MAVRIC (a multigroup MC code in SCALE)
+  \item MAVRIC has more advanced cross section processing options
+  \item Used 27 g and 200 g; in one 200 g case the plate had tailored x-secs every 10-cm \vspace*{0.5em}
+  \pause
+  \item Without plate case was correct
+  \item 27 g $\rightarrow$ completely \textit{missed} the behavior
+  \item Both 200 g cases $\rightarrow$ \textit{same} high relative error
+  \end{itemize}
+  
+\end{frame}

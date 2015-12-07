@@ -1,0 +1,262 @@
+\documentclass[final]{beamer}
+
+\mode<presentation>
+{
+  \definecolor{berkeleyblue}{HTML}{003A70}
+  \definecolor{berkeleygold}{HTML}{F2A900}
+%http://www.berkeley.edu/brand/img/downloads/UCB%20Brand%20Guidelines_FINAL_small.pdf
+  \usetheme{I6dv}      % or try Darmstadt, Madrid, Warsaw, ...
+  %\usecolortheme{dove} % or try albatross, beaver, crane, ...
+  \setbeamercolor{structure}{fg=berkeleygold,bg=berkeleyblue}
+  \setbeamercolor{palette primary}{fg=berkeleyblue,bg=berkeleygold} % changed this
+  \setbeamercolor{palette secondary}{bg=berkeleyblue,fg=white} % changed this
+  \setbeamercolor{palette tertiary}{bg=berkeleyblue,fg=white} % changed this
+\setbeamercolor{bibliography item}{bg=white,fg=black}
+\setbeamercolor{bibliography entry author}{bg=white,fg=black}
+\setbeamercolor{bibliography entry journal}{bg=white,fg=black}
+\setbeamercolor{bibliography entry note}{bg=white,fg=black}
+  \usefonttheme{structurebold}  % or try serif, structurebold, ...
+  \useinnertheme{circles}
+  \setbeamertemplate{navigation symbols}{}
+  \setbeamertemplate{footline}[title]{}
+  \setbeamertemplate{footline}[author]{}
+  \usebackgroundtemplate{
+%  \tikz[overlay,remember picture] %Can insert a Berkeley watermark
+%  \node[opacity=1, at=(current page.south west),anchor=south west, inner sep=2pt] {
+%    \includegraphics[height=.5in,width=.5in]{img/ucseal_540_139.eps}};
+}
+}
+\usepackage[sorting=none]{biblatex} 
+  \usepackage{ragged2e}
+  \usepackage{type1cm}
+  \usepackage{calc} 
+  \usepackage{times}
+  \usepackage{amsmath,amsthm, amssymb, latexsym}
+%  \boldmath
+  \usepackage[english]{babel}
+  \usepackage[latin1]{inputenc}
+  \usepackage[orientation=landscape,size=a0,scale=1.4,debug]{beamerposter}
+  \graphicspath{{img/}}
+  %\title[Fancy Posters]{Making Really Fancy Posters with \LaTeX}
+  %\author[Dreuw \& Deselaers]{Philippe Dreuw and Thomas Deselaers}
+  %\institute[University of California, Berkeley]{Department of Nuclear Engineering}
+  \newcommand{\footlinetext}{}
+
+\bibliography{2015-ans-winter}
+\setbeamertemplate{bibliography item}[text]
+
+\title[RQI with MGE]{RQI with a Multigrid in Energy Preconditioner for Massively Parallel Neutron Transport}
+\author[R.N.\ Slaybaugh et al.]{R.N.\ Slaybaugh$^{1}$, T.M.\ Evans$^{2}$, G.G. Davidson$^{2}$, S.P.\ Hamilton$^{2}$}
+  \institute[UC Berkeley]{$^{1}$Department of Nuclear Engineering, University of California, Berkeley\\
+  $^{2}$Radiation Transport Group, Oak Ridge National Laboratory}
+  \date{December 11, 2015}
+
+\begin{document}
+	\begin{frame}{}
+%    \maketitle
+
+%%%%%%%%%%%%%%
+% FIRST COLUMN
+%%%%%%%%%%%%%%
+
+  		\begin{columns}[t]
+    		\begin{column}{.3\linewidth}
+    			\vfill
+    			\begin{block}{\large WARP}
+      			\begin{itemize}
+			\item{``Weaving All the Random Particles"}
+			\item{Originally developed at UC Berkeley by Dr. Ryan Bergmann}
+			\item{3D continuous-energy Monte Carlo neutron transport code developed for efficient implementation of algorithm on GPUs}
+			\item{Leverages high-performance GPU libraries such as OptiX, CUDPP, CURAND}
+			\item{Uses an event-based algorithm with a remapping vector of pointer/index pairs to direct GPU threads to relevant data \cite{warp}}
+			\end{itemize}
+    			\end{block}
+    	\vfill
+    			\begin{block}{\large Ray tracing in WARP}
+			\begin{figure}[h!]
+			\centering
+	      		\includegraphics{img/whereami.eps}
+			\newline
+			\includegraphics{img/whereami-new.pdf}
+			\caption{Top: Previous ray tracing scheme. Bottom: New scheme \cite{warp}.}
+			\end{figure}
+			\begin{itemize}
+	%		\item{WARP uses the NVIDIA OptiX library for ray tracing}
+			\item{Old scheme used array with redundant cell data for tracking}
+			\item{New scheme uses a single integer to track neutron cell}
+		%	\item{New scheme less memory-intensive, resolved a bug that was found with the old scheme}
+			\end{itemize}
+    			\end{block}
+    	\vfill
+        	\begin{block}{\large Delta-tracking}
+		\begin{itemize}
+		\item{Neutron path lengths are sampled as:}
+			\begin{equation*}
+			\ell = \frac{-\mathrm{log}\xi}{\Sigma_{\mathrm{tot,m}}(E)}
+			\end{equation*}
+		\item{Not statistically valid if neutron crosses material boundary}
+		\item{Flight must be stopped at boundary surface and path length resampled with new material cross section}
+		\item{Delta-tracking effectively homogenizes cross sections so that sampled path lengths are valid over entire geometry \cite{serpent}}
+		\end{itemize}
+        	\end{block}
+    	\end{column}
+
+%%%%%%%%%%%%%%%
+% SECOND COLUMN
+%%%%%%%%%%%%%%%
+
+      	\begin{column}{.3\linewidth}
+            \begin{block}{Virtual Collisions and the Majorant Cross Section}
+	\begin{itemize}
+	\item{``Virtual collisions" are scattering reactions that preserve neutron energy and direction}
+		\begin{itemize}
+		\item{No impact on final outcome, any number can ``happen"}
+		\end{itemize}
+	\item{Materials' total cross sections can be adjusted by adding arbitrary virtual collision cross section:}
+		\begin{equation*}
+		\Sigma'_{\mathrm{tot,m}}(E) = \Sigma_{\mathrm{tot,m}}(E) + \Sigma_{\mathrm{0,m}}(E)
+		\end{equation*}
+	\item{With this, global majorant cross section can be assigned:}
+		\begin{equation*}
+		\begin{aligned}
+		\Sigma_{\mathrm{maj}}(E) &=\Sigma'_{\mathrm{tot,1}}(E) = \Sigma'_{\mathrm{tot,2}}(E) = \ldots = \Sigma'_{\mathrm{tot,M}}(E) \\
+		& = \mathrm{max}\{\Sigma_{\mathrm{tot,1}}(E), \Sigma_{\mathrm{tot,2}}(E),\ldots, \Sigma_{\mathrm{tot,M}}(E)\}
+		\end{aligned}
+		\end{equation*}
+		\item{Path lengths sampled with majorant cross section valid globally}
+		\item{Rejection sampling carried out for each collision}
+		\item{Collision point accepted with probability}
+		\begin{equation*} 
+		P_{\mathrm{col}}(E) = \Sigma_{\mathrm{tot,col}}(E)/\Sigma_{\mathrm{maj}}(E)
+		\end{equation*}
+		\item{If point rejected, collision considered virtual and random walk 
+		continues by sampling new path length \cite{serpent}}
+	\end{itemize}
+            \end{block}
+		\vfill
+        	\begin{block}{\large Run Parameters}
+          		\begin{itemize}
+			\item{MCNP and Serpent runs done on server with two AMD Opteron 6128 
+			Magny-Cours processors}
+			\item{WARP runs done with NVIDIA GeForce GTX TITAN Black GPU}
+			\item{20 inactive cycles, 40 active cycles, 100 000 histories}
+			\item{Vacuum boundary conditions, ENDF/B-VII data at 300K}
+			\end{itemize}
+        	\end{block}
+			\vfill
+		\begin{block}{\large Results - Jezebel}
+\begin{columns}
+	\column{0.3\linewidth}
+	\begin{figure}[h!]
+	\includegraphics[width=4in]{img/jezebel.png}
+	\caption{\footnotesize Plot of ``jezebel" geometry configuration, a bare Pu-239 sphere
+	with radius 5.1 cm.}
+	\end{figure}
+	\column{0.7\linewidth}
+	\begin{table}[h]
+	\begin{tabular}{ll}
+	\multicolumn{2}{c}{Single-run Multiplication Factors} \\ \hline
+	MCNP5, 1.60 & $k_{\mathrm{eff}} = 1.027509 \pm 0.0005$ \\
+	Serpent 1.1.19 & $k_{\mathrm{eff}} = 1.02787\hspace*{0.5em}\pm 0.00082$ \\
+	WARP (RT) & $k_{\mathrm{eff}} = 1.028425 \pm 0.00068609$ \\
+	WARP (DT) & $k_{\mathrm{eff}} = 1.027071 \pm 0.00058248$
+	\end{tabular}
+	\end{table}
+	\begin{table}[h]
+	\begin{tabular}{ll}
+	\multicolumn{2}{c}{Runtimes} \\ \hline
+	MCNP5, 1.60 & 0.94 min \\
+	Serpent 1.1.19 & 0.934333 min \\
+	WARP (RT) & 0.141333 min \\ %8.48 s
+	WARP (DT) & 0.194833 min %11.69 s
+	\end{tabular}
+	\end{table}
+\end{columns}
+	\begin{itemize}
+	\item Delta-tracking slower than ray tracing in WARP
+		\begin{itemize}
+		\item Additional OptiX trace necessary
+		\end{itemize}
+	\item Accuracy retained with delta-tracking
+	\end{itemize}
+		\end{block}
+	\vfill
+      \end{column}
+
+%%%%%%%%%%%%%%
+% THIRD COLUMN
+%%%%%%%%%%%%%%
+
+      \begin{column}{.3\linewidth}
+		\begin{block}{Results - Jezebel with Artificial Boundary}
+\begin{columns}
+	\column{0.3\linewidth}
+	\begin{figure}[h!]
+	\includegraphics[width=4in]{img/jezebel-shells.png}
+	\caption{Plot of ``jezebel" configuration with an inserted artificial boundary.}
+	\end{figure}
+	\column{0.7\linewidth}
+	\begin{itemize}
+	\item{Artificial boundary put in place to test different method speeds}
+	\item{Verify that delta-tracking performs correctly with boundary}
+	\end{itemize}
+	\begin{table}[h]
+	\begin{tabular}{ll}
+	\multicolumn{2}{c}{Single-run Multiplication Factors} \\ \hline
+	MCNP5, 1.60 & $k_{\mathrm{eff}} = 1.027472 \pm 0.0004$ \\
+	Serpent 1.1.19 & $k_{\mathrm{eff}} = 1.02815\hspace*{0.5em}\pm 0.00089$ \\
+	WARP (RT) & $k_{\mathrm{eff}} = 1.027211 \pm 0.00061316$ \\
+	WARP (DT) & $k_{\mathrm{eff}} = 1.027071 \pm 0.00058248$
+	\end{tabular}
+	\end{table}
+	\begin{table}[h]
+	\begin{tabular}{ll}
+	\multicolumn{2}{c}{Runtimes} \\ \hline
+	MCNP5, 1.60 & 0.91 min \\
+	Serpent 1.1.19 & 0.953333 min \\
+	WARP (RT) & 0.162833 min \\ %9.77 s
+	WARP (DT) & 0.198 min %11.88 s
+	\end{tabular}
+	\end{table}
+\end{columns}
+		\end{block}
+			\vfill
+        	\begin{block}{\large Future Work}
+          		\begin{itemize}
+          			\item Test configurations with material heterogeneities
+				\item{Retest delta-tracking if WARP moves to universe-based geometry similar to MCNP and Serpent}
+          			\item Investigate use of path-dependent majorant calculation
+          		\end{itemize}
+        	\end{block}
+			\vfill
+        	\begin{block}{\large References}
+			\printbibliography
+        	\end{block}
+			\vfill
+        	\begin{block}{\large Acknowledgements}
+		\justifying
+This research used resources of the Oak Ridge Leadership Computing Facility at the Oak Ridge National Laboratory, which is supported by the Office of Science of the U.S. Department of Energy under Contract No. DE-AC05-00OR22725. Additional thanks to the Rickover Fellowship Program in Nuclear Engineering sponsored by Naval Reactors Division of the U.S.\ Department of Energy. This fellowship sponsored the work from which this work is derived. 
+        	\end{block}
+      \end{column}
+    \end{columns}
+  \end{frame}
+\end{document}
+
+%    			\begin{block}{\large Fontsizes}
+%      				\centering
+%      				{\tiny tiny}\par
+%      				{\scriptsize scriptsize}\par
+%      				{\footnotesize footnotesize}\par
+%      				{\normalsize normalsize}\par
+%      				{\large large}\par
+%      				{\Large Large}\par
+%      				{\LARGE LARGE}\par
+%      				{\veryHuge VeryHuge}\par
+%      				{\VeryHuge VeryHuge}\par
+%      				{\VERYHuge VERYHuge}\par
+%    			\end{block}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-PDF-mode: t

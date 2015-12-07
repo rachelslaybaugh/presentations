@@ -42,7 +42,17 @@
   %\institute[University of California, Berkeley]{Department of Nuclear Engineering}
   \newcommand{\footlinetext}{}
 
-\bibliography{2015-ans-winter}
+% Transport equation stuff
+\newcommand{\Sn}{\ensuremath{S_N}}
+\newcommand{\Macro}{\ensuremath{\Sigma}}
+
+\newcommand{\vOmega}{\ensuremath{\hat{\Omega}}}
+\newcommand{\Ye}[2]{\ensuremath{Y^e_{#1}(\vOmega_#2)}}
+\newcommand{\Yo}[2]{\ensuremath{Y^o_{#1}(\vOmega_#2)}}
+
+\newcommand{\ve}[1]{\ensuremath{\mathbf{#1}}}
+
+\bibliography{2015-bascd}
 \setbeamertemplate{bibliography item}[text]
 
 \title[RQI with MGE]{RQI with a Multigrid in Energy Preconditioner for Massively Parallel Neutron Transport}
@@ -62,29 +72,49 @@
   		\begin{columns}[t]
     		\begin{column}{.3\linewidth}
     			\vfill
-    			\begin{block}{\large WARP}
+    			\begin{block}{\large Motivation}
       			\begin{itemize}
-			\item{``Weaving All the Random Particles"}
-			\item{Originally developed at UC Berkeley by Dr. Ryan Bergmann}
-			\item{3D continuous-energy Monte Carlo neutron transport code developed for efficient implementation of algorithm on GPUs}
-			\item{Leverages high-performance GPU libraries such as OptiX, CUDPP, CURAND}
-			\item{Uses an event-based algorithm with a remapping vector of pointer/index pairs to direct GPU threads to relevant data \cite{warp}}
+			\item{Nuclear reactor design, shielding, nuclear security}
+			\item{3D deterministic calculations need fine resolution in space, energy, and angle}
+			\item{Need to use supercomputing architectures effectively}
+			\item{Three complimentary methods: multigroup (MG) block Krylov, Rayleigh quotient iteration (RQI), multigrid in energy (MGE) preconditioner}
 			\end{itemize}
     			\end{block}
     	\vfill
-    			\begin{block}{\large Ray tracing in WARP}
-			\begin{figure}[h!]
-			\centering
-	      		\includegraphics{img/whereami.eps}
-			\newline
-			\includegraphics{img/whereami-new.pdf}
-			\caption{Top: Previous ray tracing scheme. Bottom: New scheme \cite{warp}.}
-			\end{figure}
+    			\begin{block}{\large Boltzmann Transport Equation}
+%			\begin{figure}[h!]
+%			\centering
+%	      		\includegraphics{img/whereami.eps}
+%			\newline
+%			\includegraphics{img/whereami-new.pdf}
+%			\caption{Top: Previous ray tracing scheme. Bottom: New scheme \cite{warp}.}
+%			\end{figure}
 			\begin{itemize}
-	%		\item{WARP uses the NVIDIA OptiX library for ray tracing}
-			\item{Old scheme used array with redundant cell data for tracking}
-			\item{New scheme uses a single integer to track neutron cell}
-		%	\item{New scheme less memory-intensive, resolved a bug that was found with the old scheme}
+	 		\item{Eigenvalue form of the multigroup $S_N$ equations}
+	 		\begin{equation}
+	 		  \ve{L}\psi = \ve{MS}\phi + \frac{1}{k}\ve{M}\chi \ve{f}^{T}\phi	                
+	 		  \label{eq:eigenvalue}
+	 		\end{equation}
+	 		
+	 		\item{$\psi$ is the angular flux; $\phi = \mathbf{D} \psi$}
+
+	 		\item{$\ve{L}$ is the $\vOmega \cdot \nabla + \Macro_t$ operator; $\ve{M}$
+	 		 projects the angular flux moments, $\phi$, onto discrete angles; $\ve{S}$
+	 		 is the scattering matrix; $\ve{f}$ contains the fission source, 
+	 		 $\nu \Macro_{f}$; and $k$ is the asymptotic ratio of the number of 
+	 		 neutrons in one generation to the next}
+
+	 		\item{Rearrange \eqref{eq:eigenvalue}; define $\ve{T} = \ve{DL}^{-1}$ 
+	 		 and $\ve{F} = \chi \ve{f}^{T}$ \cite{denovo}}:
+            \begin{equation}
+              (\ve{I} - \ve{TMS})\phi = \frac{1}{k} \ve{TMF} \phi
+              \label{eq:OperatorEvalForm}
+            \end{equation}
+
+            \item{Get series of ``within-group'' eqns., each only a function of space
+             and angle}
+            \item{Groups can be coupled scattering from low to higher energy $\rightarrow$
+             iterative ``multigroup'' solves over the coupled portion needed}
 			\end{itemize}
     			\end{block}
     	\vfill

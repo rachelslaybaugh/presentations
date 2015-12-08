@@ -52,8 +52,9 @@
 
 \newcommand{\ve}[1]{\ensuremath{\mathbf{#1}}}
 
-\bibliography{2015-bascd}
 \setbeamertemplate{bibliography item}[text]
+\addbibresource{2015-bascd.bib}
+%\bibliographystyle{amsalpha}
 
 \title[RQI with MGE]{RQI with a Multigrid in Energy Preconditioner for Massively Parallel Neutron Transport}
 \author[R.N.\ Slaybaugh et al.]{R.N.\ Slaybaugh$^{1}$, T.M.\ Evans$^{2}$, G.G. Davidson$^{2}$, S.P.\ Hamilton$^{2}$}
@@ -75,58 +76,53 @@
     			\begin{block}{\large Motivation}
       			\begin{itemize}
 			\item{Nuclear reactor design, shielding, nuclear security}
-			\item{3D deterministic calculations need fine resolution in space, energy, and angle}
+			\item{3D deterministic calculations need fine resolution in space, 
+			      energy, and angle}
 			\item{Need to use supercomputing architectures effectively}
-			\item{Three complimentary methods: multigroup (MG) block Krylov, Rayleigh quotient iteration (RQI), multigrid in energy (MGE) preconditioner}
+			\item{Three complimentary methods: multigroup (MG) block Krylov, 
+			      Rayleigh quotient iteration (RQI), multigrid in energy (MGE)
+			      preconditioner}
 			\end{itemize}
     			\end{block}
     	\vfill
     			\begin{block}{\large Boltzmann Transport Equation}
-%			\begin{figure}[h!]
-%			\centering
-%	      		\includegraphics{img/whereami.eps}
-%			\newline
-%			\includegraphics{img/whereami-new.pdf}
-%			\caption{Top: Previous ray tracing scheme. Bottom: New scheme \cite{warp}.}
-%			\end{figure}
 			\begin{itemize}
-	 		\item{Eigenvalue form of the multigroup $S_N$ equations}
+	 		\item{Solve for $\psi$, the angular neutron flux (n/cm$^2$-s-steradian)}
 	 		\begin{equation}
 	 		  \ve{L}\psi = \ve{MS}\phi + \frac{1}{k}\ve{M}\chi \ve{f}^{T}\phi	                
 	 		  \label{eq:eigenvalue}
-	 		\end{equation}
-	 		
-	 		\item{$\psi$ is the angular flux; $\phi = \mathbf{D} \psi$}
-
+	 		\end{equation}	 		
+	 		\item{Collocation method in angle: $\phi = \mathbf{D} \psi$ (n/cm$^2$-s)}
 	 		\item{$\ve{L}$ is the $\vOmega \cdot \nabla + \Macro_t$ operator; $\ve{M}$
-	 		 projects the angular flux moments, $\phi$, onto discrete angles; $\ve{S}$
+	 		 projects $\phi$ onto discrete angles; $\ve{S}$
 	 		 is the scattering matrix; $\ve{f}$ contains the fission source, 
 	 		 $\nu \Macro_{f}$; and $k$ is the asymptotic ratio of the number of 
 	 		 neutrons in one generation to the next}
-
 	 		\item{Rearrange \eqref{eq:eigenvalue}; define $\ve{T} = \ve{DL}^{-1}$ 
 	 		 and $\ve{F} = \chi \ve{f}^{T}$ \cite{denovo}}:
             \begin{equation}
               (\ve{I} - \ve{TMS})\phi = \frac{1}{k} \ve{TMF} \phi
               \label{eq:OperatorEvalForm}
             \end{equation}
-
             \item{Get series of ``within-group'' eqns., each only a function of space
              and angle}
-            \item{Groups can be coupled scattering from low to higher energy $\rightarrow$
-             iterative ``multigroup'' solves over the coupled portion needed}
+            \item{Groups can be coupled by scattering from low to higher energy
+             $\rightarrow$ iterative ``multigroup'' solves over the coupled portion needed}
 			\end{itemize}
     			\end{block}
     	\vfill
-        	\begin{block}{\large Delta-tracking}
+        	\begin{block}{\large Multigroup Block Krylov}		
 		\begin{itemize}
-		\item{Neutron path lengths are sampled as:}
-			\begin{equation*}
-			\ell = \frac{-\mathrm{log}\xi}{\Sigma_{\mathrm{tot,m}}(E)}
-			\end{equation*}
-		\item{Not statistically valid if neutron crosses material boundary}
-		\item{Flight must be stopped at boundary surface and path length resampled with new material cross section}
-		\item{Delta-tracking effectively homogenizes cross sections so that sampled path lengths are valid over entire geometry \cite{serpent}}
+		\item{Groups historically solved in series with Gauss Seidel} 
+			\begin{figure}[h!]
+			\centering
+	      		\includegraphics{block-krylov.png}
+			%\caption{MG Krylov group blocking}
+			\end{figure}
+		\item{Solve downscatter groups individually}
+		\item{Solve upscatter block together with multi-group-sized iteration vector 
+		      in GMRES}
+		\item{Enables parallelization in energy (``multisets") \cite{Davidson2013}}
 		\end{itemize}
         	\end{block}
     	\end{column}
@@ -136,7 +132,7 @@
 %%%%%%%%%%%%%%%
 
       	\begin{column}{.3\linewidth}
-            \begin{block}{Virtual Collisions and the Majorant Cross Section}
+            \begin{block}{Rayleigh Quotient Iteration}
 	\begin{itemize}
 	\item{``Virtual collisions" are scattering reactions that preserve neutron energy and direction}
 		\begin{itemize}
@@ -265,7 +261,7 @@
 			\vfill
         	\begin{block}{\large Acknowledgements}
 		\justifying
-This research used resources of the Oak Ridge Leadership Computing Facility at the Oak Ridge National Laboratory, which is supported by the Office of Science of the U.S. Department of Energy under Contract No. DE-AC05-00OR22725. Additional thanks to the Rickover Fellowship Program in Nuclear Engineering sponsored by Naval Reactors Division of the U.S.\ Department of Energy. This fellowship sponsored the work from which this work is derived. 
+This research used resources of the Oak Ridge Leadership Computing Facility at the Oak Ridge National Laboratory, which is supported by the Office of Science of the U.S.\ Department of Energy under Contract No. DE-AC05-00OR22725. Additional thanks to the Rickover Fellowship Program in Nuclear Engineering sponsored by Naval Reactors Division of the U.S.\ Department of Energy. This fellowship sponsored the work from which this work is derived. 
         	\end{block}
       \end{column}
     \end{columns}

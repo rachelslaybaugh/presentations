@@ -26,6 +26,7 @@
 %    \includegraphics[height=.5in,width=.5in]{img/ucseal_540_139.eps}};
 }
 }
+%\renewcommand*{\bibfont}{\scriptsize}
 \usepackage[sorting=none]{biblatex} 
   \usepackage{ragged2e}
   \usepackage{type1cm}
@@ -98,7 +99,7 @@
 	 		 is the scattering matrix; $\ve{f}$ contains the fission source, 
 	 		 $\nu \Macro_{f}$; and $k$ is the asymptotic ratio of the number of 
 	 		 neutrons in one generation to the next}
-	 		\item{Rearrange \eqref{eq:eigenvalue}; define $\ve{T} = \ve{DL}^{-1}$ 
+	 		\item{Rearrange Eqn.~\eqref{eq:eigenvalue}; define $\ve{T} = \ve{DL}^{-1}$ 
 	 		 and $\ve{F} = \chi \ve{f}^{T}$ \cite{denovo}}:
             \begin{equation}
               (\ve{I} - \ve{TMS})\phi = \frac{1}{k} \ve{TMF} \phi
@@ -111,7 +112,7 @@
 			\end{itemize}
     			\end{block}
     	\vfill
-        	\begin{block}{\large Multigroup Block Krylov}		
+        	\begin{block}{\large Multigroup Block Krylov \cite{Davidson2013}}		
 		\begin{itemize}
 		\item{Groups historically solved in series with Gauss Seidel} 
 			\begin{figure}[h!]
@@ -119,10 +120,10 @@
 	      		\includegraphics{block-krylov.png}
 			%\caption{MG Krylov group blocking}
 			\end{figure}
-		\item{Solve downscatter groups individually}
+		\item{In Denovo~\cite{denovo} solve downscatter groups individually}
 		\item{Solve upscatter block together with multi-group-sized iteration vector 
 		      in GMRES}
-		\item{Enables parallelization in energy (``multisets") \cite{Davidson2013}}
+		\item{Enables parallelization in energy (``multisets")}
 		\end{itemize}
         	\end{block}
     	\end{column}
@@ -131,79 +132,78 @@
 % SECOND COLUMN
 %%%%%%%%%%%%%%%
 
-      	\begin{column}{.3\linewidth}
-            \begin{block}{Rayleigh Quotient Iteration}
+    \begin{column}{.3\linewidth}
+    \begin{block}{Rayleigh Quotient Iteration \cite{Slaybaugh2012}}
 	\begin{itemize}
-	\item{``Virtual collisions" are scattering reactions that preserve neutron energy and direction}
+	\item{Eigenvalues historically found with power iteration (PI)}
+	\begin{equation}
+	(\ve{I} - \ve{TMS})^{-1} \ve{TMF} \phi = k\phi
+	\end{equation}
+	\vspace*{-1em}
 		\begin{itemize}
-		\item{No impact on final outcome, any number can ``happen"}
+		\item{Error reduced as $\lambda_{2}/\lambda_{1}$; slow in many nuclear cases}
 		\end{itemize}
-	\item{Materials' total cross sections can be adjusted by adding arbitrary virtual collision cross section:}
-		\begin{equation*}
-		\Sigma'_{\mathrm{tot,m}}(E) = \Sigma_{\mathrm{tot,m}}(E) + \Sigma_{\mathrm{0,m}}(E)
-		\end{equation*}
-	\item{With this, global majorant cross section can be assigned:}
-		\begin{equation*}
-		\begin{aligned}
-		\Sigma_{\mathrm{maj}}(E) &=\Sigma'_{\mathrm{tot,1}}(E) = \Sigma'_{\mathrm{tot,2}}(E) = \ldots = \Sigma'_{\mathrm{tot,M}}(E) \\
-		& = \mathrm{max}\{\Sigma_{\mathrm{tot,1}}(E), \Sigma_{\mathrm{tot,2}}(E),\ldots, \Sigma_{\mathrm{tot,M}}(E)\}
-		\end{aligned}
-		\end{equation*}
-		\item{Path lengths sampled with majorant cross section valid globally}
-		\item{Rejection sampling carried out for each collision}
-		\item{Collision point accepted with probability}
-		\begin{equation*} 
-		P_{\mathrm{col}}(E) = \Sigma_{\mathrm{tot,col}}(E)/\Sigma_{\mathrm{maj}}(E)
-		\end{equation*}
-		\item{If point rejected, collision considered virtual and random walk 
-		continues by sampling new path length \cite{serpent}}
+		\vspace*{0.2 em}
+	\item{Shifted inverse iteration (PI on $(\ve{P} - \mu \ve{I})^{-1}$) gives same eigenvectors; $\sigma([\ve{P} - \mu \ve{I}]^{-1}) = \{1/(\lambda - \mu):\lambda \in \sigma(\ve{P})\}$ }
+		\vspace*{0.1 em}
+		\begin{itemize}
+		\item{Error now reduced as $(\lambda_{1}-\mu)/(\lambda_{2}-\mu)$}
+		\end{itemize}		
+		\vspace*{0.1 em}
+	\item{RQI uses Rayleigh quotient as an \textit{optimal} shift}
+		\begin{equation}
+          \rho = \frac{(\ve{I} - \ve{TMS})\phi}{\ve{TMF} \phi} \approx \frac{1}{k}
+		\end{equation}
+		\item{RQI in Denovo: subtract $\rho \ve{TMF}$ from both sides of 
+		 Eq.\ \eqref{eq:OperatorEvalForm}}
+        \begin{equation}
+          (\ve{I} - \ve{TM}\ve{\tilde{S}})\phi =( \gamma - \rho) \ve{TMF} \phi  \:, 
+          \label{eq:OperatorShiftedEval} 
+        \end{equation}
+		\item{$\ve{\tilde{S}} \equiv \ve{S} + \rho\ve{F}$ is energy-block dense;
+		 need MG Krylov}
+		\item{The RQ shift can cause ill conditioning; difficult to converge
+		 eigenvector iterations with Krylov}
 	\end{itemize}
             \end{block}
 		\vfill
-        	\begin{block}{\large Run Parameters}
-          		\begin{itemize}
-			\item{MCNP and Serpent runs done on server with two AMD Opteron 6128 
-			Magny-Cours processors}
-			\item{WARP runs done with NVIDIA GeForce GTX TITAN Black GPU}
-			\item{20 inactive cycles, 40 active cycles, 100 000 histories}
-			\item{Vacuum boundary conditions, ENDF/B-VII data at 300K}
+        	\begin{block}{\large Multigrid in Energy \cite{Slaybaugh2013}}
+        \begin{itemize}
+			\item{Multigrid in Energy (MGE) as right preconditioner}
+			\item{Relaxation method is weighted Richardson}
+			\begin{equation}
+              \phi^{m} = \bigr(\ve{I} + \omega(\ve{TMS} - \ve{I})\bigl)\phi^{m-1}
+               + \omega b^{m-1}
+            \label{eq:relax}
+            \end{equation} 
+			\item{Parallelization: each set restricts, prolongs, and relaxes only
+			 its own groups; does not need to communicate with other energy sets
+			 beyond for upscattering in the solver}
+			\item{Can use reduced angular quadrature in the preconditioner}
 			\end{itemize}
         	\end{block}
 			\vfill
-		\begin{block}{\large Results - Jezebel}
+		\begin{block}{\large Results\textemdash Past Work 
+		              \cite{Slaybaugh2012}, \cite{Slaybaugh2013}}
 \begin{columns}
-	\column{0.3\linewidth}
+	\column{0.4\linewidth}
 	\begin{figure}[h!]
-	\includegraphics[width=4in]{img/jezebel.png}
-	\caption{\footnotesize Plot of ``jezebel" geometry configuration, a bare Pu-239 sphere
-	with radius 5.1 cm.}
+	\includegraphics[width=5in]{../figs/denovo-pwr.png}
+	\caption{\footnotesize Full PWR; $S_{12}$ (168 angle sets), 233,858,800 
+	         cells, 44 groups: 1.73 trillion unknowns}
 	\end{figure}
-	\column{0.7\linewidth}
-	\begin{table}[h]
-	\begin{tabular}{ll}
-	\multicolumn{2}{c}{Single-run Multiplication Factors} \\ \hline
-	MCNP5, 1.60 & $k_{\mathrm{eff}} = 1.027509 \pm 0.0005$ \\
-	Serpent 1.1.19 & $k_{\mathrm{eff}} = 1.02787\hspace*{0.5em}\pm 0.00082$ \\
-	WARP (RT) & $k_{\mathrm{eff}} = 1.028425 \pm 0.00068609$ \\
-	WARP (DT) & $k_{\mathrm{eff}} = 1.027071 \pm 0.00058248$
-	\end{tabular}
-	\end{table}
-	\begin{table}[h]
-	\begin{tabular}{ll}
-	\multicolumn{2}{c}{Runtimes} \\ \hline
-	MCNP5, 1.60 & 0.94 min \\
-	Serpent 1.1.19 & 0.934333 min \\
-	WARP (RT) & 0.141333 min \\ %8.48 s
-	WARP (DT) & 0.194833 min %11.69 s
-	\end{tabular}
-	\end{table}
+	\column{0.6\linewidth}
+	\begin{itemize}
+	\item{RQI could solve easy problems without preconditioning, but not hard ones}
+	\item{Using a reduced quadrature set in MGE is highly valuable}
+	\item{No need to have MGE restrict to 1 group, a few grids are sufficient}
+	\item{MGE is not very helpful with PI}
+	\item{MGE scales very well in energy}
+	\end{itemize}
 \end{columns}
 	\begin{itemize}
-	\item Delta-tracking slower than ray tracing in WARP
-		\begin{itemize}
-		\item Additional OptiX trace necessary
-		\end{itemize}
-	\item Accuracy retained with delta-tracking
+	\item{Open questions: Will preconditioning with MGE facilitate the use of RQI? 
+	      Will the combination be better for some problems?}
 	\end{itemize}
 		\end{block}
 	\vfill
@@ -249,9 +249,8 @@
 			\vfill
         	\begin{block}{\large Future Work}
           		\begin{itemize}
-          			\item Test configurations with material heterogeneities
-				\item{Retest delta-tracking if WARP moves to universe-based geometry similar to MCNP and Serpent}
-          			\item Investigate use of path-dependent majorant calculation
+          		\item Quantify MGE preconditioner performance more fully and
+          		 with more energy groups
           		\end{itemize}
         	\end{block}
 			\vfill
@@ -261,7 +260,7 @@
 			\vfill
         	\begin{block}{\large Acknowledgements}
 		\justifying
-This research used resources of the Oak Ridge Leadership Computing Facility at the Oak Ridge National Laboratory, which is supported by the Office of Science of the U.S.\ Department of Energy under Contract No. DE-AC05-00OR22725. Additional thanks to the Rickover Fellowship Program in Nuclear Engineering sponsored by Naval Reactors Division of the U.S.\ Department of Energy. This fellowship sponsored the work from which this work is derived. 
+This research used resources of the OLCF at the ORNL, which is supported by the Office of Science of the U.S.\ Department of Energy under Contract No. DE-AC05-00OR22725. Additional support came from the Rickover Fellowship Program in Nuclear Engineering sponsored by Naval Reactors Division of the U.S.\ Department of Energy.
         	\end{block}
       \end{column}
     \end{columns}

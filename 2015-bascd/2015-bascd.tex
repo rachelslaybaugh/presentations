@@ -28,6 +28,8 @@
 %    \includegraphics[height=.5in,width=.5in]{img/ucseal_540_139.eps}};
 }
 }
+\definecolor{dgreen}{rgb}{0.,0.6,0.}
+\definecolor{rawsienna}{cmyk}{0,0.72,1,0.45}
 %\renewcommand*{\bibfont}{\scriptsize}
 \usepackage[sorting=none]{biblatex} 
   \usepackage{ragged2e}
@@ -216,54 +218,106 @@
 % THIRD COLUMN
 %%%%%%%%%%%%%%
 
-      \begin{column}{.3\linewidth}
-		\begin{block}{Results - Jezebel with Artificial Boundary}
-\begin{columns}
-	\column{0.3\linewidth}
-	\begin{figure}[h!]
-	\includegraphics[width=4in]{img/jezebel-shells.png}
-	\caption{Plot of ``jezebel" configuration with an inserted artificial boundary.}
-	\end{figure}
-	\column{0.7\linewidth}
-	\begin{itemize}
-	\item{Artificial boundary put in place to test different method speeds}
-	\item{Verify that delta-tracking performs correctly with boundary}
-	\end{itemize}
-	\begin{table}[h]
-	\begin{tabular}{ll}
-	\multicolumn{2}{c}{Single-run Multiplication Factors} \\ \hline
-	MCNP5, 1.60 & $k_{\mathrm{eff}} = 1.027472 \pm 0.0004$ \\
-	Serpent 1.1.19 & $k_{\mathrm{eff}} = 1.02815\hspace*{0.5em}\pm 0.00089$ \\
-	WARP (RT) & $k_{\mathrm{eff}} = 1.027211 \pm 0.00061316$ \\
-	WARP (DT) & $k_{\mathrm{eff}} = 1.027071 \pm 0.00058248$
-	\end{tabular}
-	\end{table}
-	\begin{table}[h]
-	\begin{tabular}{ll}
-	\multicolumn{2}{c}{Runtimes} \\ \hline
-	MCNP5, 1.60 & 0.91 min \\
-	Serpent 1.1.19 & 0.953333 min \\
-	WARP (RT) & 0.162833 min \\ %9.77 s
-	WARP (DT) & 0.198 min %11.88 s
-	\end{tabular}
-	\end{table}
-\end{columns}
+\begin{column}{.3\linewidth}
+   \begin{block}{Results\textemdash RQI + MGE}
+	 \begin{itemize}
+	 \item{2D C5G7 benchmark: RQI converged with enough preconditioning, but was slow}
+	 \item{3D C5G7 benchmark: preconditioned RQI faster than preconditioning PI; 
+	  still slower than unpreconditioned PI}
+	 \end{itemize}
+%     \vspace*{-0.5 em}
+%     \begin{table}[h]
+%     \caption{3-D C5G7 benchmark: RQI and PI comparison}
+%     \begin{tabular}{ c  c  c  c  c  c  c }
+%     \hline
+%     Sovler & Preconditioner & N Krylov & N Eigen & Time (s) \\\hline 
+%     PI  & \textcolor{dgreen}{none}       & 3,129  & 32       & \textcolor{dgreen}{4.46 $\times$ 10$^{3}$} \\
+%     RQI & w1.3 r2 v2 & 302    & 19       & 2.32 $\times$ 10$^{4}$ \\
+%     PI  & w1.3 r2 v2 & 288    & 32       & 2.84 $\times$ 10$^{4}$ \\
+%     %\hline
+%     RQI & w1   r3 v3 & 103    & 9$^{*}$  & 3.02 $\times$ 10$^{4}$ \\
+%     PI  & w1   r3 v3 & 126    & 14$^{*}$ & 4.04 $\times$ 10$^{4}$ \\
+%     %\hline
+%     RQI & w1.5 r3 v3 & 187    & 19       & 3.24 $\times$ 10$^{4}$ \\
+%     PI  & w1.5 r3 v3 & 192    & 32       & 3.73 $\times$ 10$^{4}$ \\
+%    \hline 
+%    \end{tabular}\\
+%    $^{*}$different tolerances
+%    \label{table:PI RQI}
+%	\end{table}	 
+\vspace*{-0.3 em}
+	 \begin{table}[h!]
+  \caption{Full PWR: PI and RQI with and without preconditioning}
+    \begin{tabular}{ c  c  c  c  c  c  c }
+      \hline
+      Method & Preconditioner & N Krylov & N Eigen & Time (m) \\
+      \hline
+      %RQI & none   & n/a & n/a   & n/a                                & n/a$^*$ \\
+      %RQI & w1r1v1 & 3   & 45    & 1.252 $\pm$ 1.42 $\times$ 10$^{-2}$ & 120$^*$ \\
+      RQI & \textcolor{dgreen}{w1r2v2} & 70    & 5   & \textcolor{dgreen}{54.8} \\
+      RQI & w1r3v3 & 76    & 6   & 330.4$^{\dag}$ \\
+      PI  & \textcolor{rawsienna}{none}   & 5,602 & 149 & \textcolor{rawsienna}{612.2} \\
+      PI  & w1r2v2 & 946   & 86  & 720$^*$ \\
+      PI  & w1r3v3 & 111   & 11  & 480$^{*,\dag}$ \\
+      %\hline
+      %PI  & none   & 24  & 901  & 1.272 $\pm$ 1.01e-4 & 92.1$^+$ \\
+      %PI  & w1r2v2 & 28  & 312  & 1.273 $\pm$ 8.24e-5 & 250.9$^+$ \\
+      \hline
+    \end{tabular}\\
+    \footnotesize{$^{*}$did not converge within walltime limit (8 or 12 hours)\\
+    $^{\dag}$used $S_{12}$ in MGE preconditioner; diff.\ tolerances and decomp.}\\
+  \label{tab:PWR all}
+\end{table}
+%
+	 \begin{itemize}
+	 \item{Full PWR: preconditioned RQI was fastest!}
+	 \item{Full PWR: RQI + MGE strong-scales well}
+	 \end{itemize}
+\vspace*{-0.3 em}
+%	\begin{figure}[h!]
+%	\includegraphics[width=6in]{strong-scaling.png}
+%	\caption{\footnotesize Full PWR, RQI+MGE strong scaling}
+%	\end{figure}
+\begin{table}[h!]
+  \caption{Full PWR: RQI strong scaling with $w1r2v2$ preconditioning}
+  \begin{tabular}{ c  c  c  c  c  c  c }
+     \hline
+      Sets & Domains & Time (m) & $\text{t}_{\text{perfect}}$ & Efficiency \\
+      \hline
+      1   & 12,544 & 407.8 & 407.8 & 1.000 \\
+      4   & 50,176 & 123.4 & 102.0 & 0.826\\
+      11  & 137,984 & 54.8 & 37.1  & 0.676\\
+      22  & 275,968 & 39.6 & 18.5  & 0.468\\
+      \hline
+  \end{tabular}
+  \label{tab:PWR rqi strong scaling}
+\end{table}
+\vspace*{0.3 em}
+          	\begin{itemize}
+          	\item{RQI + MGE performed well on a large machine for a challenging problem}
+          	\end{itemize}
 		\end{block}
-			\vfill
-%        	\begin{block}{\large Future Work}
-%          		\begin{itemize}
-%          		\item Quantify MGE preconditioner performance more fully and
-%          		 with more energy groups
-%          		\end{itemize}
-%        	\end{block}
 %			\vfill
+%        	\begin{block}{\large Conclusions}
+%          	\begin{itemize}
+%          	\item{RQI is desirable for loosely coupled systems but need preconditioning}
+%          	\item{Multigrid in Energy preconditioner can converge flux so RQI can
+%          	 converge}
+%          	\item{Together, they performed well on a large machine for a challenging problems}
+%          	\end{itemize}
+%        	\end{block}
+			\vfill
         	\begin{block}{\large References}
 			\printbibliography
         	\end{block}
 			\vfill
         	\begin{block}{\large Acknowledgements}
 		\justifying
-This research used resources of the OLCF at the ORNL, which is supported by the Office of Science of the U.S.\ Department of Energy under Contract No. DE-AC05-00OR22725. Additional support came from the Rickover Fellowship Program in Nuclear Engineering sponsored by Naval Reactors Division of the U.S.\ Department of Energy.
+        \small{This research used resources of the OLCF at the ORNL, which is supported 
+        by the Office of Science of the U.S.\ Department of Energy under Contract 
+        No.\ DE-AC05-00OR22725. Additional support came from the Rickover Fellowship
+        Program in Nuclear Engineering sponsored by Naval Reactors Division of the 
+        U.S.\ Department of Energy.}
         	\end{block}
       \end{column}
     \end{columns}

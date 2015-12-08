@@ -2,8 +2,10 @@
 
 \mode<presentation>
 {
-  \definecolor{berkeleyblue}{HTML}{003A70}
-  \definecolor{berkeleygold}{HTML}{F2A900}
+  %\definecolor{berkeleyblue}{HTML}{003A70}
+  %\definecolor{berkeleygold}{HTML}{F2A900}
+  \definecolor{berkeleyblue}{HTML}{003262}
+  \definecolor{berkeleygold}{HTML}{FDB515}
 %http://www.berkeley.edu/brand/img/downloads/UCB%20Brand%20Guidelines_FINAL_small.pdf
   \usetheme{I6dv}      % or try Darmstadt, Madrid, Warsaw, ...
   %\usecolortheme{dove} % or try albatross, beaver, crane, ...
@@ -42,20 +44,20 @@
   %\author[Dreuw \& Deselaers]{Philippe Dreuw and Thomas Deselaers}
   %\institute[University of California, Berkeley]{Department of Nuclear Engineering}
   \newcommand{\footlinetext}{}
+  \usepackage{biblatex}
 
 % Transport equation stuff
 \newcommand{\Sn}{\ensuremath{S_N}}
 \newcommand{\Macro}{\ensuremath{\Sigma}}
-
 \newcommand{\vOmega}{\ensuremath{\hat{\Omega}}}
 \newcommand{\Ye}[2]{\ensuremath{Y^e_{#1}(\vOmega_#2)}}
 \newcommand{\Yo}[2]{\ensuremath{Y^o_{#1}(\vOmega_#2)}}
-
 \newcommand{\ve}[1]{\ensuremath{\mathbf{#1}}}
 
 \setbeamertemplate{bibliography item}[text]
 \addbibresource{2015-bascd.bib}
-%\bibliographystyle{amsalpha}
+\renewcommand*{\bibfont}{\footnotesize}
+
 
 \title[RQI with MGE]{RQI with a Multigrid in Energy Preconditioner for Massively Parallel Neutron Transport}
 \author[R.N.\ Slaybaugh et al.]{R.N.\ Slaybaugh$^{1}$, T.M.\ Evans$^{2}$, G.G. Davidson$^{2}$, S.P.\ Hamilton$^{2}$}
@@ -186,13 +188,13 @@
 		\begin{block}{\large Results\textemdash Past Work 
 		              \cite{Slaybaugh2012}, \cite{Slaybaugh2013}}
 \begin{columns}
-	\column{0.4\linewidth}
+	\column{0.45\linewidth}
 	\begin{figure}[h!]
 	\includegraphics[width=5in]{../figs/denovo-pwr.png}
 	\caption{\footnotesize Full PWR; $S_{12}$ (168 angle sets), 233,858,800 
 	         cells, 44 groups: 1.73 trillion unknowns}
 	\end{figure}
-	\column{0.6\linewidth}
+	\column{0.55\linewidth}
 	\begin{itemize}
 	\item{RQI could solve easy problems without preconditioning, but not hard ones}
 	\item{Using a reduced quadrature set in MGE is highly valuable}
@@ -201,9 +203,10 @@
 	\item{MGE scales very well in energy}
 	\end{itemize}
 \end{columns}
+\vspace*{0.5 em}
 	\begin{itemize}
-	\item{Open questions: Will preconditioning with MGE facilitate the use of RQI? 
-	      Will the combination be better for some problems?}
+	\item{\textit{Will preconditioning with MGE facilitate the use of RQI?}}
+	\item{\textit{Will the combination be better for some problems?}}
 	\end{itemize}
 		\end{block}
 	\vfill
@@ -247,13 +250,13 @@
 \end{columns}
 		\end{block}
 			\vfill
-        	\begin{block}{\large Future Work}
-          		\begin{itemize}
-          		\item Quantify MGE preconditioner performance more fully and
-          		 with more energy groups
-          		\end{itemize}
-        	\end{block}
-			\vfill
+%        	\begin{block}{\large Future Work}
+%          		\begin{itemize}
+%          		\item Quantify MGE preconditioner performance more fully and
+%          		 with more energy groups
+%          		\end{itemize}
+%        	\end{block}
+%			\vfill
         	\begin{block}{\large References}
 			\printbibliography
         	\end{block}

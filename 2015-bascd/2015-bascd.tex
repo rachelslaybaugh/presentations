@@ -2,10 +2,10 @@
 
 \mode<presentation>
 {
-  %\definecolor{berkeleyblue}{HTML}{003A70}
-  %\definecolor{berkeleygold}{HTML}{F2A900}
-  \definecolor{berkeleyblue}{HTML}{003262}
-  \definecolor{berkeleygold}{HTML}{FDB515}
+  \definecolor{berkeleyblue}{HTML}{003A70}
+  \definecolor{berkeleygold}{HTML}{F2A900}
+  %\definecolor{berkeleyblue}{HTML}{003262}
+  %\definecolor{berkeleygold}{HTML}{FDB515}
 %http://www.berkeley.edu/brand/img/downloads/UCB%20Brand%20Guidelines_FINAL_small.pdf
   \usetheme{I6dv}      % or try Darmstadt, Madrid, Warsaw, ...
   %\usecolortheme{dove} % or try albatross, beaver, crane, ...
@@ -80,7 +80,7 @@
     			\vfill
     			\begin{block}{\large Motivation}
       			\begin{itemize}
-			\item{Nuclear reactor design, shielding, nuclear security}
+			\item{Improving nuclear reactor design, shielding, and security}
 			\item{3D deterministic calculations need fine resolution in space, 
 			      energy, and angle}
 			\item{Need to use supercomputing architectures effectively}
@@ -148,7 +148,7 @@
 		\item{Error reduced as $\lambda_{2}/\lambda_{1}$; slow in many nuclear cases}
 		\end{itemize}
 		\vspace*{0.2 em}
-	\item{Shifted inverse iteration (PI on $(\ve{P} - \mu \ve{I})^{-1}$) gives same eigenvectors; $\sigma([\ve{P} - \mu \ve{I}]^{-1}) = \{1/(\lambda - \mu):\lambda \in \sigma(\ve{P})\}$ }
+	\item{Shifted inverse iteration (PI on $(\ve{A} - \mu \ve{I})^{-1}$) gives same eigenvectors; $\sigma([\ve{A} - \mu \ve{I}]^{-1}) = \{1/(\lambda - \mu):\lambda \in \sigma(\ve{A})\}$ }
 		\vspace*{0.1 em}
 		\begin{itemize}
 		\item{Error now reduced as $(\lambda_{1}-\mu)/(\lambda_{2}-\mu)$}
@@ -159,9 +159,9 @@
           \rho = \frac{(\ve{I} - \ve{TMS})\phi}{\ve{TMF} \phi} \approx \frac{1}{k}
 		\end{equation}
 		\item{RQI in Denovo: subtract $\rho \ve{TMF}$ from both sides of 
-		 Eq.\ \eqref{eq:OperatorEvalForm}}
+		 Eqn.\ \eqref{eq:OperatorEvalForm}}
         \begin{equation}
-          (\ve{I} - \ve{TM}\ve{\tilde{S}})\phi =( \gamma - \rho) \ve{TMF} \phi  \:, 
+          (\ve{I} - \ve{TM}\ve{\tilde{S}})\phi =( \gamma - \rho) \ve{TMF} \phi 
           \label{eq:OperatorShiftedEval} 
         \end{equation}
 		\item{$\ve{\tilde{S}} \equiv \ve{S} + \rho\ve{F}$ is energy-block dense;
@@ -173,14 +173,14 @@
 		\vfill
         	\begin{block}{\large Multigrid in Energy \cite{Slaybaugh2013}}
         \begin{itemize}
-			\item{Multigrid in Energy (MGE) as right preconditioner}
+			\item{Multigrid in energy as a right preconditioner}
 			\item{Relaxation method is weighted Richardson}
 			\begin{equation}
               \phi^{m} = \bigr(\ve{I} + \omega(\ve{TMS} - \ve{I})\bigl)\phi^{m-1}
                + \omega b^{m-1}
             \label{eq:relax}
             \end{equation} 
-			\item{Parallelization: each set restricts, prolongs, and relaxes only
+			\item{Parallelization: each energy set restricts, prolongs, and relaxes only
 			 its own groups; does not need to communicate with other energy sets
 			 beyond for upscattering in the solver}
 			\item{Can use reduced angular quadrature in the preconditioner}
@@ -200,8 +200,8 @@
 	\begin{itemize}
 	\item{RQI could solve easy problems without preconditioning, but not hard ones}
 	\item{Using a reduced quadrature set in MGE is highly valuable}
-	\item{No need to have MGE restrict to 1 group, a few grids are sufficient}
-	\item{MGE is not very helpful with PI}
+	\item{No need to have MGE restrict to 1 group; a few grids are sufficient}
+	\item{MGE makes PI slower}
 	\item{MGE scales very well in energy}
 	\end{itemize}
 \end{columns}
@@ -222,7 +222,7 @@
    \begin{block}{Results\textemdash RQI + MGE}
 	 \begin{itemize}
 	 \item{2D C5G7 benchmark: RQI converged with enough preconditioning, but was slow}
-	 \item{3D C5G7 benchmark: preconditioned RQI faster than preconditioning PI; 
+	 \item{3D C5G7 benchmark: preconditioned RQI faster than preconditioned PI; 
 	  still slower than unpreconditioned PI}
 	 \end{itemize}
 %     \vspace*{-0.5 em}
@@ -270,7 +270,7 @@
 \end{table}
 %
 	 \begin{itemize}
-	 \item{Full PWR: preconditioned RQI was fastest!}
+	 \item{Full PWR: \textit{preconditioned RQI was fastest!}}
 	 \item{Full PWR: RQI + MGE strong-scales well}
 	 \end{itemize}
 \vspace*{-0.3 em}

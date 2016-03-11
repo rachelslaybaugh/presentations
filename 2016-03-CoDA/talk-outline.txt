@@ -1,34 +1,57 @@
-Outline
+CoDA 2016 + BIDS
+----------------
 
-- Introduction
-  - We need nuclear innovation to address 
+Introduction
+- Motivation (broad)
+  - I am concerned about
     - global climate and environmental goals
     - global and domestic security goals
-    - to ensure economic competitiveness
-  - we need it for advanced reactor design, understanding detector materials  
-    and behaviors, potential material diversion, and false positives or 
-    negatives in monitoring
-  - I build tools that people want to use to predictively design these systems
+    - economic prosperity
+  - We can (at least partially) address these issues through nuclear innovation:
+    - advanced reactor design, sustain current reactors
+    - nuclear security applications: monitoring, nonproliferation, detection,
+      etc.
+- Motivation (my role)
+  - To facilitate innovation across all of these areas, we need predictive
+    simulation: better designs; limit slow, costly experiments
+  - I build tools that people use to design and analyze these systems
   - with a focus on tools that work on very large machines
-  - outline talk: bg, 3 prongs
- 
-- background
-  - the transport equation (here's what it is)
-  - the problems we want to solve are really big: 6D, complex data, physically
-    challenging problems. We also might want coupled multiphysics. We can do
-    this deterministically or with Monte Carlo; each present pretty big
-    challenges
-  - Context of existing tools are tuned to predict what we already know. We're
-    not in a place where we really can predict new things yet. We really need
-    to be able to be, though, so that we can shorten development time and
-    really bring change. 
 
-- Algorithms for advanced architectures
+- Outline talk
+ 
+Background
+- What is the transport equation?
+  - to design a nuclear system, we need to know where all the neutrons are
+  - the transport equation (this awesome thing) tells us that
+- This problem is hard
+  - the problems we want to solve are really big: 6D, complex data, physically
+    challenging problems
+  - We also might want coupled multiphysics
+  - We can do this deterministically or with Monte Carlo; each present pretty big
+    challenges
+- Where are we now?
+  - Many existing tools are tuned to predict what we already know, not new
+    things: 
+    - need increased accuracy and resolution, coupled multiphysics, and
+      confidence in solvers
+    - To accomplish this, we really need to be able use huge machines. We are
+      just starting to be able to take advantage of heterogenous architecture;
+      can we make it to exascale?
+  - We need better nuclear data (the input that describes all of the physics):
+    as we improve what we can calculate, errors in the underlying data become
+    increasingly problematic 
+  - We are having trouble doing analysis now, and this will get worse. We need
+    innovative methods so that we can use the answers we make in some
+    reasonable amount of time.
+
+
+Algorithms for advanced architectures
   - To do predictive simulation we need a lot of computing power. 
      - Cutting edge hardware; describe the kinds of machines; discuss some
        challenges about using these machines.
      - We've got a lot of old codes that can't use new machines effectively, and
-       as the machines become larger and more complex this becomes increasingly true.
+       as the machines become larger and more complex this becomes increasingly
+       true.
   - Work I've done to capitalize on new machines across solution strategies.
     - traditional CPUs: Block Krylov + RQI + MGE
     - heterogeneous architectures: WARP

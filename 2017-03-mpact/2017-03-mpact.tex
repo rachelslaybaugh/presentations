@@ -1,6 +1,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%\documentclass[xcolor=x11names,compress]{beamer}
-\documentclass[handout]{beamer}
+\documentclass[xcolor=x11names,compress]{beamer}
+%\documentclass[handout]{beamer}
 \definecolor{CoolBlack}{rgb}{0.0, 0.18, 0.39}
 \definecolor{byellow}{rgb}{0.55037, 0.38821, 0.06142}
 %% General document %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -192,12 +192,20 @@ T.\ M.\ Evans and S.\ W.\ Mosher, Oak Ridge National Lab}
 % --------------------------------------------------------------
 \begin{frame}[fragile]
   \frametitle{Solving the TE}
+  %
+  \begin{align}
+\vOmega \cdot \nabla \psi(\vec{r}, E, \vOmega) &+
+\Sigma_t \psi(\vec{r}, E, \vOmega) = S(\vec{r}, E, \vOmega) \:+\nonumber\\
+%
+& \int_{4\pi} d\vOmega' \int_0^{\infty} dE'\: \Sigma_s(E', \vOmega' \rightarrow E, \vOmega) \psi(\vec{r}, E', \vOmega') \nonumber
+\end{align}
 %
 \begin{columns}
   \begin{column}{0.5\textwidth}
   \begin{center}
   \underline{Monte Carlo}
   \end{center}
+  \vspace*{-1em}
 	\begin{itemize}
 	\item Solution has statistical error
 	\item \textit{Continuous} phase space%: ``gold standard answers"
@@ -209,6 +217,7 @@ T.\ M.\ Evans and S.\ W.\ Mosher, Oak Ridge National Lab}
   \begin{center}
   \underline{Deterministic}
   \end{center}
+  \vspace*{-1em}
 	\begin{itemize}
 	\item Solution equally valid everywhere
 	\item \textit{Discretized} phase space%: drives solution quality
@@ -217,13 +226,6 @@ T.\ M.\ Evans and S.\ W.\ Mosher, Oak Ridge National Lab}
 	\end{itemize}
   \end{column}
 \end{columns}
-%
-\begin{align}
-\vOmega \cdot \nabla \psi(\vec{r}, E, \vOmega) &+
-\Sigma_t \psi(\vec{r}, E, \vOmega) = S(\vec{r}, E, \vOmega) \:+\nonumber\\
-%
-& \int_{4\pi} d\vOmega' \int_0^{\infty} dE'\: \Sigma_s(E', \vOmega' \rightarrow E, \vOmega) \psi(\vec{r}, E', \vOmega') \nonumber
-\end{align}
 
 \end{frame}
 
@@ -263,7 +265,7 @@ T.\ M.\ Evans and S.\ W.\ Mosher, Oak Ridge National Lab}
 	\item Many important nuclear applications have strong anisotropies
 	 \begin{itemize}
 	 \item \textbf{Used fuel casks}
-	 \item Reprocessing facilities
+	 \item \textbf{Reprocessing facilities}
 	 \item Reactor facilities
 	 \item Active interrogation 
 	 \end{itemize}
@@ -290,129 +292,189 @@ T.\ M.\ Evans and S.\ W.\ Mosher, Oak Ridge National Lab}
 \end{frame}
 
 
+%% --------------------------------------------------------------
+%\begin{frame}[fragile]
+%  \frametitle{Forward-Adjoint Relationship \cite{Wagner2007}}
+%Define response with function $f(\ve{r}, E)$ in volume $V_f$ as
+%%
+%\begin{equation}
+% R = \int_E \int_{V_f} f(\ve{r}, E) \phi(\ve{r}, E) dV dE 
+% \label{eq:Response}
+%\end{equation}
+%%
+%\begin{columns}
+%  \begin{column}{0.5\textwidth}
+%	\begin{align}
+%  	H\phi &= q \quad \text{(forward)}\nonumber \\
+%  	%
+%  	H^{\dagger} \phi^{\dagger} &= q^{\dagger} \quad 
+%  	\text{(adjoint)}\nonumber
+%  	\end{align}
+%  \end{column}
+%  \begin{column}{0.5\textwidth}
+%  	\begin{align}
+%  	\langle H\phi, \phi^{\dagger} \rangle &= \langle H^{\dagger} \phi^{\dagger}, \phi \rangle \:, \text{and therefore} \nonumber \\
+%  	%
+%  	\langle q, \phi^{\dagger} \rangle &= \langle q^{\dagger}, \phi \rangle \nonumber
+%  	\end{align}
+%  \end{column}
+%\end{columns}
+%\vspace*{1 em}
+%If we let $q^{\dagger} = f(\ve{r}, E)$ then
+%%
+%\begin{equation}
+% \langle q^{\dagger}, \phi \rangle = \langle f, \phi \rangle = R = \langle q, \phi^{\dagger} \rangle
+% \label{eq:ResponseRedef}
+%\end{equation}
+%%
+%Eq.\ \eqref{eq:ResponseRedef} expresses that $\phi^{\dagger}$ represents the expected contribution of a source particle to the response given the source, $q$.
+%
+%\end{frame}
+%
+%% --------------------------------------------------------------
+%\begin{frame}[fragile]
+%  \frametitle{CADIS \cite{Wagner2007}}
+%  
+%  \begin{enumerate}
+%  \item Define $q^{\dagger}$ as the local response of interest\\
+%  \item Coarse deterministic calculation to get $\phi^{\dagger}$ and $R$
+%  \end{enumerate}
+%% 
+%\begin{align}
+%  imp(\ve{r}, E) &= \frac{\phi^{\dagger}(\ve{r}, E)}{\langle q(\ve{r}, E), \phi^{\dagger}(\ve{r}, E) \rangle} = \frac{\phi^{\dagger}(\ve{r}, E)}{R} \\
+%  %
+%  \hat{q}(\ve{r}, E) &= \frac{\phi^{\dagger}(\ve{r}, E) q(\ve{r}, E)}{R} \\
+%  %
+%  w_0(\ve{r}, E) &= \frac{q(\ve{r}, E)}{\hat{q}(\ve{r}, E)} = \frac{R}{\phi^{\dagger}(\ve{r}, E)} 
+%  \label{eq:Importance}
+%\end{align}
+%
+%Birth weights match weight targets, making this the \underline{C}onsistent \underline{A}djoint \underline{D}riven \underline{I}mportance \underline{S}ampling \underline{M}ethod
+%
+%\end{frame}
+%
+%% --------------------------------------------------------------
+%%\subsection{FW-CADIS}
+%\begin{frame}[fragile]
+%  \frametitle{FW-CADIS \cite{Wagner2007}}
+%
+%\begin{itemize}
+%\item We often what to optimize solutions in all of phase space\\
+%\item In this case the adjoint source needs to be a global forward solution: \underline{F}orward \underline{W}eighted-CADIS
+%\end{itemize}
+%%
+%\begin{columns}
+%  \begin{column}{0.5\textwidth}
+%  \begin{center}
+%  \alert{To Optimize}
+%  \end{center}
+%	\begin{align}
+%  	&\phi(\ve{r}, E)\nonumber \\
+%  	%
+%  	\int&\phi(\ve{r}, E)\sigma_d(\ve{r}, E)\nonumber
+%  	\end{align}
+%  \end{column}
+%  %
+%  \begin{column}{0.5\textwidth}
+%  \begin{center}
+%  \alert{Adjoint Source}
+%  \end{center}
+%  	\begin{align}
+%  	f(\ve{r}, E) &= \frac{1}{\phi(\ve{r}, E)}\nonumber \\
+%  	%
+%  	f(\ve{r}, E) &= \frac{\sigma_d(\ve{r}, E)}{\int\phi(\ve{r}, E)\sigma_d(\ve{r}, E)} \nonumber
+%  	\end{align}
+%  \end{column}
+%\end{columns}
+%\vspace*{1 em}
+%For example
+%%
+%\begin{equation}
+% R = \int_E \int_{V_f} f(\ve{r}, E) \phi(\ve{r}, E) dV dE = \int_E \int_{V} \frac{1}{\phi(\ve{r}, E)} \phi(\ve{r}, E) dV dE \approx 1 \nonumber
+%\end{equation}
+%
+%\end{frame}
+
+
 % --------------------------------------------------------------
 \begin{frame}[fragile]
-  \frametitle{Forward-Adjoint Relationship \cite{Wagner2007}}
+  \frametitle{Adjoint as an importance map}
 Define response with function $f(\ve{r}, E)$ in volume $V_f$ as
 %
 \begin{equation}
  R = \int_E \int_{V_f} f(\ve{r}, E) \phi(\ve{r}, E) dV dE 
  \label{eq:Response}
 \end{equation}
-%
-\begin{columns}
-  \begin{column}{0.5\textwidth}
-	\begin{align}
-  	H\phi &= q \quad \text{(forward)}\nonumber \\
-  	%
-  	H^{\dagger} \phi^{\dagger} &= q^{\dagger} \quad 
-  	\text{(adjoint)}\nonumber
-  	\end{align}
-  \end{column}
-  \begin{column}{0.5\textwidth}
-  	\begin{align}
-  	\langle H\phi, \phi^{\dagger} \rangle &= \langle H^{\dagger} \phi^{\dagger}, \phi \rangle \:, \text{and therefore} \nonumber \\
-  	%
-  	\langle q, \phi^{\dagger} \rangle &= \langle q^{\dagger}, \phi \rangle \nonumber
-  	\end{align}
-  \end{column}
-\end{columns}
-\vspace*{1 em}
-If we let $q^{\dagger} = f(\ve{r}, E)$ then
-%
-\begin{equation}
- \langle q^{\dagger}, \phi \rangle = \langle f, \phi \rangle = R = \langle q, \phi^{\dagger} \rangle
- \label{eq:ResponseRedef}
-\end{equation}
-%
-Eq.\ \eqref{eq:ResponseRedef} expresses that $\phi^{\dagger}$ represents the expected contribution of a source particle to the response given the source, $q$.
+\pause
+\begin{itemize}
+\item Forward ($\phi$ or $\psi$): neutrons flow from the source ($q$) to the detector
+\item Adjoint($\phi^{\dagger}$ or $\psi^{\dagger}$): particles represent how each part of phase space contributes to the ``source" ($q^{\dagger}$)
+\item $\phi^{\dagger}$ represents the expected contribution of a source particle to the response given the source, $q$.
+\end{itemize}
+
 
 \end{frame}
+% --------------------------------------------------------------
+% --------------------------------------------------------------
+%\section{\scshape Initial Results}
+\begin{frame}[fragile]
+
+  \frametitle{Understanding Forward flux}
+  10 MeV isotropic point source; NaI detector
+  \begin{columns}
+   \begin{column}{0.75\textwidth}
+   \begin{figure}
+   \includegraphics[height=1.5in,clip]{../figs/maze-forward.png}
+   %\caption{Simple two-turn labyrinth}
+   \end{figure}
+   \end{column}
+  %
+  \begin{column}{0.25\textwidth}
+Neutrons in the forward problem will flow from the source to the detector
+   \end{column}
+\end{columns}
+	
+\end{frame}
+
+%% --------------------------------------------------------------
+%
+\begin{frame}[fragile]
+  \frametitle{Understanding Adjoint Flux}
+  10 MeV isotropic point source; NaI detector
+  \begin{columns}
+   \begin{column}{0.25\textwidth}
+   Adjoint measures how each part of phase space contributes to the solution: \\\vspace*{.5em}importance map 
+   \end{column}
+  %
+  \begin{column}{0.75\textwidth}
+   \begin{figure}
+   \includegraphics[height=1.75in,clip]{../figs/maze-adjoint.png}
+   %\caption{Simple two-turn labyrinth}
+   \end{figure}
+   \end{column}
+\end{columns}
+\end{frame}
+
 
 % --------------------------------------------------------------
 \begin{frame}[fragile]
-  \frametitle{CADIS \cite{Wagner2007}}
-  
-  \begin{enumerate}
-  \item Define $q^{\dagger}$ as the local response of interest\\
-  \item Coarse deterministic calculation to get $\phi^{\dagger}$ and $R$
-  \end{enumerate}
-% 
-\begin{align}
+  \frametitle{Adjoint as an importance map}
+Use \textit{adjoint}: the importance of a source particle to the solution
+
+\begin{itemize}
+\item Define $q^{\dagger}$ as the response of interest
+\item Coarse deterministic calculation to get $\phi^{\dagger}$ and $R$
+\item The current state of the art is FW/CADIS \cite{Wagner2007}
+\end{itemize}
+\begin{align*}
   imp(\ve{r}, E) &= \frac{\phi^{\dagger}(\ve{r}, E)}{\langle q(\ve{r}, E), \phi^{\dagger}(\ve{r}, E) \rangle} = \frac{\phi^{\dagger}(\ve{r}, E)}{R} \\
   %
   \hat{q}(\ve{r}, E) &= \frac{\phi^{\dagger}(\ve{r}, E) q(\ve{r}, E)}{R} \\
   %
   w_0(\ve{r}, E) &= \frac{q(\ve{r}, E)}{\hat{q}(\ve{r}, E)} = \frac{R}{\phi^{\dagger}(\ve{r}, E)} 
-  \label{eq:Importance}
-\end{align}
-
-Birth weights match weight targets, making this the \underline{C}onsistent \underline{A}djoint \underline{D}riven \underline{I}mportance \underline{S}ampling \underline{M}ethod
+\end{align*}
 
 \end{frame}
-
-% --------------------------------------------------------------
-%\subsection{FW-CADIS}
-\begin{frame}[fragile]
-  \frametitle{FW-CADIS \cite{Wagner2007}}
-
-\begin{itemize}
-\item We often what to optimize solutions in all of phase space\\
-\item In this case the adjoint source needs to be a global forward solution: \underline{F}orward \underline{W}eighted-CADIS
-\end{itemize}
-%
-\begin{columns}
-  \begin{column}{0.5\textwidth}
-  \begin{center}
-  \alert{To Optimize}
-  \end{center}
-	\begin{align}
-  	&\phi(\ve{r}, E)\nonumber \\
-  	%
-  	\int&\phi(\ve{r}, E)\sigma_d(\ve{r}, E)\nonumber
-  	\end{align}
-  \end{column}
-  %
-  \begin{column}{0.5\textwidth}
-  \begin{center}
-  \alert{Adjoint Source}
-  \end{center}
-  	\begin{align}
-  	f(\ve{r}, E) &= \frac{1}{\phi(\ve{r}, E)}\nonumber \\
-  	%
-  	f(\ve{r}, E) &= \frac{\sigma_d(\ve{r}, E)}{\int\phi(\ve{r}, E)\sigma_d(\ve{r}, E)} \nonumber
-  	\end{align}
-  \end{column}
-\end{columns}
-\vspace*{1 em}
-For example
-%
-\begin{equation}
- R = \int_E \int_{V_f} f(\ve{r}, E) \phi(\ve{r}, E) dV dE = \int_E \int_{V} \frac{1}{\phi(\ve{r}, E)} \phi(\ve{r}, E) dV dE \approx 1 \nonumber
-\end{equation}
-
-\end{frame}
-
-
-% --------------------------------------------------------------
-%\begin{frame}[fragile]
-%  \frametitle{Adjoint as an importance map}
-%Use \textit{adjoint}: the importance of a source particle to the solution
-%
-%\begin{itemize}
-%\item Forward ($\phi$ or $\psi$): neutrons flow from the source to the detector
-%\item Adjoint($\phi^{\dagger}$ or $\psi^{\dagger}$): particles represent how each part of phase space contributes to the ``source"
-%\item The current state of the art is FW/CADIS \cite{Wagner2007}
-%\end{itemize}
-%\begin{align*}
-%  imp(\ve{r}, E) &= \frac{\phi^{\dagger}(\ve{r}, E)}{\langle q(\ve{r}, E), \phi^{\dagger}(\ve{r}, E) \rangle} = \frac{\phi^{\dagger}(\ve{r}, E)}{R} \\
-%  %
-%  \hat{q}(\ve{r}, E) &= \frac{\phi^{\dagger}(\ve{r}, E) q(\ve{r}, E)}{R} \\
-%  %
-%  w_0(\ve{r}, E) &= \frac{q(\ve{r}, E)}{\hat{q}(\ve{r}, E)} = \frac{R}{\phi^{\dagger}(\ve{r}, E)} 
-%\end{align*}
-%
-%\end{frame}
 
 
 % --------------------------------------------------------------
@@ -531,236 +593,154 @@ For example
     \item Testing: \alert{in process}
       \begin{itemize}
       \item A collection of small tests with varying anisotropies
-      \item Study performance compared to existing methods as a function of degree of anisotropy
-      \item Investigate impact of angular discretization
+      \item Studying performance compared to existing methods as a function of degree of anisotropy
+      \item Investigating impact of angular discretization
       \end{itemize}
       \vspace*{0.5em}
       \pause
     \item Impact characterization: \alert{started}
       \begin{itemize}
-      \item Investigate performance for one used fuel canister
-      \item Investigate performance for array of used fuel canisters
-      \item \alert{Goal}: improved material control and accountability
+      \item Investigating performance for one used fuel canister
+      \item Investigating performance for array of used fuel canisters
+      \item Extending to other applications of interest like monitoring reprocessing
       \end{itemize}
     \end{enumerate}
 
 	
 \end{frame}
 
-%% --------------------------------------------------------------
-%% --------------------------------------------------------------
-%%\section{\scshape Initial Results}
-%\begin{frame}[fragile]
-%
-%  \frametitle{Results 1: maze problem}
-%  10 MeV isotropic point source
-%  \begin{columns}
-%   \begin{column}{0.45\textwidth}
-%   \begin{itemize}
-%\item Concrete maze
-%\item Air duct
-%\end{itemize}
-%   \end{column}
-%  %
-%  \begin{column}{0.5\textwidth}
-%   \begin{itemize}
-%\item NaI detector; 26 groups
-%\item Reflecting BCs
-%\end{itemize}
-%   \end{column}
-%\end{columns}
-%   \begin{figure}
-%   \includegraphics[height=2in,clip]{maze2_forward_group00_adjusted.png}
-%   %\caption{Simple two-turn labyrinth}
-%   \end{figure}
-%
-%
-%	
-%\end{frame}
-%
-%%% --------------------------------------------------------------
-%%
-%\begin{frame}[fragile]
-%  \frametitle{Quantifying Anisotropy}
-%  
-%    \begin{columns}
-%    \begin{column}{0.5\textwidth}
-%  	\begin{figure}
-%  	\begin{center}
-%  		\includegraphics[height=1.1in,clip]{maze2_anisotropy_forward_group26_cropped.png}
-%		%\caption{Forward flux anisotropy}
-%	\end{center}
-%  	\end{figure}
-%  	  \begin{figure}
-%  	\begin{center}
-%  		\includegraphics[height=1.1in,clip]{maze2_anisotropy_adjoint_group26_cropped.png}
-%		%\caption{Adjoint flux anisotropy}
-%	\end{center}
-%  	\end{figure}
-%    \end{column}
-%  \pause
-%    \begin{column}{0.5\textwidth}
-%    Combining forward and adjoint fluxes, we see:
-%    \begin{itemize}
-%        \item Some elimination of ray effects
-%        \item Anisotropy captured 
-%    \end{itemize}
-%  	\begin{figure}
-%  	\begin{center}
-%  		\includegraphics[height=1.1in,clip]{maze2_anisotropy_contributon_group26_cropped.png}
-%		%\caption{Contributon flux anisotropy }
-%	\end{center}
-%  	\end{figure}
-%  	\end{column}  
-%  \end{columns}
-%\end{frame}
-%
-%%% --------------------------------------------------------------
-%
-%\begin{frame}[fragile]
-%  \frametitle{Generating adjusted fluxes}
-%  %However, the method is not dominated by \textbf{just} the anisotropy....
-%  \begin{columns}
-%    \begin{column}{0.5\textwidth}
-%  	\begin{figure}
-%  	\begin{center}
-%  		\includegraphics[height=1.1in,clip]{maze2_adjoint_group26_adjusted_cropped.png}
-%		%\caption{Regions with high importance}
-%	\end{center}
-%  	\end{figure}
-%  	  \begin{figure}
-%  	\begin{center}
-%  		\includegraphics[height=1.1in,clip]{maze2_anisotropy_contributon_group26_cropped.png}
-%		%\caption{... coupled with strong anisotropies}
-%		% point out that while the FOM is better for analog, it has high RE in regions, so overall it performs poorer
-%	\end{center}
-%  	\end{figure}
-%    \end{column}
-%  \pause
-%    \begin{column}{0.5\textwidth}
-%   Regions with high importance coupled with strong anisotropy result in adjusted flux incorporating both
-%  	\begin{figure}
-%  	\begin{center}
-%  		\includegraphics[height=1.1in,clip]{maze2_myflux_group26_adjusted_cropped.png}
-%		%\caption{Result in adjusted flux incorporating both }
-%	\end{center}
-%  	\end{figure}
-%  	\end{column}  
-%  \end{columns}
-%  %\alert{The new method incorporates both importance AND anisotropy into weighting parameters}
-%\end{frame}
-%
-%%% --------------------------------------------------------------
-%
-%\begin{frame}[fragile]
-%  \frametitle{Adjusted Fluxes}
-%
-%
-%	Comparing the original adjoint to CADIS-$\Omega$....
-%	\vspace*{1 em}
-%	\begin{columns}
-%  	\begin{column}{0.5\textwidth}
-%  	\begin{figure}
-%  	\begin{center}
-%  		\includegraphics[height=1in,clip]{maze2_adjoint_group26_adjusted_cropped.png}
-%		%\caption{Adjoint flux used by CADIS}
-%	\end{center}
-%  	\end{figure}
-%  	\end{column}
-% 	%
-% 	\begin{column}{0.5\textwidth}
-% 	\begin{figure}
-%  	\begin{center}
-%  		\includegraphics[height=1in,clip]{maze2_myflux_group26_adjusted_cropped.png}
-%  		%\caption{Adjoint flux used by CADIS-$\Omega$}
-%  	\end{center}
-%  	\end{figure}
-%  	\end{column}
-%	\end{columns}
-%	\vspace*{1 em}
-%	.... shows that the method does incorporate problem physics differently
-%  
-%	
-%\end{frame}
-%
-%%% --------------------------------------------------------------
-%%
-%\begin{frame}[fragile]
-%  \frametitle{Response in detector}
-%  
-%\begin{columns}
-%  \begin{column}{0.45\textwidth}
-%  Adjusted CADIS has:
-%  \begin{itemize}
-%    \item Relatively uniform uncertainty distribution
-%    \item Raster runtimes than CADIS
-%    \item Better overall results than analog
-%  \end{itemize}
-%  \begin{tabular}{|l|c c|}
-%  \hline
-%      Run Type & FOM$_{MC}$ & FOM$_{adj}$ \\  
-%      \hline
-%      Analog & 493 & 493 \\
-%      CADIS  & 8   &   7 \\
-%      CADIS-$\Omega$ & 466 & 354 \\
-%      \hline
-%  \end{tabular}
-%  \end{column}
-%  \begin{column}{0.55\textwidth}
-%  	\begin{figure}
-%  	\begin{center}
-%  		\includegraphics[height=1.3in,clip]{response.png}
-%		%\caption{Response for maze 2}
-%	\end{center}
-%  	\end{figure}
-%  	  \begin{figure}
-%  	\begin{center}
-%  		\includegraphics[height=1.3in,clip]{response_RE.png}
-%		%\caption{Relative errors for response function}
-%		% point out that while the FOM is better for analog, it has high RE in regions, so overall it performs poorer
-%	\end{center}
-%  	\end{figure}
-%  \end{column}
-%\end{columns}
-%	
-%\end{frame}
 
 %% --------------------------------------------------------------
-%% --------------------------------------------------------------
-%\section{\scshape Continuing Work}
 \begin{frame}[fragile]
-
-  \frametitle{Characterization Tests}
-   Quantify method's effectiveness for problems with different degrees of anisotropy: \\
-   \vspace*{1 em}
-    Spatial streaming; \hspace*{2 em} Labyrinth variants;\\
-    Spherical boat; \hspace*{4.25 em} Energy streaming
-    \vspace{1 em}
-    
-%    \begin{columns}
-%    \begin{column}{0.45\textwidth}
-%    \textbf{Deterministic}
-%    \begin{itemize}
-%    \item Energy groups 
-%    \item Quadrature order
-%    \item Quadrature type
-%    \item Spatial discretization
-%    \end{itemize}
-%    \end{column}
-%    
-%    \begin{column}{0.55\textwidth}
-%    \textbf{Monte Carlo}
-%    \begin{itemize}
-%    \item Tally spatial resolution (FW CADIS only)
-%    \item Tally energy resolution 
-%    \end{itemize}
-%    \end{column}
-%  \end{columns}
-
+  \frametitle{The New Method Captures Anisotropy}
+Comparing the original adjoint to CADIS-$\Omega$....
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+  	\begin{figure}
+  	\begin{center}
+  		\includegraphics[height=1.1in,clip]{../figs/maze-adj-orig.png}
+		\caption{original adjoint}
+	\end{center}
+  	\end{figure}
+    \end{column}
+  \pause
+    \begin{column}{0.5\textwidth}
+     	  \begin{figure}
+  	\begin{center}
+  		\includegraphics[height=1.1in,clip]{../figs/maze-adj-new}
+		\caption{new adjoint}
+		% point out that while the FOM is better for analog, it has high RE in regions, so overall it performs poorer
+	\end{center}
+  	\end{figure}
+  	\end{column}  
+  \end{columns}
+  ...shows that the method does incorporate problem physics differently
 \end{frame}
 
 %% --------------------------------------------------------------
+%
+\begin{frame}[fragile]
+  \frametitle{Response in Maze Detector}
+  
+\begin{columns}
+  \begin{column}{0.45\textwidth}
+  Adjusted CADIS has:
+  \begin{itemize}
+    \item Relatively uniform uncertainty distribution
+    \item Faster runtimes than CADIS
+  \end{itemize}
+  \vspace*{.5em}
+  \begin{tabular}{|l|c c|}
+  \hline
+      Run Type & Time (m) & FOM \\  
+      \hline
+      CADIS  & 524.9  &  5.1 \\
+      CADIS-$\Omega$ & 491.9 & 145 \\
+      \hline
+  \end{tabular}
+  \end{column}
+  \begin{column}{0.55\textwidth}
+  	\begin{figure}
+  	\begin{center}
+  		\includegraphics[height=1.5in,clip]{../figs/maze-results.png}\\
+		%\caption{Response for maze 2}
+  		\includegraphics[height=1.5in,clip]{../figs/maze-re.png}
+		%\caption{Relative errors for response function}
+		% point out that while the FOM is better for analog, it has high RE in regions, so overall it performs poorer
+	\end{center}
+  	\end{figure}
+  \end{column}
+\end{columns}
+\end{frame}
 
+
+
+%% --------------------------------------------------------------
+\begin{frame}[fragile]
+
+  \frametitle{Quantifying Anisotropy}
+  
+  To measure how the method performs for different problems, we've defined several metrics.
+  \vspace*{1em}
+    \begin{columns}
+    \begin{column}{0.5\textwidth}
+      \begin{itemize}
+      \item $M_{1} = \frac{\phi^{\dagger}(\vecr,E)\phi(\vecr,E)}{\int_{\vOmega}\psi^{\dagger}(\vecr,\vOmega,E)\psi(\vecr,\vOmega,E)}$
+      \item $M_{2} = \frac{\phi^{\dagger}_{\vOmega}(\vecr,E)}{\phi^{\dagger}(\vecr,E)}$
+      \item $M_{3} = \frac{\max(\int_{\vOmega}\psi^{\dagger}(\vecr,\vOmega,E)\psi(\vecr,\vOmega,E))}{\text{avg}(\int_{\vOmega}\psi^{\dagger}(\vecr,\vOmega,E)\psi(\vecr,\vOmega,E))}$
+       \item $M_{4} = \frac{\max(\int_{\vOmega}\psi^{\dagger}(\vecr,\vOmega,E)\psi(\vecr,\vOmega,E))}{\min(\int_{\vOmega}\psi^{\dagger}(\vecr,\vOmega,E)\psi(\vecr,\vOmega,E))}$
+      \end{itemize}
+    \end{column}    
+    \begin{column}{0.5\textwidth}
+    Example: source in a room
+      	\begin{figure}
+  	\begin{center}
+  		\includegraphics[height=1.5in,clip]{../figs/therapy-room.png}
+	\end{center}
+  	\end{figure}
+    \end{column}
+  \end{columns}   
+
+\end{frame}
+
+
+%% --------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Response in Room Detector}
+  
+\begin{columns}
+  \begin{column}{0.45\textwidth}
+  Adjusted CADIS has:
+  \begin{itemize}
+    \item Relatively uniform uncertainty distribution
+    \item Faster runtimes than CADIS
+  \end{itemize}
+  \vspace*{.5em}
+  \begin{tabular}{|l|c c|}
+  \hline
+      Run Type & Time (m) & FOM \\  
+      \hline
+      CADIS  & 69.05  &  287 \\
+      CADIS-$\Omega$ & 50.4 & 373 \\
+      \hline
+  \end{tabular}
+  \end{column}
+  \begin{column}{0.55\textwidth}
+  	\begin{figure}
+  	\begin{center}
+  		\includegraphics[height=1.5in,clip]{../figs/room-both-tally.png}\\
+		%\caption{Response for maze 2}
+  		\includegraphics[height=1.5in,clip]{../figs/room-both-re.png}
+		%\caption{Relative errors for response function}
+		% point out that while the FOM is better for analog, it has high RE in regions, so overall it performs poorer
+	\end{center}
+  	\end{figure}
+  \end{column}
+\end{columns}
+\end{frame}
+
+
+%% --------------------------------------------------------------
 \begin{frame}[fragile]
 
   \frametitle{Impact Tests}
@@ -773,7 +753,7 @@ For example
     \end{column}    
     \begin{column}{0.45\textwidth}
   \begin{center}
-  \includegraphics[height=2.5in,clip]{Transfer_Side_profile}  
+  \includegraphics[height=2.5in,clip]{../figs/Transfer_Side_profile}  
   \end{center}
     \end{column}
   \end{columns}   
@@ -832,6 +812,7 @@ For example
 %\end{frame}
 
 
+%% --------------------------------------------------------------
 \begin{frame}{Derivation of the LDO Equations}
 Start with the TE:
 \begin{multline}
@@ -885,6 +866,8 @@ Start with the TE:
 %% what can they be, what do we usually choose for them, etc.
 %\end{frame}
 
+
+%% --------------------------------------------------------------
 \begin{frame}{Lagrange Functions (cont'd.)}
 
 The $L_{i}(\vOmega)$ satisfy:
@@ -905,6 +888,8 @@ w_i = \int_{\maths}L_{i}(\vOmega)d\vOmega = \sum_{j=1}^{\dn}\lij
 %Here, $\langle f,g\rangle$ is the inner product $\int_{\maths}f(\vOmega)g(\vOmega)d\vOmega$.
 \end{frame}
 
+
+%% --------------------------------------------------------------
 \begin{frame}[label=group_disc]{Derivation of the LDO Equations (cont'd.)}
 %Define the residual:
 %\begin{multline}
@@ -941,15 +926,21 @@ These are the new multigroup LDO equations.
 \end{frame}
 
 
+
 % --------------------------------------------------------------
 % --------------------------------------------------------------
 \section*{}
 \begin{frame}[fragile]
   \frametitle{Summary}
   \begin{itemize}
-  \item Need for methods
-  \item CADIS-$\vOmega$...
-  \item LDO
+  \item There are many situations of interest where neutron fluxes have strong anisotropies
+  \item Current VR methods do not enhance performance sufficiently 
+  \pause
+  \item CADIS-$\vOmega$ is one way to capture angular information and shows strong initial promise
+  \item Strategically using the LDO equations may provide another effective path
+  \pause
+  \item We're looking at many types of problems and are scaling up to real applications
+  \item Next up: expanding to reprocessing facilities
   \end{itemize}
 \end{frame}
 
@@ -966,9 +957,14 @@ These are the new multigroup LDO equations.
 \end{frame}
 
 % --------------------------------------------------------------
-\begin{frame}[allowframebreaks]{References}
-	\bibliographystyle{unsrt}
-	\bibliography{2017-03-mpact}
+\begin{frame}[plain,allowframebreaks]{References}
+\small
+	\bibliography{2017-03-mpact}%\printbibliography
 \end{frame}
+
+%\begin{frame}[allowframebreaks]{References}
+%	\bibliographystyle{unsrt}
+%	\bibliography{2017-03-mpact}
+%\end{frame}
 
 \end{document}

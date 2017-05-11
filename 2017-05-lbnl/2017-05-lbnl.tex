@@ -136,18 +136,18 @@
   \begin{column}{0.5\textwidth}
     \begin{itemize}
     \item Motivation \& Background
-    \vspace*{.75em}
+    \vspace*{.5em}
     \item Hybrid Methods and Strong Anisotropies
         \begin{itemize}
         \item Research Objectives
-	\item Results
+	\item CADIS-$\Omega$ Method
 	\item LDO Method
         \end{itemize}
         
-   \vspace*{.75em}
+   \vspace*{.5em}
    \item Spectrum Shaping for Strategic Research
         \begin{itemize}
-        \item CADIS-$\Omega$ Method
+        \item Research Objectives
 	\item Gnowee: Metaheuristic Optimization Algorithm
 	\item Coeus: ETA Design Software
         \end{itemize}	
@@ -212,9 +212,9 @@
   \end{center}
   \vspace*{-1em}
 	\begin{itemize}
-	\item Solution has statistical error
 	\item \textit{Continuous} phase space%: ``gold standard answers"
-	\item Can be slow
+	\item Solution has statistical error
+	\item Localized solutions
 	\item Optically thick = \textit{slow}
 	\end{itemize}
   \end{column}
@@ -224,9 +224,9 @@
   \end{center}
   \vspace*{-1em}
 	\begin{itemize}
-	\item Solution equally valid everywhere
 	\item \textit{Discretized} phase space%: drives solution quality
-	\item Can be fast
+	\item Solution equally valid everywhere
+	\item Truncation errors
 	\item Streaming = \textit{ray effects}
 	\end{itemize}
   \end{column}
@@ -261,8 +261,37 @@
 % --------------------------------------------------------------
 % --------------------------------------------------------------
 \section{\scshape Hybrid Methods \& Anisotropy}
+
 \begin{frame}[fragile]
-  \frametitle{Anisotropy: a computational challenge}
+  \frametitle{Project 1 motivation}
+%
+%\begin{columns}
+%  \begin{column}{0.55\textwidth}
+%	\begin{itemize}
+%	\item Need to accurately model radiation for safeguarding and monitoring
+%	\item \alert{Challenging}: dense shields; streaming paths
+%	\item Current methods are insufficient
+%	\item \alert{Goal}: accurate solutions in reasonable time
+%	\item New methods can easily be added to existing codes
+%	\end{itemize}
+%  \end{column}
+%  \begin{column}{0.45\textwidth}
+%  	\begin{figure}
+%  	\begin{center}
+%  		\includegraphics[height=1.5in,clip]{../figs/isfsi}
+%		\caption{Used fuel storage pad}
+%	\end{center}
+%  	\end{figure}
+%  \end{column}
+%\end{columns}
+%
+%\end{frame}
+%
+%
+%% --------------------------------------------------------------
+%% --------------------------------------------------------------
+%\begin{frame}[fragile]
+%  \frametitle{Anisotropy: a computational challenge}
 
 	\begin{columns}
   	\begin{column}{0.5\textwidth}
@@ -277,9 +306,11 @@
 	\pause
 	\item New ideas are needed for these problems
 	\begin{itemize}
-	\item Current hybrid methods are insufficient
+	\item Current hybrid methods only $f(\vec{x}, E)$
 	\item Including angle explicitly is too costly	
 	\end{itemize}
+	\pause
+	\item \alert{Goal}: new methods that are easy to use
 	\end{itemize}
   	\end{column}
  	%
@@ -298,32 +329,6 @@
 
 
 
-% --------------------------------------------------------------
-% --------------------------------------------------------------
-\begin{frame}[fragile]
-  \frametitle{Project 1 motivation}
-
-\begin{columns}
-  \begin{column}{0.55\textwidth}
-	\begin{itemize}
-	\item Need to accurately model radiation for safeguarding and monitoring
-	\item \alert{Challenging}: dense shields; streaming paths
-	\item Current methods are insufficient
-	\item \alert{Goal}: accurate solutions in reasonable time
-	\item New methods can easily be added to existing codes
-	\end{itemize}
-  \end{column}
-  \begin{column}{0.45\textwidth}
-  	\begin{figure}
-  	\begin{center}
-  		\includegraphics[height=1.5in,clip]{../figs/isfsi}
-		\caption{Used fuel storage pad}
-	\end{center}
-  	\end{figure}
-  \end{column}
-\end{columns}
-
-\end{frame}
 %% --------------------------------------------------------------
 %\begin{frame}[fragile]
 %  \frametitle{Forward-Adjoint Relationship \cite{Wagner2007}}
@@ -476,7 +481,7 @@ Neutrons in the forward problem will flow from the source to the detector
    \begin{column}{0.25\textwidth}
    Adjoint measures how each part of phase space contributes to the solution: \\
 \vspace*{.5em}
-importance map 
+\alert{importance map} 
    \end{column}
   %
   \begin{column}{0.75\textwidth}
@@ -606,40 +611,40 @@ Use \textit{adjoint}: the importance of a source particle to the solution
 
 % --------------------------------------------------------------
 % --------------------------------------------------------------
-\section{\scshape Results \& Plans}
-\begin{frame}[fragile]
-  \frametitle{Current Status}
-
-    \begin{enumerate}
-    \item Implementation: \alert{complete}
-      \begin{itemize}
-      %\item Large data handling is \alert{broader outcome}
-      \item Implementation of weighted flux algorithm in Denovo \cite{Evans2010} is 
-      complete
-      \item Integration of method into ADVANTG complete
-      %\item ADVANTG allows for ease of use; broader user base
-      %\item Denovo integration enhances use on other hybrid platforms
-      \end{itemize} 
-      \vspace*{0.5em}
-      \pause
-    \item Testing: \alert{in process}
-      \begin{itemize}
-      \item A collection of small tests with varying anisotropies
-      \item Studying performance compared to existing methods as a function of degree of anisotropy
-      \item Investigating impact of angular discretization
-      \end{itemize}
-      \vspace*{0.5em}
-      \pause
-    \item Impact characterization: \alert{started}
-      \begin{itemize}
-      \item Investigating performance for one used fuel canister
-      \item Investigating performance for array of used fuel canisters
-      \item Extending to other applications of interest like monitoring reprocessing
-      \end{itemize}
-    \end{enumerate}
-
-	
-\end{frame}
+%\section{\scshape Results \& Plans}
+%\begin{frame}[fragile]
+%  \frametitle{Current Status}
+%
+%    \begin{enumerate}
+%    \item Implementation: \alert{complete}
+%      \begin{itemize}
+%      %\item Large data handling is \alert{broader outcome}
+%      \item Implementation of weighted flux algorithm in Denovo \cite{Evans2010} is 
+%      complete
+%      \item Integration of method into ADVANTG complete
+%      %\item ADVANTG allows for ease of use; broader user base
+%      %\item Denovo integration enhances use on other hybrid platforms
+%      \end{itemize} 
+%      \vspace*{0.5em}
+%      \pause
+%    \item Testing: \alert{in process}
+%      \begin{itemize}
+%      \item A collection of small tests with varying anisotropies
+%      \item Studying performance compared to existing methods as a function of degree of anisotropy
+%      \item Investigating impact of angular discretization
+%      \end{itemize}
+%      \vspace*{0.5em}
+%      \pause
+%    \item Impact characterization: \alert{started}
+%      \begin{itemize}
+%      \item Investigating performance for one used fuel canister
+%      \item Investigating performance for array of used fuel canisters
+%      \item Extending to other applications of interest like monitoring reprocessing
+%      \end{itemize}
+%    \end{enumerate}
+%
+%	
+%\end{frame}
 
 
 %% --------------------------------------------------------------
@@ -676,7 +681,7 @@ Comparing the original adjoint to CADIS-$\Omega$....
   
 \begin{columns}
   \begin{column}{0.45\textwidth}
-  Adjusted CADIS has:
+  CADIS-$\Omega$ has:
   \begin{itemize}
     \item Relatively uniform uncertainty distribution
     \item Faster runtimes than CADIS
@@ -712,7 +717,7 @@ Comparing the original adjoint to CADIS-$\Omega$....
 
   \frametitle{Quantifying Anisotropy}
   
-  To measure how the method performs for different problems, we've defined several metrics.
+  To measure how the method performs based on the degree of problem anisotropy, we've defined several metrics
   \vspace*{1em}
     \begin{columns}
     \begin{column}{0.5\textwidth}
@@ -742,7 +747,7 @@ Comparing the original adjoint to CADIS-$\Omega$....
   
 \begin{columns}
   \begin{column}{0.45\textwidth}
-  Adjusted CADIS has:
+  CADIS-$\Omega$ again has:
   \begin{itemize}
     \item Relatively uniform uncertainty distribution
     \item Faster runtimes than CADIS
@@ -963,7 +968,7 @@ These are the new multigroup LDO equations.
 % --------------------------------------------------------------
 \section*{}
 \begin{frame}[fragile]
-  \frametitle{Summary}
+  \frametitle{Project 1 Summary}
   \begin{itemize}
   \item There are many situations of interest where neutron fluxes have strong anisotropies
   \item Current VR methods do not enhance performance sufficiently 
@@ -972,7 +977,6 @@ These are the new multigroup LDO equations.
   \item Strategically using the LDO equations may provide another effective path
   \pause
   \item We're looking at many types of problems and are scaling up to real applications
-  \item Next up: expanding to reprocessing facilities
   \end{itemize}
 \end{frame}
 
@@ -991,7 +995,8 @@ These are the new multigroup LDO equations.
 % --------------------------------------------------------------
 \begin{frame}[plain,allowframebreaks]{References}
 \small
-	\bibliography{2017-03-mpact}%\printbibliography
+        \bibliographystyle{unsrt}
+	\bibliography{2017-05-lbnl}%\printbibliography
 \end{frame}
 
 %\begin{frame}[allowframebreaks]{References}

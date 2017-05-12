@@ -17,6 +17,8 @@
 \usepackage{palatino}
 \usepackage{tabu}
 
+\usepackage{subfigure}
+
 % addition of color
 \usepackage{xcolor}
 \definecolor{dgreen}{rgb}{0.,0.6,0.}
@@ -88,6 +90,22 @@
 \newcommand{\psig}{\ensuremath{\psi^g}}
 \newcommand{\ldosig}[2]{\ensuremath{\sum_{n=0}^N \frac{2n+1}{4\pi}\sigma_{s,n}^{g'\rightarrow g} P_n(\vOmega_#1\cdot\vOmega_#2)}}
 
+% Define plus minus symbol
+\makeatletter
+\newcommand{\mypm}{\mathbin{\mathpalette\@mypm\relax}}
+\newcommand{\@mypm}[2]{\ooalign{%
+  \raisebox{.1\height}{$#1+$}\cr
+  \smash{\raisebox{-.6\height}{$#1-$}}\cr}}
+\makeatother
+
+% Math packages
+\newenvironment{myalign}{\par\nobreak\small\noindent\align}{\endalign}
+\usepackage[version=3]{mhchem}
+\usepackage{esint}
+\usepackage{esvect}
+\usepackage{siunitx}
+\usepackage{mathtools}
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}%
 
 \newcommand\RBox[1]{%
   \tikz\node[draw,rounded corners,align=center,] {#1};}%
@@ -173,7 +191,8 @@
 
 \begin{columns}
   \begin{column}{0.55\textwidth}
-  To facilitate nuclear innovation, we need predictive simulation
+  To facilitate nuclear innovation, 
+we need predictive simulation
 	\begin{itemize}
 	\item I build tools (translate applied math into code) used to design and analyze nuclear systems
 	\item I focus on high performance computing
@@ -803,7 +822,7 @@ Comparing the original adjoint to CADIS-$\Omega$....
 
 %% --------------------------------------------------------------
 %% --------------------------------------------------------------
-\section{\scshape LDO Method}
+%\section{\scshape LDO Method}
 \begin{frame}[fragile]
 
   \frametitle{Lagrange Discrete Ordinates (LDO) \cite{Ahrens2015}}
@@ -979,6 +998,281 @@ These are the new multigroup LDO equations.
   \item We're looking at many types of problems and are scaling up to real applications
   \end{itemize}
 \end{frame}
+
+
+
+% --------------------------------------------------------------
+% --------------------------------------------------------------
+% --------------------------------------------------------------
+% --------------------------------------------------------------
+\section{\scshape Optimization \& Energy Tuning}
+\begin{frame}{Project 2 Motivation}
+  \begin{columns}
+    \begin{column}{0.55\linewidth}
+      \vspace{-.5cm}
+      \begin{figure}[htp]
+        \includegraphics[width=0.9\textwidth]{../figs/FP_Distribution.png}
+      \end{figure}
+    \end{column}
+    
+    \begin{column}{0.45\linewidth}
+      \vspace{-0.55cm}
+      \renewcommand*{\thesubfigure}{}
+      \begin{figure}[htp]
+        \centering
+        \includegraphics[width=1.45in]{../figs/47_111_Ag_log.png}
+        \vspace{-0.35cm}
+        \includegraphics[width=1.45in]{../figs/56_140_Ba_lin.png}
+        \vspace{-0.5cm}
+        \includegraphics[width=1.45in]{../figs/62_153_Sm_lin.png}
+      \end{figure}    
+    \end{column}
+  \end{columns}   
+\end{frame}
+
+% --------------------------------------------------------------
+\begin{frame}{Research objectives}
+  \centering{\textbf{Develop a capability to design and test custom neutron energy spectra for technical nuclear forensics (TNF)}} 
+    \vspace{0.3cm}
+    \begin{enumerate}
+      \item Design energy tuning assembly (ETA) to generate TNF relevant spectrum at NIF
+      \item Piece-wise application specific validation of ETA design at LBNL 88-Inch Cyclotron
+      \item Integral test and creation of synthetic debris at NIF
+    \end{enumerate}
+  \vspace*{-1.5em}
+  \renewcommand*{\thesubfigure}{}
+  \begin{figure}[htp]
+    \centering
+    \subcapcentertrue
+    \vspace{0.3cm}
+    \hspace{0.0cm}
+    \subfigure[]{\includegraphics[width=4.5in]{../figs/howto.png}}
+  \end{figure}
+\end{frame}
+
+% --------------------------------------------------------------
+\begin{frame}{Potential application areas}
+  \begin{columns}
+    \begin{column}{0.5\linewidth}
+      \begin{itemize}
+        \item Radiation shielding
+        \item Radiation effects/damage
+        \item Medical physics
+        \item Radio-isotope production
+      \end{itemize}
+      \renewcommand*{\thesubfigure}{}
+      \vspace{-0.5cm}
+      \begin{figure}[htp]
+        \centering
+        \subcapcentertrue
+        \subfigure{\includegraphics[width=0.85\textwidth]{../figs/HFIR_screen.png}}
+      \end{figure}
+    \end{column}
+    
+    \begin{column}{0.5\linewidth}
+      \begin{itemize}
+        \item Nuclear data
+        \item Detector calibration and development
+        \item Fusion blanket design
+        \item Reactor design
+      \end{itemize}
+      \renewcommand*{\thesubfigure}{}
+      \vspace{-0.5cm}
+      \begin{figure}[htp]
+        \centering
+        \subcapcentertrue
+        \subfigure{\includegraphics[width=0.75\textwidth]{../figs/BSA.png}}
+      \end{figure}
+    \end{column}
+    
+  \end{columns}
+\end{frame}
+
+% --------------------------------------------------------------
+\begin{frame}{Optimization problem classes}
+    Optimization problems can be formulated as \cite{Rady, Yang2014}:
+    \begin{myalign}
+      &\substack{\text{Minimize}\\\vv{x} \in \mathbb{R}^d}& f_i&(\vv{x}), & (i&=1,\ 2,\ \ldots,\ I) \label{eq:Obj_Funct} \\
+      &\text{Subject to:} & h_j&(\vv{x})= 0, & (j&=1,\ 2,\ \ldots,\ J) \label{eq:Eq_Const}\\
+      & & g_k&(\vv{x})\le 0, & (k&=1,\ 2,\ \ldots,\ K) \label{eq:Ineq_Const}
+    \end{myalign}
+
+    \vspace{-0.15cm}
+    where $\vv{x}$ is a vector of the problem design variables     
+    
+    \vspace{0.25cm}
+    Optimization problems can be classified by \cite{Guler2010,Yang2010}:
+    \begin{itemize}
+      \item Single or multi-objective
+      \item Linear or non-linear
+      \item Constrained or unconstrained
+      \item Continuous or combinatorial (discrete) 
+      \item Uni-modal or multi-modal
+    \end{itemize}
+
+    \vspace{0.15cm}
+    \begin{beamercolorbox}[sep=0pt,rounded=true]{title}
+      \usebeamerfont{normal text}\centering%
+      \textbf{ETA design is a single objective, non-linear, constrained, continuous \underline{and} discrete multi-modal optimization problem}
+    \end{beamercolorbox}    
+    
+\end{frame}
+
+% --------------------------------------------------------------
+\begin{frame}{ETA optimization}
+  For the ETA optimization problem, \eqref{eq:Obj_Funct} and \eqref{eq:Ineq_Const} are given by \cite{Chen2010a}: 
+  \begin{myalign}
+    f_1(\vv{x_p}) &=  \sum_{g=1}^G \left(\frac{\phi^O_g-\phi^D_g(\vv{x_p})}{\phi^O_g}\right)^2 *\frac{\phi^O_g}{\phi^O} \label{eq:ETA_Obj_Funct} \\
+    g_1(\vv{x_p}) &=  \displaystyle\sum_{n=1}^{N} \rho_n V_n -W \le 0 \label{eq:ETA_Ineq_Const_1} \\
+    g_2(\vv{x_p}) &=  N_f^{min} - n \phi V(\sigma^{235}_f+\sigma^{238}_f) \le 0 \label{eq:ETA_Ineq_Const_2}
+  \end{myalign}
+  
+  Where $\phi^O$ is the design objective neutron spectrum and $\phi^D(\vv{x_p})$ is the neutron spectra corresponding to a candidate design \newline
+  
+  $\vv{x_p}$ is a vector of the variables for a candidate design given by (in 2-D):
+  \begin{myalign}
+    \begin{split}     
+      \vv{x_p}=\{&Cell_1[M_1, \rho_1, IR_1, OR_1, Z1_1, Z2_1],\  Cell_2[\ldots],\  \dots, \\
+      &Cell_N[M_N, \rho_N, IR_N, OR_N, Z1_N, Z2_N],\ R_{foil},\ Z_{foil}\}
+    \end{split}
+  \end{myalign}
+  
+%  \begin{equation}
+%    P=(|M| \times |\rho| \times |IR| \times |OR| \times |Z1| \times |Z2|)^{|N|} \times |R_{foil}| \times |Z_{foil}|
+%  \end{equation} 
+\end{frame}
+
+% --------------------------------------------------------------
+\begin{frame}{Optimization methods: metaheuristics \cite{Lones2014}}
+  \vspace{-0.25cm}
+  \renewcommand*{\thesubfigure}{}
+  \begin{figure}[htp]
+    \centering
+    %\captionsetup{justification=centering,margin=0cm}
+    \includegraphics[width=1.1\textwidth]{../figs/Heuristics.png}
+  \end{figure}
+\end{frame}
+
+% --------------------------------------------------------------
+\begin{frame}{\includegraphics[width=0.35in]{../figs/Gnowee.png} \hspace{0.25cm}  Gnowee: hybrid metaheuristic opt.}
+  \centering{\textbf{\underline{General purpose} metaheuristic optimization algorithm }}
+  \begin{columns}
+    \begin{column}{0.6\linewidth}
+      \vspace{-0.75cm}
+      \begin{itemize}
+        \item Handles continuous and discrete variables \newline
+        \item Robust, complete set of search heuristics \newline
+        \item Nearly-global convergence \newline
+        \item Outperforms most other algorithms we tested on all nearly all problems of interest
+      \end{itemize} 
+    \end{column}
+    
+    \begin{column}{0.4\linewidth}
+      \includegraphics[width=0.95\textwidth]{../figs/GnoweeAlgorithm.png}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+
+% --------------------------------------------------------------
+\begin{frame}{\includegraphics[width=0.35in]{../figs/Coeus.jpg}  \hspace{0.25cm}  Coeus: NE optimization software}
+  \centering{\textbf{ETA design tool to build custom neutron spectra from existing facilities and sources}}
+  
+  \begin{itemize}
+    \item MCNP-Denovo hybrid radiation transport engine \cite{MCNP2008, ORNL2015, Evans2010}
+    \item ETA designs generated with Gnowee optimization framework 
+    \item Fully operational on Savio - neutronics design in days
+    \item Expanding capabilities by adding more objective functions, constraints, and geometric options     
+  \end{itemize}
+  
+%  \begin{columns}
+%  \begin{column}{0.5\linewidth}
+%    \centering
+%    \subcapcentertrue
+%    \vspace{-0.2cm}  
+%      \centering
+%      \begin{animateinline}[autoplay,loop]{2}  
+%      \multiframe{33}{i=0+1}{%
+%      \includegraphics[width=0.65\textwidth]{gifs/ETA_\i.png}}
+%      \newframe
+%      \includegraphics[width=0.65\textwidth]{gifs/ETA_32.png}
+%      \newframe[1]
+%      \includegraphics[width=0.65\textwidth]{gifs/ETA_32.png}
+%  \end{animateinline} 
+%  \end{column}
+%  
+%  \begin{column}{0.6\linewidth}
+%    %\vspace{-1.25cm}
+%    \includemedia[
+%      activate=pageopen,
+%      width=0.75\textwidth,height=0.44\textheight,
+%      addresource=figs/results.mp4,
+%      flashvars={%
+%        source=figs/results.mp4
+%        &autoPlay=true%    % optional configuration
+%        &loop=true%        % variables
+%        }  
+%    ]{}{VPlayer9.swf}
+%  \end{column}
+%  \end{columns}
+\end{frame}
+
+% --------------------------------------------------------------
+\begin{frame}{ETA design}
+  \begin{columns}
+    \begin{column}{0.55\linewidth}
+\renewcommand*{\thesubfigure}{}
+      \begin{figure}[htp]
+        \centering
+        \subcapcentertrue
+        \vspace{-0.75cm}
+        \subfigure[]{\includegraphics[width=2.70in, height=2.75in]{../figs/ETA_labeled.png}}
+      \end{figure}
+    \end{column}
+    
+    \begin{column}{0.45\linewidth}
+      \vspace{-0.25cm}
+      \centering
+      {At a Glance}
+      \vspace*{1em}
+        \begin{itemize}
+          \item $\sim$ 70 kg
+          \item \SI{1.6e+9} Fissions
+        \end{itemize}  
+      
+      \vspace{-0.25cm}      
+      \renewcommand*{\thesubfigure}{}
+      \begin{figure}[htp]
+        \centering
+        \subcapcentertrue
+        \subfigure[]{\includegraphics[width=2.2in]{../figs/ETA_Output_vs_Obj.png}}
+      \end{figure}
+      
+      \vspace{-1.0cm} 
+    \end{column}
+  \end{columns} 
+\end{frame}  
+
+% --------------------------------------------------------------
+%\begin{frame}{ETA Design}
+%	\includemedia[
+%      activate=pageopen,
+%      width=\textwidth,height=0.8\textheight,
+%      addresource=figs/ETA_DPLUS_24Jun16.mp4,
+%      flashvars={%
+%        source=figs/ETA_DPLUS_24Jun16.mp4
+%%        &autoPlay=true%    % optional configuration
+%        &loop=true%        % variables
+%        }  
+%    ]{}{VPlayer.swf}
+%\end{frame}
+
+
+
+
+
+
+
 
 
 % --------------------------------------------------------------

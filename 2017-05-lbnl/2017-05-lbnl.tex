@@ -1,5 +1,5 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\documentclass[xcolor=x11names,compress,handout]{beamer}
+\documentclass[xcolor=x11names,compress]{beamer}
 %\documentclass[handout]{beamer}
 \definecolor{CoolBlack}{rgb}{0.0, 0.18, 0.39}
 \definecolor{byellow}{rgb}{0.55037, 0.38821, 0.06142}
@@ -129,8 +129,7 @@
 %   }
 %   {Subham Soni S., Karthikeyanm, Shantikumar L.,  Mithun C.K.}
 %}
-\title{Improved Hybrid Modeling}
-\subtitle{of Used Fuel Storage Facilities}
+\title{Advanced Solvers and Challenges for Nuclear Innovation}
 \author{\includegraphics[height=2cm]
 {../bk-eps-converted-to}\\R.\ N.\ Slaybaugh, Univ.\ of Cal.\ Berkeley
 }
@@ -144,6 +143,28 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
 \titlepage
+\end{frame}
+
+% --------------------------------------------------------------
+\begin{frame}[fragile]{Outline}
+  \frametitle{Nuclear innovation is needed}
+
+\begin{columns}
+  \begin{column}{0.5\textwidth}
+  		\includegraphics[height=2.75in,clip]{../figs/msr-core-diagram}
+		%\caption{advanced reactors}
+  \end{column}
+  \begin{column}{0.5\textwidth}
+        \renewcommand*{\thesubfigure}{}
+      \begin{figure}[htp]
+        \centering
+        \includegraphics[width=1.75in]{../figs/isfsi}
+
+        \includegraphics[width=1.75in]{../figs/spent-fuel-pool}
+      \end{figure}    
+  \end{column}
+\end{columns}
+
 \end{frame}
 
 % --------------------------------------------------------------
@@ -325,7 +346,7 @@ we need predictive simulation
 	\pause
 	\item New ideas are needed for these problems
 	\begin{itemize}
-	\item Current hybrid methods only $f(\vec{x}, E)$
+	\item Current hybrid methods are only $f(\vec{x}, E)$
 	\item Including angle explicitly is too costly	
 	\end{itemize}
 	\pause
@@ -1173,6 +1194,87 @@ These are the new multigroup LDO equations.
   \end{columns}
 \end{frame}
 
+% --------------------------------------------------------------
+\begin{frame}{\includegraphics[width=0.35in]{../figs/Gnowee.png} Gnowee: Benchmarking \cite{Walton2013a,Yang2014,Civicioglu2013}}
+  \begin{columns}
+    \begin{column}{0.33\linewidth} 
+      \vspace{-.5cm} 
+      \begin{figure}[htp]
+        \centering
+        \includegraphics[width=1.0\textwidth, height=0.18\textheight]{../figs/PressureVessel.png} 
+      \end{figure}        
+      \vspace{-0.75cm} 
+      \begin{figure}[htp]
+        \centering
+        \includegraphics[width=1.0\textwidth, height=0.27\textheight]{../figs/SpeedReducer.png} 
+      \end{figure}       
+      \vspace{-0.75cm} 
+%      \begin{figure}[htp]
+%        \centering
+%        \includegraphics[width=1.0\textwidth, height=0.18\textheight]{../figs/Spring.png} 
+%      \end{figure}       
+%      \vspace{-0.750cm} 
+      \begin{figure}[htp]
+        \centering
+        \includegraphics[width=1.0\textwidth, height=0.20\textheight]{../figs/WeldedBeam.png} 
+      \end{figure}
+    \end{column}
+    
+    \begin{column}{0.33\linewidth}
+      \vspace{-.55cm} 
+      \begin{figure}[htp]
+        \centering
+        %\captionsetup{justification=centering,margin=0cm,labelformat=empty}
+        \includegraphics[width=1.0\textwidth, height=0.25\textheight]{../figs/DeJong.png} 
+        \vspace{-0.35cm}
+        %\caption*{De Jong}
+      \end{figure}        
+      \vspace{-1.05cm} 
+      \begin{figure}[htp]
+        \centering
+        %\captionsetup{justification=centering,margin=0cm}
+        \includegraphics[width=1.0\textwidth, height=0.25\textheight]{../figs/Easom.png} 
+        \vspace{-0.35cm}
+        %\caption*{ Easom}
+      \end{figure}       
+      \vspace{-1.05cm} 
+      \begin{figure}[htp]
+        \centering
+        %\captionsetup{justification=centering,margin=0cm}
+        \includegraphics[width=1.0\textwidth, height=0.25\textheight]{../figs/Griewank.png} 
+        \vspace{-0.35cm}
+        %\caption*{Griewank}
+      \end{figure}
+    \end{column}
+    
+    \begin{column}{0.33\linewidth}
+      \vspace{-.9cm} 
+      \begin{figure}[htp]
+        \centering
+        %\captionsetup{justification=centering,margin=0cm}
+        \includegraphics[width=1.0\textwidth, height=0.25\textheight]{../figs/Ackley.png} 
+        \vspace{-0.35cm}
+        %\caption*{Ackley}
+      \end{figure}        
+      \vspace{-1.4cm} 
+      \begin{figure}[htp]
+        \centering
+        %\captionsetup{justification=centering,margin=0cm}
+        \includegraphics[width=1.0\textwidth, height=0.25\textheight]{../figs/Rastrigin.png} 
+        \vspace{-0.35cm}
+        %\caption*{Rastrigin}
+      \end{figure}       
+      \vspace{-1.15cm} 
+      \begin{figure}[htp]
+        \centering
+        %\captionsetup{justification=centering,margin=0cm}
+        \includegraphics[width=1.0\textwidth, height=0.25\textheight]{../figs/Rosenbrock.png} 
+        \vspace{-0.35cm}
+        %S\caption*{Rosenbrock}
+      \end{figure}
+    \end{column}
+  \end{columns}
+\end{frame}
 
 % --------------------------------------------------------------
 \begin{frame}{\includegraphics[width=0.35in]{../figs/Coeus.jpg}  \hspace{0.25cm}  Coeus: NE optimization software}
@@ -1181,7 +1283,7 @@ These are the new multigroup LDO equations.
   \begin{itemize}
     \item MCNP-Denovo hybrid radiation transport engine \cite{MCNP2008, ORNL2015, Evans2010}
     \item ETA designs generated with Gnowee optimization framework 
-    \item Fully operational on Savio - neutronics design in days
+    \item Fully operational on Savio -- neutronics design in days
     \item Expanding capabilities by adding more objective functions, constraints, and geometric options     
   \end{itemize}
   
@@ -1218,40 +1320,55 @@ These are the new multigroup LDO equations.
 \end{frame}
 
 % --------------------------------------------------------------
-\begin{frame}{ETA design}
+\begin{frame}{Development Approach}
   \begin{columns}
     \begin{column}{0.55\linewidth}
-\renewcommand*{\thesubfigure}{}
-      \begin{figure}[htp]
-        \centering
-        \subcapcentertrue
-        \vspace{-0.75cm}
-        \subfigure[]{\includegraphics[width=2.70in, height=2.75in]{../figs/ETA_labeled.png}}
-      \end{figure}
-    \end{column}
-    
-    \begin{column}{0.45\linewidth}
-      \vspace{-0.25cm}
-      \centering
-      {At a Glance}
-      \vspace*{1em}
-        \begin{itemize}
-          \item $\sim$ 70 kg
-          \item \SI{1.6e+9} Fissions
-        \end{itemize}  
+      \begin{itemize}
+        \item 1.2 g HEU foil
+        \item $\sim80$ kg
+        \item \SI{1e+8} - \SI{1e+9} Fissions
+      \end{itemize}  
       
-      \vspace{-0.25cm}      
       \renewcommand*{\thesubfigure}{}
       \begin{figure}[htp]
         \centering
         \subcapcentertrue
-        \subfigure[]{\includegraphics[width=2.2in]{../figs/ETA_Output_vs_Obj.png}}
+        \vspace{-0.6cm}
+        \subfigure[\small ETA Design]{\includegraphics[width=1.9in]{../figs/ETA_Design_1g235.png}}
+      \end{figure}
+    \end{column}
+    
+    \begin{column}{0.5\linewidth}
+      \vspace{-1cm}      
+      \renewcommand*{\thesubfigure}{}
+      \begin{figure}[htp]
+        \centering
+        \subcapcentertrue
+        \subfigure[]{\includegraphics[width=2.2in]{../figs/ETA_Output_vs_Obj_1g.png}}
       \end{figure}
       
-      \vspace{-1.0cm} 
+      \vspace{-1.4cm}
+      \begin{table}
+        \centering
+        \tiny
+        \begin{tabular}{0.95\textwidth}%{@{} Y c c @{}} 
+          \toprule
+          \textbf{Energy} & \textbf{Target Normalized} & \textbf{\% Fluence} \\
+          \textbf{Range} & \textbf{Differential Fluence} & \textbf{Achieved} \\
+          \midrule
+          0-3 keV & \SI{6.24e-05} & 103.4 $\mypm$ 2.0\% \\ \addlinespace
+          3-100 keV & \SI{3.41e-02} & 140.7 $\mypm$ 0.1\% \\ \addlinespace
+          0.1-6 MeV & \SI{8.46e-01} & 96.0 $\mypm$ 0.0\% \\ \addlinespace
+          6-10 MeV & \SI{1.65E-02} & 117.3 $\mypm$ 0.2\% \\ \addlinespace
+          10-16 MeV & \SI{1.01E-01} & 119.4 $\mypm$ 0.0\% \\ \addlinespace
+          \bottomrule
+        \end{tabular} 
+      \end{table}
+      \vspace{-0.2cm}      
+      \small \centering ETA vs Objective Spectrum 
     \end{column}
-  \end{columns} 
-\end{frame}  
+  \end{columns}    
+\end{frame}
 
 % --------------------------------------------------------------
 \begin{frame}{NIF experiment: TNF validation}
@@ -1304,7 +1421,7 @@ These are the new multigroup LDO equations.
           \begin{itemize}
             \item 29/33 MeV D-breakup on Ta
             \item Field NIF ETA design
-            \item Possibly field partial ETA stackups
+            \item Field partial ETA stackups
             \item EJ-309 detectors, activation, and fission products measurements 
           \end{itemize}
           \includegraphics[width=0.95\textwidth]{../figs/33MeVTa_OutputComp.png}
@@ -1325,7 +1442,7 @@ These are the new multigroup LDO equations.
       \item \textit{\underline{Not}} input or output specific
       \item Further development to improve user flexibility underway \newline
     \end{itemize}
-    \item Experimental validation of TNF application at LBNL 88-Inch Cyclotron proceeding \newline
+    \item Experimental validation of TNF application at LBNL 88-Inch Cyclotron executed \newline
     \item Planning underway for NIF shot
     \begin{itemize}
       \item Scoping study has shown feasibility
@@ -1335,7 +1452,45 @@ These are the new multigroup LDO equations.
   \end{itemize}
 \end{frame}
 
+% --------------------------------------------------------------
+% --------------------------------------------------------------
+\section*{}
+\begin{frame}[fragile]
+  %\frametitle{Questions?}
+        \begin{columns}
+        \begin{column}{0.55\linewidth}
+          \includegraphics[width=0.95\textwidth]{../figs/earth}
+        \end{column}
+        
+        \begin{column}{0.45\linewidth}
+We would accomplish many more things if we did not think of them as impossible. \\
+\vspace*{1em}
+- Vince Lombardi
+        \end{column}
+      \end{columns}
+  \begin{center}
+  \end{center}
+  
+\end{frame}
 
+% --------------------------------------------------------------
+\begin{frame}{Summary}
+  \begin{itemize}
+    \item Innovation is needed for many nuclear technologies \newline
+    \item Predictive simulation can play a key role \newline
+    \item We're developing better hybrid methods 
+    \begin{itemize}
+      \item for problems with strong anisotropies
+      \item and to provide evaluative flexibility \newline
+    \end{itemize}
+    \item Energy tuning assemblies can provide strategic investigative tools
+    \begin{itemize}
+      \item for technical nuclear forensics
+      \item as well as many other applications
+    \end{itemize}
+      
+  \end{itemize}
+\end{frame}
 
 % --------------------------------------------------------------
 % --------------------------------------------------------------
@@ -1351,31 +1506,23 @@ These are the new multigroup LDO equations.
 % --------------------------------------------------------------
 \begin{frame}{Acknowledgments }
  	  \footnotesize{\textbf{University of California, Berkeley:}
-	  \vspace{-0.2cm}
 	  \begin{itemize}
-	    \itemsep-0.35em 	 
-	    \item Madicken Munk, Kelly Rowland, Richard Vasques, 
+	    \item Madicken Munk, Kelly Rowland, Richard Vasques
 	    \item James Bevins, Bethany Goldblum, Josh Brown, Matthew Harasty, Will Kable, Ethan Boado, Sandra Bogetic, Youdong Zhang
 	  \end{itemize}
-	  \vspace{-0.2cm}
+	  
 	  \textbf{Oak Ridge National Lab:}
-	  \vspace{-0.22cm}
 	    \begin{itemize}
-	      \itemsep-0.35em 
 	      \item Tom Evans, Steven Hamilton, Scott Mosher, Tara Pandya, Seth Johnson, Josh Jarrell
 	    \end{itemize}
-	  \vspace{-0.2cm}
+	    
 	  \textbf{Lawrence Berkeley National Lab:}
-	  \vspace{-0.22cm}
 	    \begin{itemize}
-	      \itemsep-0.35em 
 	      \item Lee Bernstein
 	    \end{itemize}
-	  \vspace{-0.2cm}
+	    
 	  \textbf{Lawrence Livermore National Lab:}
-	  \vspace{-0.2cm}
 	  \begin{itemize}
-	    \itemsep-0.35em 
 	    \item Bill Dunlop, Eugene Henry, Darren Bleuel, Brent Blue, Walid Younes, Joe Bauer, Dawn Shaughnessy, Narek Gharibyan, Don Jedlovec, Charles Yeamans, Kim Christensen 
 	  \end{itemize}}
 \end{frame}
@@ -1386,9 +1533,7 @@ These are the new multigroup LDO equations.
 The views expressed in this research are those of the author and do not reflect the official policy or position of the United States Air Force, the Department of Defense, or the United States Government. \newline
 \vspace{0.5cm}  
 
-Department of Energy award number DE-NE0008286
-
-This material is based upon work supported by the National Science Foundation Graduate Research Fellowship Program. Any opinions, findings, and conclusions or recommendations expressed in this material are those of the author(s) and do not necessarily reflect the views of the National Science Foundation.
+This material is based upon work supported by the National Science Foundation Graduate Research Fellowship Program and Department of Energy award number DE-NE0008286. Any opinions, findings, and conclusions or recommendations expressed in this material are those of the author(s) and do not necessarily reflect the views of the National Science Foundation.
 \end{frame}
 
 

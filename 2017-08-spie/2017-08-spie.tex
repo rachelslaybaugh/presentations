@@ -682,16 +682,17 @@ Comparing the original adjoint to CADIS-$\Omega$....
   \begin{column}{0.45\textwidth}
   \begin{itemize}
     \item CADIS-$\Omega$ has lower REs at higher energies
-    \item Analog had very high RE
+    \item Analog has high RE
     \item CADIS-$\Omega$ was in the middle for FOM using the worst RE
   \end{itemize}
-  \vspace*{.5em}
+  \vspace*{1em}
+  
   \begin{tabular}{|l|c c|}
   \hline
       Run Type & Time (m) & FOM \\  
       \hline
       CADIS  & 84.4  &  2.21 \\
-      CADIS-$\Omega$ & 237 & 0.318 \\
+      CADIS-$\Omega$ & 237 & \alert{0.318} \\
       analog & 11.7 & 0.0857\\
       \hline
   \end{tabular}
@@ -720,7 +721,7 @@ Comparing the original adjoint to CADIS-$\Omega$....
   To measure how the method performs based on the degree of problem anisotropy, we've defined several metrics
   \vspace*{1em}
     \begin{columns}
-    \begin{column}{0.5\textwidth}
+    \begin{column}{0.45\textwidth}
       \begin{itemize}
       \item $M_{1} = \frac{\phi^{\dagger}(\vecr,E)\phi(\vecr,E)}{\int_{\vOmega}\psi^{\dagger}(\vecr,\vOmega,E)\psi(\vecr,\vOmega,E)}$
       \item $M_{2} = \frac{\phi^{\dagger}_{\vOmega}(\vecr,E)}{\phi^{\dagger}(\vecr,E)}$
@@ -728,11 +729,11 @@ Comparing the original adjoint to CADIS-$\Omega$....
        \item $M_{4} = \frac{\max(\int_{\vOmega}\psi^{\dagger}(\vecr,\vOmega,E)\psi(\vecr,\vOmega,E))}{\min(\int_{\vOmega}\psi^{\dagger}(\vecr,\vOmega,E)\psi(\vecr,\vOmega,E))}$
       \end{itemize}
     \end{column}    
-    \begin{column}{0.5\textwidth}
-    Example: source in a room
+    \begin{column}{0.55\textwidth}
+    Example: M$_4$ in lowest energy group
       	\begin{figure}
   	\begin{center}
-  		\includegraphics[height=1.5in,clip]{../figs/therapy-room.png}
+  		\includegraphics[height=1.25in,clip]{../figs/maze2M4G26.png}
 	\end{center}
   	\end{figure}
     \end{column}
@@ -743,31 +744,33 @@ Comparing the original adjoint to CADIS-$\Omega$....
 
 %% --------------------------------------------------------------
 \begin{frame}[fragile]
-  \frametitle{Response in Room Detector}
+  \frametitle{Steel Beam in Plate}
   
 \begin{columns}
   \begin{column}{0.45\textwidth}
-  CADIS-$\Omega$ again has:
   \begin{itemize}
-    \item Relatively uniform uncertainty distribution
-    \item Faster runtimes than CADIS
+    \item CADIS-$\Omega$ has lower REs at all energies
+    \item Analog has high RE
+    \item CADIS-$\Omega$ performed best for all FOMs
   \end{itemize}
-  \vspace*{.5em}
+  \vspace*{1em}
+  
   \begin{tabular}{|l|c c|}
   \hline
       Run Type & Time (m) & FOM \\  
       \hline
-      CADIS  & 69.05  &  287 \\
-      CADIS-$\Omega$ & 50.4 & 373 \\
+      CADIS  & 420  &  3.69 \\
+      CADIS-$\Omega$ & 2,110 & \alert{6.71} \\
+      analog & 22 &  0.0448 \\
       \hline
-  \end{tabular}
+  \end{tabular}  
   \end{column}
   \begin{column}{0.55\textwidth}
   	\begin{figure}
   	\begin{center}
-  		\includegraphics[height=1.5in,clip]{../figs/room-both-tally.png}\\
+  		\includegraphics[height=1.5in,clip]{../figs/beam_facility_tally_result_compare.pdf}\\
 		%\caption{Response for maze 2}
-  		\includegraphics[height=1.5in,clip]{../figs/room-both-re.png}
+  		\includegraphics[height=1.5in,clip]{../figs/beam_facility_tally_error_compare.pdf}
 		%\caption{Relative errors for response function}
 		% point out that while the FOM is better for analog, it has high RE in regions, so overall it performs poorer
 	\end{center}
@@ -780,187 +783,36 @@ Comparing the original adjoint to CADIS-$\Omega$....
 %% --------------------------------------------------------------
 \begin{frame}[fragile]
 
-  \frametitle{Impact Tests}
-  
+  \frametitle{Results Summary}
+
+    We tested a variety of characterization problems  
     \begin{columns}
-    \begin{column}{0.55\textwidth}
-    Real system tests will show the ability of the method to improve MC for applications of interest\\
-    \vspace*{1em}
-    We are starting with a full storage cask with highly-detailed information
+    \begin{column}{0.5\textwidth}
+    \begin{itemize}
+       \item Problems with air streaming did not work well for any solver
+       \item With weight windows
+       \begin{itemize}
+         \item flux changes magnitude too quickly
+         \item causes lots of splitting and dramatic weight change
+         \item causes high variance and long runtime
+       \end{itemize}       
+    \end{itemize}
     \end{column}    
-    \begin{column}{0.45\textwidth}
-  \begin{center}
-  \includegraphics[height=2.5in,clip]{../figs/Transfer_Side_profile}  
-  \end{center}
+
+    \begin{column}{0.5\textwidth}
+    \begin{itemize}
+       \item CADIS-$\Omega$ was great for problems with denser material streaming 
+       \item These have enough scattering so flux changes more slowly
+       \item And enough streaming that anisotropy is strong
+       \item \textit{This is exactly the problem we want to solve}
+    \end{itemize}   
     \end{column}
-  \end{columns}   
+    \end{columns}   
 
 \end{frame}
 
 % --------------------------------------------------------------
 % --------------------------------------------------------------
-
-
-%% --------------------------------------------------------------
-%% --------------------------------------------------------------
-%\section{\scshape LDO Method}
-\begin{frame}[fragile]
-
-  \frametitle{Lagrange Discrete Ordinates (LDO) \cite{Ahrens2015}}
-
-   We're also looking at an entirely different approach.    
-\pause
-\begin{itemize}
-\item{Formally the same as the classical $S_N$ equations}
-	\begin{itemize}
-	\pause
-	\item{The difference lies in how the scattering source is calculated and in the representation of the angular flux}
-	\pause
-	\item{\textbf{No need to evaluate spherical harmonic moments of angular flux}}
-	\end{itemize}
-\pause
-\item{Increasing the angular resolution of the LDO equations brings ability to mitigate ray effects}
-%	\begin{itemize}
-%	\pause
-%	\item{Positive-weight quadrature sets on which LDO equations are based can integrate spherical harmonics from degree 0 to degree 165}
-%	\pause
-%	\item{For a fixed maximum degree of integration $N$, the corresponding number of quadrature points (ordinates) is $(N+1)^2$}
-%	\end{itemize}
-\pause
-\item{\textbf{LDO equations naturally allow angular flux to be evaluated in directions other than those found in the quadrature set}}
-	\begin{itemize}
-	\pause
-	\item{Solution of the LDO equations has interpolatory structure in angle}
-	\pause
-	\item{Opens the door to using angular biasing schemes for hybrid Monte Carlo calculations}
-	\end{itemize}
-\end{itemize}
-
-\end{frame}
-
-% --------------------------------------------------------------
-%\begin{frame}{Lagrange Discrete Ordinates (LDO) Equations}
-%\begin{multline}
-%\vOmega_i\cdot\nabla\psi_i^g(\vecr) + \Sigma_t^g(\vecr)\psi_i^g(\vecr) \\ \qquad= 
-%\sum_{g'=1}^{G}\sum_{j=1}^{\dn}\sum_{i'=1}^{\dn}\langle L_{i'},L_j\rangle\Sigma_{s,N}^{g'\rightarrow g}(\vecr,\vOmega_i\cdot\vOmega_j)\psi_{i'}^{g'}(\vecr) + S^g(\vecr,\vOmega_i);~ \\
-%i =1,2,\ldots,\dn;~g=1,2,\ldots,G
-%\end{multline}
-%These are the multigroup LDO equations, which are formally the same as the classical $S_N$ equations. The difference lies in how the scattering source is calculated and in the representation of the angular flux.
-%\end{frame}
-
-
-%% --------------------------------------------------------------
-\begin{frame}{Derivation of the LDO Equations}
-Start with the TE:
-\begin{multline}
-\vOmega\cdot  \nabla \psi(\vecr,E,\vOmega) + \Sigma_t(\vecr,E)\psi(\vecr,E,\vOmega) = S(\vecr, E, \vOmega) 
-\\ +
-\int_0^{\infty}\int_{\maths}\Sigma_s(\vecr, E'\rightarrow E,\vOmega'\cdot\vOmega)
-\psi(\vecr,E',\vOmega')d\vOmega'dE'
-\end{multline}
-\begin{itemize}
-\pause
-\item{Define approximation $\psi_N(\vecr,E,\vOmega) = \sum_{i=1}^{\dn}\psi_i(\vecr,E)L_i(\vOmega)$ and substitute it into the TE}
-\pause
-\item{$\psi_i(\vecr,E)$ are flux coefficients, $L_i(\vOmega)$ is the $i^{th}$ Lagrange element}
-\pause
-\item{$\dn\equiv \dim\hn = (N+1)^2$;
- 
- $\hn = \text{span}\{Y^m_n: |m| \leq n, 0 \leq n \leq N\}$}
-\end{itemize}
-\end{frame}
-
-%\begin{frame}{Lagrange Functions \cite{sph}}
-%Defined generally as:
-%\begin{equation}
-%L_i(\vOmega) =
-%\frac{
-%\det
-%\begin{bmatrix}
-%\ell_1(\vOmega_1)&\cdots&\ell_n(\vOmega_1) &\cdots& \ell_P(\vOmega_1) \\
-%\vdots & \ddots & \vdots & \ddots & \vdots \\
-%\ell_1(\vOmega_{i-1}) & \cdots &\ell_n(\vOmega_{i-1}) & \cdots & \ell_P(\vOmega_{i-1}) \\
-%\ell_1(\vOmega) & \cdots & \ell_n(\vOmega) & \cdots & \ell_P(\vOmega) \\
-%\ell_1(\vOmega_{i+1}) & \cdots & \ell_n(\vOmega_{i+1}) & \cdots & \ell_P(\vOmega_{i+1}) \\
-% \vdots & \ddots & \vdots & \ddots & \vdots \\
-%\ell_1(\vOmega_P) & \cdots & \ell_n(\vOmega_P) & \cdots & \ell_P(\vOmega_P)
-% \end{bmatrix} 
-%}
-%{
-%\det
-%\begin{bmatrix}
-%\ell_1(\vOmega_1)&\cdots&\ell_n(\vOmega_1) &\cdots& \ell_P(\vOmega_1) \\
-% \vdots & \ddots & \vdots & \ddots & \vdots \\
-%\ell_1(\vOmega_i)&\cdots&\ell_n(\vOmega_i) &\cdots& \ell_P(\vOmega_i) \\
-% \vdots & \ddots & \vdots & \ddots & \vdots \\
-%\ell_1(\vOmega_P)&\cdots&\ell_n(\vOmega_P) &\cdots& \ell_P(\vOmega_P)
-% \end{bmatrix} 
-%}
-%\end{equation}
-%Here, $\{\vOmega_1,\ldots,\vOmega_P\}$ varies over $\maths$ and $\{\ell_1,\ldots,\ell_P\}$ are basis functions for the space of polynomials of degree $\leq P$.
-%% pgs 190 and 133 of springer book, maybe ask
-%% look up basis functions and know how to talk about them!
-%% what can they be, what do we usually choose for them, etc.
-%\end{frame}
-
-
-%% --------------------------------------------------------------
-\begin{frame}{Lagrange Functions (cont'd.)}
-
-The $L_{i}(\vOmega)$ satisfy:
-\begin{equation}
-L_i(\vOmega_j) = \delta_{i,j};\quad i,j = 1,2,\ldots,P;\quad P = \dn
-\end{equation}
-\pause
-Interpolatory points allow definition of a quadrature for $f \in \hn$% = \text{span}\{Y^m_n: |m| \leq n, 0 \leq n \leq N\};\ \dim\hn = (N+1)^2 \equiv \dn$:
-\begin{equation}
-\int_{\maths}f(\vOmega)d\vOmega = \int_{\maths}\sum_{i=1}^{\dn} f_i L_i(\vOmega)d\vOmega 
-= \sum_{i=1}^{\dn}\int_{\maths}L_i(\vOmega)d\vOmega f_i = \sum_{i=1}^{\dn} w_i f_i
-\end{equation}
-\pause
-Quadrature weights:
-\begin{equation}
-w_i = \int_{\maths}L_{i}(\vOmega)d\vOmega = \sum_{j=1}^{\dn}\lij
-\end{equation}
-%Here, $\langle f,g\rangle$ is the inner product $\int_{\maths}f(\vOmega)g(\vOmega)d\vOmega$.
-\end{frame}
-
-
-%% --------------------------------------------------------------
-\begin{frame}[label=group_disc]{Derivation of the LDO Equations (cont'd.)}
-%Define the residual:
-%\begin{multline}
-%r_N(\vecr,E,\vOmega) \equiv \vOmega\cdot\nabla\psi_N(\vecr,E,\vOmega) + \sigt(\vecr,E)\psi_N(\vecr,E,\vOmega) \\
-%- \int_{0}^{\infty}\int_{\maths}\sigs(\vecr,E'\rightarrow E, \vOmega'\cdot\vOmega)\psi_N(\vecr,E',\vOmega')d\vOmega'dE' - S(\vecr,E,\vOmega)
-%\end{multline}
-%\pause
-\begin{itemize}
-\item Discretize the energy variable with a standard multigroup approach
-%\begin{multline}
-%r_N^g = \vOmega\cdot\sum_{i=1}^{\dn}\left[\nabla\psi_i^g(\vecr)\right]L_i(\vOmega) + \Sigma_t^g(\vecr)\sum_{i=1}^{\dn}\psi_i^g(\vecr)L_i(\vOmega) \\
-%- \sum_{g'=1}^G\sum_{i'=1}^{\dn} \psi_{i'}^{g'}(\vecr)\int_{\maths}\Sigma_{s}^{g'\rightarrow g}(\vecr,\vOmega'\cdot\vOmega)L_{i'}(\vOmega')d\vOmega'
-%- S^g(\vecr,\vOmega); \\ g=1,2,\ldots,G
-%\end{multline}
-%\end{frame}
-%\
-\pause
-%\begin{frame}[label=ldo-fin]{Derivation of the LDO Equations (cont'd.)}
-\item Analytically evaluate the scattering cross section and substitute it in%into the residual
-\end{itemize}
-%\begin{multline}
-%r_N^g = \vOmega\cdot\sum_{i=1}^{\dn}\left[\nabla\psi_i^g(\vecr)\right]L_i(\vOmega) + \Sigma_t^g(\vecr)\sum_{i=1}^{\dn}\psi_i^g(\vecr)L_i(\vOmega) \\
-%- \sum_{g'=1}^{G}\sum_{j=1}^{\dn}\sum_{i'=1}^{\dn}\langle L_{i'},L_j\rangle\Sigma_{s,N}^{g'\rightarrow g}(\vecr,\vOmega_j\cdot\vOmega)\psi_{i'}^{g'}(\vecr) - S^g(\vecr,\vOmega)
-%\end{multline}
-\pause
-We invoke a collocation procedure that requires the residual to be zero at the points 
-$\{\vOmega_i\}_{i=1}^{\dn}$, leading to the $G\times\dn$ equations:
-\begin{multline}
-\vOmega_i\cdot\nabla\psi_i^g(\vecr) + \Sigma_t^g(\vecr)\psi_i^g(\vecr) \\ \qquad= 
-\sum_{g'=1}^{G}\sum_{j=1}^{\dn}\sum_{i'=1}^{\dn}\langle L_{i'},L_j\rangle\Sigma_{s,N}^{g'\rightarrow g}(\vecr,\vOmega_i\cdot\vOmega_j)\psi_{i'}^{g'}(\vecr) + S^g(\vecr,\vOmega_i)%;~ \\
-%i =1,2,\ldots,\dn;~g=1,2,\ldots,G
-\end{multline}
-These are the new multigroup LDO equations.
-\end{frame}
 
 
 
@@ -973,8 +825,8 @@ These are the new multigroup LDO equations.
   \item There are many situations of interest where neutron fluxes have strong anisotropies
   \item Current VR methods do not enhance performance sufficiently 
   \pause
-  \item CADIS-$\vOmega$ is one way to capture angular information and shows strong initial promise
-  \item Strategically using the LDO equations may provide another effective path
+  \item CADIS-$\Omega$ is one way to capture angular information and shows strong initial promise
+  %\item Strategically using the LDO equations may provide another effective path
   \pause
   \item We're looking at many types of problems and are scaling up to real applications
   \end{itemize}
@@ -1501,12 +1353,177 @@ This material is based upon work supported by the National Science Foundation Gr
 \begin{frame}[plain,allowframebreaks]{References}
 \small
         \bibliographystyle{unsrt}
-	\bibliography{2017-05-lbnl}%\printbibliography
+	\bibliography{2017-08-spie}%\printbibliography
 \end{frame}
 
 %\begin{frame}[allowframebreaks]{References}
 %	\bibliographystyle{unsrt}
 %	\bibliography{2017-03-mpact}
 %\end{frame}
+
+
+
+
+%% --------------------------------------------------------------
+%% --------------------------------------------------------------
+%\section{\scshape LDO Method}
+\begin{frame}[fragile]
+
+  \frametitle{Lagrange Discrete Ordinates (LDO) \cite{Ahrens2015}}
+
+   We're also looking at an entirely different approach.    
+\pause
+\begin{itemize}
+\item{Formally the same as the classical $S_N$ equations}
+	\begin{itemize}
+	\pause
+	\item{The difference lies in how the scattering source is calculated and in the representation of the angular flux}
+	\pause
+	\item{\textbf{No need to evaluate spherical harmonic moments of angular flux}}
+	\end{itemize}
+\pause
+\item{Increasing the angular resolution of the LDO equations brings ability to mitigate ray effects}
+%	\begin{itemize}
+%	\pause
+%	\item{Positive-weight quadrature sets on which LDO equations are based can integrate spherical harmonics from degree 0 to degree 165}
+%	\pause
+%	\item{For a fixed maximum degree of integration $N$, the corresponding number of quadrature points (ordinates) is $(N+1)^2$}
+%	\end{itemize}
+\pause
+\item{\textbf{LDO equations naturally allow angular flux to be evaluated in directions other than those found in the quadrature set}}
+	\begin{itemize}
+	\pause
+	\item{Solution of the LDO equations has interpolatory structure in angle}
+	\pause
+	\item{Opens the door to using angular biasing schemes for hybrid Monte Carlo calculations}
+	\end{itemize}
+\end{itemize}
+
+\end{frame}
+
+% --------------------------------------------------------------
+%\begin{frame}{Lagrange Discrete Ordinates (LDO) Equations}
+%\begin{multline}
+%\vOmega_i\cdot\nabla\psi_i^g(\vecr) + \Sigma_t^g(\vecr)\psi_i^g(\vecr) \\ \qquad= 
+%\sum_{g'=1}^{G}\sum_{j=1}^{\dn}\sum_{i'=1}^{\dn}\langle L_{i'},L_j\rangle\Sigma_{s,N}^{g'\rightarrow g}(\vecr,\vOmega_i\cdot\vOmega_j)\psi_{i'}^{g'}(\vecr) + S^g(\vecr,\vOmega_i);~ \\
+%i =1,2,\ldots,\dn;~g=1,2,\ldots,G
+%\end{multline}
+%These are the multigroup LDO equations, which are formally the same as the classical $S_N$ equations. The difference lies in how the scattering source is calculated and in the representation of the angular flux.
+%\end{frame}
+
+
+%% --------------------------------------------------------------
+\begin{frame}{Derivation of the LDO Equations}
+Start with the TE:
+\begin{multline}
+\vOmega\cdot  \nabla \psi(\vecr,E,\vOmega) + \Sigma_t(\vecr,E)\psi(\vecr,E,\vOmega) = S(\vecr, E, \vOmega) 
+\\ +
+\int_0^{\infty}\int_{\maths}\Sigma_s(\vecr, E'\rightarrow E,\vOmega'\cdot\vOmega)
+\psi(\vecr,E',\vOmega')d\vOmega'dE'
+\end{multline}
+\begin{itemize}
+\pause
+\item{Define approximation $\psi_N(\vecr,E,\vOmega) = \sum_{i=1}^{\dn}\psi_i(\vecr,E)L_i(\vOmega)$ and substitute it into the TE}
+\pause
+\item{$\psi_i(\vecr,E)$ are flux coefficients, $L_i(\vOmega)$ is the $i^{th}$ Lagrange element}
+\pause
+\item{$\dn\equiv \dim\hn = (N+1)^2$;
+ 
+ $\hn = \text{span}\{Y^m_n: |m| \leq n, 0 \leq n \leq N\}$}
+\end{itemize}
+\end{frame}
+
+%\begin{frame}{Lagrange Functions \cite{sph}}
+%Defined generally as:
+%\begin{equation}
+%L_i(\vOmega) =
+%\frac{
+%\det
+%\begin{bmatrix}
+%\ell_1(\vOmega_1)&\cdots&\ell_n(\vOmega_1) &\cdots& \ell_P(\vOmega_1) \\
+%\vdots & \ddots & \vdots & \ddots & \vdots \\
+%\ell_1(\vOmega_{i-1}) & \cdots &\ell_n(\vOmega_{i-1}) & \cdots & \ell_P(\vOmega_{i-1}) \\
+%\ell_1(\vOmega) & \cdots & \ell_n(\vOmega) & \cdots & \ell_P(\vOmega) \\
+%\ell_1(\vOmega_{i+1}) & \cdots & \ell_n(\vOmega_{i+1}) & \cdots & \ell_P(\vOmega_{i+1}) \\
+% \vdots & \ddots & \vdots & \ddots & \vdots \\
+%\ell_1(\vOmega_P) & \cdots & \ell_n(\vOmega_P) & \cdots & \ell_P(\vOmega_P)
+% \end{bmatrix} 
+%}
+%{
+%\det
+%\begin{bmatrix}
+%\ell_1(\vOmega_1)&\cdots&\ell_n(\vOmega_1) &\cdots& \ell_P(\vOmega_1) \\
+% \vdots & \ddots & \vdots & \ddots & \vdots \\
+%\ell_1(\vOmega_i)&\cdots&\ell_n(\vOmega_i) &\cdots& \ell_P(\vOmega_i) \\
+% \vdots & \ddots & \vdots & \ddots & \vdots \\
+%\ell_1(\vOmega_P)&\cdots&\ell_n(\vOmega_P) &\cdots& \ell_P(\vOmega_P)
+% \end{bmatrix} 
+%}
+%\end{equation}
+%Here, $\{\vOmega_1,\ldots,\vOmega_P\}$ varies over $\maths$ and $\{\ell_1,\ldots,\ell_P\}$ are basis functions for the space of polynomials of degree $\leq P$.
+%% pgs 190 and 133 of springer book, maybe ask
+%% look up basis functions and know how to talk about them!
+%% what can they be, what do we usually choose for them, etc.
+%\end{frame}
+
+
+%% --------------------------------------------------------------
+\begin{frame}{Lagrange Functions (cont'd.)}
+
+The $L_{i}(\vOmega)$ satisfy:
+\begin{equation}
+L_i(\vOmega_j) = \delta_{i,j};\quad i,j = 1,2,\ldots,P;\quad P = \dn
+\end{equation}
+\pause
+Interpolatory points allow definition of a quadrature for $f \in \hn$% = \text{span}\{Y^m_n: |m| \leq n, 0 \leq n \leq N\};\ \dim\hn = (N+1)^2 \equiv \dn$:
+\begin{equation}
+\int_{\maths}f(\vOmega)d\vOmega = \int_{\maths}\sum_{i=1}^{\dn} f_i L_i(\vOmega)d\vOmega 
+= \sum_{i=1}^{\dn}\int_{\maths}L_i(\vOmega)d\vOmega f_i = \sum_{i=1}^{\dn} w_i f_i
+\end{equation}
+\pause
+Quadrature weights:
+\begin{equation}
+w_i = \int_{\maths}L_{i}(\vOmega)d\vOmega = \sum_{j=1}^{\dn}\lij
+\end{equation}
+%Here, $\langle f,g\rangle$ is the inner product $\int_{\maths}f(\vOmega)g(\vOmega)d\vOmega$.
+\end{frame}
+
+
+%% --------------------------------------------------------------
+\begin{frame}[label=group_disc]{Derivation of the LDO Equations (cont'd.)}
+%Define the residual:
+%\begin{multline}
+%r_N(\vecr,E,\vOmega) \equiv \vOmega\cdot\nabla\psi_N(\vecr,E,\vOmega) + \sigt(\vecr,E)\psi_N(\vecr,E,\vOmega) \\
+%- \int_{0}^{\infty}\int_{\maths}\sigs(\vecr,E'\rightarrow E, \vOmega'\cdot\vOmega)\psi_N(\vecr,E',\vOmega')d\vOmega'dE' - S(\vecr,E,\vOmega)
+%\end{multline}
+%\pause
+\begin{itemize}
+\item Discretize the energy variable with a standard multigroup approach
+%\begin{multline}
+%r_N^g = \vOmega\cdot\sum_{i=1}^{\dn}\left[\nabla\psi_i^g(\vecr)\right]L_i(\vOmega) + \Sigma_t^g(\vecr)\sum_{i=1}^{\dn}\psi_i^g(\vecr)L_i(\vOmega) \\
+%- \sum_{g'=1}^G\sum_{i'=1}^{\dn} \psi_{i'}^{g'}(\vecr)\int_{\maths}\Sigma_{s}^{g'\rightarrow g}(\vecr,\vOmega'\cdot\vOmega)L_{i'}(\vOmega')d\vOmega'
+%- S^g(\vecr,\vOmega); \\ g=1,2,\ldots,G
+%\end{multline}
+%\end{frame}
+%\
+\pause
+%\begin{frame}[label=ldo-fin]{Derivation of the LDO Equations (cont'd.)}
+\item Analytically evaluate the scattering cross section and substitute it in%into the residual
+\end{itemize}
+%\begin{multline}
+%r_N^g = \vOmega\cdot\sum_{i=1}^{\dn}\left[\nabla\psi_i^g(\vecr)\right]L_i(\vOmega) + \Sigma_t^g(\vecr)\sum_{i=1}^{\dn}\psi_i^g(\vecr)L_i(\vOmega) \\
+%- \sum_{g'=1}^{G}\sum_{j=1}^{\dn}\sum_{i'=1}^{\dn}\langle L_{i'},L_j\rangle\Sigma_{s,N}^{g'\rightarrow g}(\vecr,\vOmega_j\cdot\vOmega)\psi_{i'}^{g'}(\vecr) - S^g(\vecr,\vOmega)
+%\end{multline}
+\pause
+We invoke a collocation procedure that requires the residual to be zero at the points 
+$\{\vOmega_i\}_{i=1}^{\dn}$, leading to the $G\times\dn$ equations:
+\begin{multline}
+\vOmega_i\cdot\nabla\psi_i^g(\vecr) + \Sigma_t^g(\vecr)\psi_i^g(\vecr) \\ \qquad= 
+\sum_{g'=1}^{G}\sum_{j=1}^{\dn}\sum_{i'=1}^{\dn}\langle L_{i'},L_j\rangle\Sigma_{s,N}^{g'\rightarrow g}(\vecr,\vOmega_i\cdot\vOmega_j)\psi_{i'}^{g'}(\vecr) + S^g(\vecr,\vOmega_i)%;~ \\
+%i =1,2,\ldots,\dn;~g=1,2,\ldots,G
+\end{multline}
+These are the new multigroup LDO equations.
+\end{frame}
+
 
 \end{document}

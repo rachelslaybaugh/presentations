@@ -744,7 +744,25 @@ Comparing the original adjoint to CADIS-$\Omega$....
 
 %% --------------------------------------------------------------
 \begin{frame}[fragile]
-  \frametitle{Steel Beam in Plate}
+  \frametitle{Steel Beam in Concrete}
+  
+  	\begin{figure}
+  	\begin{center}
+  		\includegraphics[height=1.5in,clip]{../figs/steel-beam.png}\\
+	\end{center}
+  	\end{figure} 
+%
+    \begin{itemize}
+    \item Steel plate embedded in concrete; air on each end
+    \item $^{235}$U fission spectrum plane source
+    \item Steel streams neutrons, concrete scatters them
+    \end{itemize}
+
+\end{frame}
+
+%% --------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Steel Beam in Plate Results}
   
 \begin{columns}
   \begin{column}{0.45\textwidth}
@@ -768,9 +786,9 @@ Comparing the original adjoint to CADIS-$\Omega$....
   \begin{column}{0.55\textwidth}
   	\begin{figure}
   	\begin{center}
-  		\includegraphics[height=1.5in,clip]{../figs/beam_facility_tally_result_compare.pdf}\\
+  		\includegraphics[height=1.5in,clip]{../figs/steel_beam_tally_result_compare.pdf}\\
 		%\caption{Response for maze 2}
-  		\includegraphics[height=1.5in,clip]{../figs/beam_facility_tally_error_compare.pdf}
+  		\includegraphics[height=1.5in,clip]{../figs/steel_beam_tally_error_compare.pdf}
 		%\caption{Relative errors for response function}
 		% point out that while the FOM is better for analog, it has high RE in regions, so overall it performs poorer
 	\end{center}
@@ -813,12 +831,6 @@ Comparing the original adjoint to CADIS-$\Omega$....
 
 % --------------------------------------------------------------
 % --------------------------------------------------------------
-
-
-
-% --------------------------------------------------------------
-% --------------------------------------------------------------
-\section*{}
 \begin{frame}[fragile]
   \frametitle{Project 1 Summary}
   \begin{itemize}
@@ -832,6 +844,28 @@ Comparing the original adjoint to CADIS-$\Omega$....
   \end{itemize}
 \end{frame}
 
+% --------------------------------------------------------------
+% --------------------------------------------------------------
+\section*{}
+\begin{frame}[fragile]
+  \frametitle{}
+\begin{columns}
+  \begin{column}{0.6\textwidth}
+  	\begin{figure}
+  	\begin{center}
+  		\includegraphics[height=1.25in,clip]{../figs/steel-beam.png}\\
+  		\includegraphics[height=1.75in,clip]{../figs/snapshots.png}
+	\end{center}
+  	\end{figure}
+  \end{column}
+  \begin{column}{0.4\textwidth}
+  Ok, so you can capture transport problems with material streaming better with your new method...
+  
+  \vspace*{2 em}
+  What \textit{else} can you do?
+  \end{column}
+\end{columns}
+\end{frame}
 
 
 % --------------------------------------------------------------

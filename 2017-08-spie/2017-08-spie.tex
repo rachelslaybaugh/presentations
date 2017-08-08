@@ -237,7 +237,7 @@ we need predictive simulation
 % --------------------------------------------------------------
 % --------------------------------------------------------------
 \begin{frame}[fragile]
-  \frametitle{Solving the TE}
+  \frametitle{Solving the Boltzmann Transport Equation}
   %
   \begin{align}
 \vOmega \cdot \nabla \psi(\vec{r}, E, \vOmega) &+
@@ -347,7 +347,7 @@ we need predictive simulation
 	\pause
 	\item New ideas are needed for these problems
 	\begin{itemize}
-	\item Current hybrid methods are only $f(\vec{x}, E)$
+	\item Current hybrid methods are only $f(\vec{r}, E)$
 	\item Including angle explicitly is too costly	
 	\end{itemize}
 	\pause
@@ -410,7 +410,7 @@ Neutrons in the forward problem will flow from the source to the detector
 %% --------------------------------------------------------------
 %
 \begin{frame}[fragile]
-  \frametitle{Understanding Adjoint Flux, $phi^{\dagger}(\vec{r},E)$}
+  \frametitle{Understanding Adjoint Flux, $\phi^{\dagger}(\vec{r},E)$}
   10 MeV isotropic point source; NaI detector
   \begin{columns}
    \begin{column}{0.25\textwidth}
@@ -456,6 +456,7 @@ Define response with function $f(\ve{r}, E)$ in volume $V_f$ as
   \end{column}
 \end{columns}
 \vspace*{1 em}
+\pause
 If we let $q^{\dagger} = f(\ve{r}, E)$ then
 %
 \begin{equation}
@@ -463,7 +464,7 @@ If we let $q^{\dagger} = f(\ve{r}, E)$ then
  \label{eq:ResponseRedef}
 \end{equation}
 %
-Eq.\ \eqref{eq:ResponseRedef} expresses that $\phi^{\dagger}$ represents the expected contribution of a source particle to the response given the source, $q$.
+Eq.\ \eqref{eq:ResponseRedef} expresses that $\phi^{\dagger}$ represents the expected contribution of a source particle to the respons.
 
 \end{frame}
 
@@ -475,7 +476,7 @@ Use \textit{adjoint}: the importance of a source particle to the solution
 \begin{itemize}
 \item Define $q^{\dagger}$ as the response of interest
 \item Coarse deterministic calculation to get $\phi^{\dagger}$ and $R$
-\item The current state of the art is FW/CADIS \cite{Wagner2007}
+\item The current state of the art for VR is FW/CADIS \cite{Wagner2007}
 \end{itemize}
 \begin{align*}
   imp(\ve{r}, E) &= \frac{\phi^{\dagger}(\ve{r}, E)}{\langle q(\ve{r}, E), \phi^{\dagger}(\ve{r}, E) \rangle} = \frac{\phi^{\dagger}(\ve{r}, E)}{R} \\
@@ -714,32 +715,32 @@ Comparing the original adjoint to CADIS-$\Omega$....
 
 
 %% --------------------------------------------------------------
-\begin{frame}[fragile]
-
-  \frametitle{Quantifying Anisotropy}
-  
-  To measure how the method performs based on the degree of problem anisotropy, we've defined several metrics
-  \vspace*{1em}
-    \begin{columns}
-    \begin{column}{0.45\textwidth}
-      \begin{itemize}
-      \item $M_{1} = \frac{\phi^{\dagger}(\vecr,E)\phi(\vecr,E)}{\int_{\vOmega}\psi^{\dagger}(\vecr,\vOmega,E)\psi(\vecr,\vOmega,E)}$
-      \item $M_{2} = \frac{\phi^{\dagger}_{\vOmega}(\vecr,E)}{\phi^{\dagger}(\vecr,E)}$
-      \item $M_{3} = \frac{\max(\int_{\vOmega}\psi^{\dagger}(\vecr,\vOmega,E)\psi(\vecr,\vOmega,E))}{\text{avg}(\int_{\vOmega}\psi^{\dagger}(\vecr,\vOmega,E)\psi(\vecr,\vOmega,E))}$
-       \item $M_{4} = \frac{\max(\int_{\vOmega}\psi^{\dagger}(\vecr,\vOmega,E)\psi(\vecr,\vOmega,E))}{\min(\int_{\vOmega}\psi^{\dagger}(\vecr,\vOmega,E)\psi(\vecr,\vOmega,E))}$
-      \end{itemize}
-    \end{column}    
-    \begin{column}{0.55\textwidth}
-    Example: M$_4$ in lowest energy group
-      	\begin{figure}
-  	\begin{center}
-  		\includegraphics[height=1.25in,clip]{../figs/maze2M4G26.png}
-	\end{center}
-  	\end{figure}
-    \end{column}
-  \end{columns}   
-
-\end{frame}
+%\begin{frame}[fragile]
+%
+%  \frametitle{Quantifying Anisotropy}
+%  
+%  To measure how the method performs based on the degree of problem anisotropy, we've defined several metrics
+%  \vspace*{1em}
+%    \begin{columns}
+%    \begin{column}{0.45\textwidth}
+%      \begin{itemize}
+%      \item $M_{1} = \frac{\phi^{\dagger}(\vecr,E)\phi(\vecr,E)}{\int_{\vOmega}\psi^{\dagger}(\vecr,\vOmega,E)\psi(\vecr,\vOmega,E)}$
+%      \item $M_{2} = \frac{\phi^{\dagger}_{\vOmega}(\vecr,E)}{\phi^{\dagger}(\vecr,E)}$
+%      \item $M_{3} = \frac{\max(\int_{\vOmega}\psi^{\dagger}(\vecr,\vOmega,E)\psi(\vecr,\vOmega,E))}{\text{avg}(\int_{\vOmega}\psi^{\dagger}(\vecr,\vOmega,E)\psi(\vecr,\vOmega,E))}$
+%       \item $M_{4} = \frac{\max(\int_{\vOmega}\psi^{\dagger}(\vecr,\vOmega,E)\psi(\vecr,\vOmega,E))}{\min(\int_{\vOmega}\psi^{\dagger}(\vecr,\vOmega,E)\psi(\vecr,\vOmega,E))}$
+%      \end{itemize}
+%    \end{column}    
+%    \begin{column}{0.55\textwidth}
+%    Example: M$_4$ in lowest energy group
+%      	\begin{figure}
+%  	\begin{center}
+%  		\includegraphics[height=1.25in,clip]{../figs/maze2M4G26.png}
+%	\end{center}
+%  	\end{figure}
+%    \end{column}
+%  \end{columns}   
+%
+%\end{frame}
 
 
 %% --------------------------------------------------------------
@@ -817,9 +818,10 @@ Comparing the original adjoint to CADIS-$\Omega$....
     \end{itemize}
     \end{column}    
 
+\pause
     \begin{column}{0.5\textwidth}
     \begin{itemize}
-       \item CADIS-$\Omega$ was great for problems with denser material streaming 
+       \item CADIS-$\Omega$ was great for problems with denser streaming materials  
        \item These have enough scattering so flux changes more slowly
        \item And enough streaming that anisotropy is strong
        \item \textit{This is exactly the problem we want to solve}
@@ -1030,7 +1032,7 @@ Comparing the original adjoint to CADIS-$\Omega$....
         \item Handles continuous and discrete variables \newline
         \item Robust, complete set of search heuristics \newline
         \item Nearly-global convergence \newline
-        \item Outperforms most other algorithms we tested on all nearly all problems of interest
+        \item Outperforms most other algorithms we tested on nearly all problems of interest
       \end{itemize} 
     \end{column}
     
@@ -1302,7 +1304,7 @@ Comparing the original adjoint to CADIS-$\Omega$....
 
 % --------------------------------------------------------------
 % --------------------------------------------------------------
-\section*{Nuclear Bootcamp}
+\section*{\scshape Nuclear Bootcamp}
 \begin{frame}[fragile]
   \frametitle{Thinking Bigger}
         \begin{columns}
@@ -1379,7 +1381,7 @@ We would accomplish many more things if we did not think of them as impossible. 
     \item We're developing better hybrid methods 
     \begin{itemize}
       \item for problems with strong anisotropies
-      \item and to provide evaluative flexibility \newline
+      \item and to provide evaluative flexibility 
     \end{itemize}
     \vspace*{0.5em}
     \item Energy tuning assemblies can provide strategic investigative tools

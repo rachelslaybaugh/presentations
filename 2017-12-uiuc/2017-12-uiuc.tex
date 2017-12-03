@@ -16,6 +16,7 @@
 \usefonttheme{serif}
 \usepackage{palatino}
 \usepackage{tabu}
+\usepackage{siunitx}
 
 \usepackage{subfigure}
 
@@ -23,13 +24,14 @@
 \usepackage{xcolor}
 \definecolor{dgreen}{rgb}{0.,0.6,0.}
 \definecolor{RawSienna}{cmyk}{0,0.72,1,0.45}
+\definecolor{Bblue}{HTML}{003A70}
 
 \setbeamerfont{title like}{shape=\scshape}
 \setbeamerfont{frametitle}{shape=\scshape}
 
 \setbeamercolor*{lower separation line head}{bg=CoolBlack} 
 \setbeamercolor*{normal text}{fg=black,bg=white} 
-\setbeamercolor*{alerted text}{fg=dgreen} 
+\setbeamercolor*{alerted text}{fg=Bblue} 
 \setbeamercolor*{example text}{fg=black} 
 \setbeamercolor*{structure}{fg=black} 
  
@@ -111,24 +113,7 @@
   \tikz\node[draw,rounded corners,align=center,] {#1};}%
 
 \setbeamerfont{author in head/foot}{size={\fontsize{3pt}{4pt}\selectfont}}
-%\author[Subham \& Mithun \& Karthikeyan \& Shantikumar]
-%{%
-%   \texorpdfstring{
-%        \begin{columns}
-%            \column{.25\linewidth}
-%            \centering
-%            \includegraphics[height=3cm]{../bk-eps-converted-to}
-%            \column{.25\linewidth}
-%            \centering
-%            \RBox{R.\ N.\ Slaybaugh\\
-%            Univ.\ of Cal.\ Berkeley}\\[1ex]
-%            \RBox{T.\ M.\ Evans, and\\
-%            S.\ W.\ Mosher\\
-%            Oak Ridge National Lab}
-%        \end{columns}
-%   }
-%   {Subham Soni S., Karthikeyanm, Shantikumar L.,  Mithun C.K.}
-%}
+
 \title{Advanced Solvers and Radiation Transport}
 \author{\includegraphics[height=2cm]
 {../bk-eps-converted-to}\\R.\ N.\ Slaybaugh, Univ.\ of Cal.\ Berkeley
@@ -179,8 +164,7 @@
     \item Hybrid Methods and Strong Anisotropies
         \begin{itemize}
         \item Research Objectives
-	    \item LDO Method
-	    \item Initial Results
+	    \item Cadis-$\Omega$ method and highlights
         \end{itemize}
         
    \vspace*{.5em}
@@ -216,7 +200,7 @@
 we need predictive simulation
 	\begin{itemize}
 	\item My group builds tools (translate applied math into code) used to design and analyze nuclear systems
-	\item We focus on high performance computing
+	\item We focus on high performance computing,
 	\item and inform algorithm development with physics of problems of interest
 	\end{itemize}
   \end{column}
@@ -236,7 +220,7 @@ we need predictive simulation
 % --------------------------------------------------------------
 % --------------------------------------------------------------
 \begin{frame}[fragile]
-  \frametitle{Solving the TE}
+  \frametitle{Solving the transport equation}
   %
   \begin{align}
 \vOmega \cdot \nabla \psi(\vec{r}, E, \vOmega) &+
@@ -276,41 +260,7 @@ we need predictive simulation
 
 % --------------------------------------------------------------
 \begin{frame}[fragile]
-  \frametitle{\url{https://github.com/SlaybaughLab}}
-
-	\begin{itemize}
-	\item Hybrid Methods
-	\begin{itemize}
-	  \item Kelly Rowland: Lagrange Discrete Ordinates
-	  \item Vanessa Goss and Emily Vu: analysis
-	  \item Madicken Munk (alumna): Omega methods
-	\end{itemize}
-	\pause
-	\item Deterministic methods
-	\begin{itemize}
-	  \item Mario Ortega: eigenvalue acceleration methods
-	  \item Weixiong Zhang: finite element methods
-	  \item Josh Rehak: finite element methods
-	  \item Marissa Ramirez Zweiger: finite element methods
-	  \item Sam Olivier: finite element methods
-	\end{itemize}
-	\pause
-	\item Other adventures
-	\begin{itemize}
-	   \item April Novak: coupled neutronics and TH
-	  \item Mitch Negus:  PWR analysis
-	  \item Ethan Boado: pelletron experiment design
-	  \item James Bevins (alumnus): optimization methods
-	  \item Richard Vasques (alumnus): non-classical transport
-	\end{itemize}
-	\end{itemize}
-
-\end{frame}
-
-
-% --------------------------------------------------------------
-\begin{frame}[fragile]
-  \frametitle{Speeding up MC}
+  \frametitle{Speeding up Monte Carlo}
   \begin{itemize}
 	\item Variance reduction (VR) used to improve Monte Carlo:\\
 	reduce relative error \textit{and} time by augmenting game
@@ -333,39 +283,45 @@ we need predictive simulation
 
 
 % --------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{\url{https://github.com/SlaybaughLab}}
+
+	\begin{itemize}
+	\item Hybrid methods
+	\begin{itemize}
+	  \item \alert{Kelly Rowland}: Lagrange Discrete Ordinates
+	  \item \alert{Vanessa Goss} and \alert{Emily Vu}: analysis
+	  \item \alert{Madicken Munk} (alumna): Omega methods
+	\end{itemize}
+	\pause
+	\item Deterministic methods
+	\begin{itemize}
+	  \item \alert{Mario Ortega}: eigenvalue acceleration methods
+	  \item \alert{Weixiong Zhang}: finite element methods
+	  \item \alert{Josh Rehak}: finite element methods
+	  \item \alert{Marissa Ramirez Zweiger}: finite element methods
+	  \item \alert{Sam Olivier}: finite element methods
+	\end{itemize}
+	\pause
+	\item Other adventures
+	\begin{itemize}
+	  \item \alert{April Novak}: coupled neutronics and TH
+	  \item \alert{Mitch Negus}:  PWR analysis
+	  \item \alert{Ethan Boado}: pelletron experiment design
+	  \item \alert{James Bevins} (alumnus): optimization methods
+	  \item \alert{Richard Vasques} (alumnus): non-classical transport
+	\end{itemize}
+	\end{itemize}
+
+\end{frame}
+
+
+% --------------------------------------------------------------
 % --------------------------------------------------------------
 \section{\scshape Hybrid Methods \& Anisotropy}
 
 \begin{frame}[fragile]
   \frametitle{Project 1 motivation}
-%
-%\begin{columns}
-%  \begin{column}{0.55\textwidth}
-%	\begin{itemize}
-%	\item Need to accurately model radiation for safeguarding and monitoring
-%	\item \alert{Challenging}: dense shields; streaming paths
-%	\item Current methods are insufficient
-%	\item \alert{Goal}: accurate solutions in reasonable time
-%	\item New methods can easily be added to existing codes
-%	\end{itemize}
-%  \end{column}
-%  \begin{column}{0.45\textwidth}
-%  	\begin{figure}
-%  	\begin{center}
-%  		\includegraphics[height=1.5in,clip]{../figs/isfsi}
-%		\caption{Used fuel storage pad}
-%	\end{center}
-%  	\end{figure}
-%  \end{column}
-%\end{columns}
-%
-%\end{frame}
-%
-%
-%% --------------------------------------------------------------
-%% --------------------------------------------------------------
-%\begin{frame}[fragile]
-%  \frametitle{Anisotropy: a computational challenge}
 
 	\begin{columns}
   	\begin{column}{0.5\textwidth}
@@ -402,46 +358,126 @@ we need predictive simulation
 \end{frame}
 
 
+% --------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Adjoint as an importance map}
+Define response with function $f(\ve{r}, E)$ in volume $V_f$ as
+%
+\begin{equation}
+ R = \int_E \int_{V_f} f(\ve{r}, E) \phi(\ve{r}, E) dV dE 
+ \label{eq:Response}
+\end{equation}
+\pause
+\begin{itemize}
+\item Forward ($\phi$ or $\psi$): neutrons flow from the source ($q$) to the detector
+\item Adjoint($\phi^{\dagger}$ or $\psi^{\dagger}$): particles represent how each part of phase space contributes to the ``source" ($q^{\dagger}$)
+\item $\phi^{\dagger}$ represents the expected contribution of a source particle to the response given the source, $q$.
+\end{itemize}
+
+
+\end{frame}
+% --------------------------------------------------------------
+% --------------------------------------------------------------
+\begin{frame}[fragile]
+
+  \frametitle{Understanding Forward flux, $\phi(\vec{r},E)$}
+  10 MeV isotropic point source; NaI detector
+  \begin{columns}
+   \begin{column}{0.75\textwidth}
+   \begin{figure}
+   \includegraphics[height=1.5in,clip]{../figs/maze-forward.png}
+   %\caption{Simple two-turn labyrinth}
+   \end{figure}
+   \end{column}
+  %
+  \begin{column}{0.25\textwidth}
+Neutrons in the forward problem will flow from the source to the detector
+   \end{column}
+\end{columns}
+	
+\end{frame}
 
 %% --------------------------------------------------------------
-%\begin{frame}[fragile]
-%  \frametitle{Forward-Adjoint Relationship \cite{Wagner2007}}
-%Define response with function $f(\ve{r}, E)$ in volume $V_f$ as
-%%
-%\begin{equation}
-% R = \int_E \int_{V_f} f(\ve{r}, E) \phi(\ve{r}, E) dV dE 
-% \label{eq:Response}
-%\end{equation}
-%%
-%\begin{columns}
-%  \begin{column}{0.5\textwidth}
-%	\begin{align}
-%  	H\phi &= q \quad \text{(forward)}\nonumber \\
-%  	%
-%  	H^{\dagger} \phi^{\dagger} &= q^{\dagger} \quad 
-%  	\text{(adjoint)}\nonumber
-%  	\end{align}
-%  \end{column}
-%  \begin{column}{0.5\textwidth}
-%  	\begin{align}
-%  	\langle H\phi, \phi^{\dagger} \rangle &= \langle H^{\dagger} \phi^{\dagger}, \phi \rangle \:, \text{and therefore} \nonumber \\
-%  	%
-%  	\langle q, \phi^{\dagger} \rangle &= \langle q^{\dagger}, \phi \rangle \nonumber
-%  	\end{align}
-%  \end{column}
-%\end{columns}
-%\vspace*{1 em}
-%If we let $q^{\dagger} = f(\ve{r}, E)$ then
-%%
-%\begin{equation}
-% \langle q^{\dagger}, \phi \rangle = \langle f, \phi \rangle = R = \langle q, \phi^{\dagger} \rangle
-% \label{eq:ResponseRedef}
-%\end{equation}
-%%
-%Eq.\ \eqref{eq:ResponseRedef} expresses that $\phi^{\dagger}$ represents the expected contribution of a source particle to the response given the source, $q$.
 %
-%\end{frame}
+\begin{frame}[fragile]
+  \frametitle{Understanding Adjoint Flux, $\phi^{\dagger}(\vec{r},E)$}
+  10 MeV isotropic point source; NaI detector
+  \begin{columns}
+   \begin{column}{0.25\textwidth}
+   Adjoint measures how each part of phase space contributes to the solution: \\
+\vspace*{.5em}
+\alert{importance map} 
+   \end{column}
+  %
+  \begin{column}{0.75\textwidth}
+   \begin{figure}
+   \includegraphics[height=1.75in,clip]{../figs/maze-adjoint.png}
+   %\caption{Simple two-turn labyrinth}
+   \end{figure}
+   \end{column}
+\end{columns}
+\end{frame}
+
+%% --------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Forward-Adjoint Relationship \cite{Wagner2007}}
+Define response with function $f(\ve{r}, E)$ in volume $V_f$ as
 %
+\begin{equation}
+ R = \int_E \int_{V_f} f(\ve{r}, E) \phi(\ve{r}, E) dV dE 
+ \label{eq:Response}
+\end{equation}
+%
+\begin{columns}
+  \begin{column}{0.5\textwidth}
+	\begin{align}
+  	H\phi &= q \quad \text{(forward)}\nonumber \\
+  	%
+  	H^{\dagger} \phi^{\dagger} &= q^{\dagger} \quad 
+  	\text{(adjoint)}\nonumber
+  	\end{align}
+  \end{column}
+  \begin{column}{0.5\textwidth}
+  	\begin{align}
+  	\langle H\phi, \phi^{\dagger} \rangle &= \langle H^{\dagger} \phi^{\dagger}, \phi \rangle \:, \text{and therefore} \nonumber \\
+  	%
+  	\langle q, \phi^{\dagger} \rangle &= \langle q^{\dagger}, \phi \rangle \nonumber
+  	\end{align}
+  \end{column}
+\end{columns}
+\vspace*{1 em}
+\pause
+If we let $q^{\dagger} = f(\ve{r}, E)$ then
+%
+\begin{equation}
+ \langle q^{\dagger}, \phi \rangle = \langle f, \phi \rangle = R = \langle q, \phi^{\dagger} \rangle
+ \label{eq:ResponseRedef}
+\end{equation}
+%
+Eq.\ \eqref{eq:ResponseRedef} expresses that $\phi^{\dagger}$ represents the expected contribution of a source particle to the respons.
+
+\end{frame}
+
+% --------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Adjoint as an importance map}
+Use \textit{adjoint}: the importance of a source particle to the solution
+
+\begin{itemize}
+\item Define $q^{\dagger}$ as the response of interest
+\item Coarse deterministic calculation to get $\phi^{\dagger}$ and $R$
+\item The current state of the art for VR is FW/CADIS \cite{Wagner2007}
+\end{itemize}
+\begin{align*}
+  imp(\ve{r}, E) &= \frac{\phi^{\dagger}(\ve{r}, E)}{\langle q(\ve{r}, E), \phi^{\dagger}(\ve{r}, E) \rangle} = \frac{\phi^{\dagger}(\ve{r}, E)}{R} \\
+  %
+  \hat{q}(\ve{r}, E) &= \frac{\phi^{\dagger}(\ve{r}, E) q(\ve{r}, E)}{R} \\
+  %
+  w_0(\ve{r}, E) &= \frac{q(\ve{r}, E)}{\hat{q}(\ve{r}, E)} = \frac{R}{\phi^{\dagger}(\ve{r}, E)} 
+\end{align*}
+
+\end{frame}
+
 %% --------------------------------------------------------------
 %\begin{frame}[fragile]
 %  \frametitle{CADIS \cite{Wagner2007}}
@@ -505,88 +541,6 @@ we need predictive simulation
 %\end{equation}
 %
 %\end{frame}
-
-
-% --------------------------------------------------------------
-\begin{frame}[fragile]
-  \frametitle{Adjoint as an importance map}
-Define response with function $f(\ve{r}, E)$ in volume $V_f$ as
-%
-\begin{equation}
- R = \int_E \int_{V_f} f(\ve{r}, E) \phi(\ve{r}, E) dV dE 
- \label{eq:Response}
-\end{equation}
-\pause
-\begin{itemize}
-\item Forward ($\phi$ or $\psi$): neutrons flow from the source ($q$) to the detector
-\item Adjoint($\phi^{\dagger}$ or $\psi^{\dagger}$): particles represent how each part of phase space contributes to the ``source" ($q^{\dagger}$)
-\item $\phi^{\dagger}$ represents the expected contribution of a source particle to the response given the source, $q$.
-\end{itemize}
-
-
-\end{frame}
-% --------------------------------------------------------------
-% --------------------------------------------------------------
-\begin{frame}[fragile]
-
-  \frametitle{Understanding Forward flux}
-  10 MeV isotropic point source; NaI detector
-  \begin{columns}
-   \begin{column}{0.75\textwidth}
-   \begin{figure}
-   \includegraphics[height=1.5in,clip]{../figs/maze-forward.png}
-   %\caption{Simple two-turn labyrinth}
-   \end{figure}
-   \end{column}
-  %
-  \begin{column}{0.25\textwidth}
-Neutrons in the forward problem will flow from the source to the detector
-   \end{column}
-\end{columns}
-	
-\end{frame}
-
-%% --------------------------------------------------------------
-%
-\begin{frame}[fragile]
-  \frametitle{Understanding Adjoint Flux}
-  10 MeV isotropic point source; NaI detector
-  \begin{columns}
-   \begin{column}{0.25\textwidth}
-   Adjoint measures how each part of phase space contributes to the solution: \\
-\vspace*{.5em}
-\alert{importance map} 
-   \end{column}
-  %
-  \begin{column}{0.75\textwidth}
-   \begin{figure}
-   \includegraphics[height=1.75in,clip]{../figs/maze-adjoint.png}
-   %\caption{Simple two-turn labyrinth}
-   \end{figure}
-   \end{column}
-\end{columns}
-\end{frame}
-
-
-% --------------------------------------------------------------
-\begin{frame}[fragile]
-  \frametitle{Adjoint as an importance map}
-Use \textit{adjoint}: the importance of a source particle to the solution
-
-\begin{itemize}
-\item Define $q^{\dagger}$ as the response of interest
-\item Coarse deterministic calculation to get $\phi^{\dagger}$ and $R$
-\item The current state of the art is FW/CADIS \cite{Wagner2007}
-\end{itemize}
-\begin{align*}
-  imp(\ve{r}, E) &= \frac{\phi^{\dagger}(\ve{r}, E)}{\langle q(\ve{r}, E), \phi^{\dagger}(\ve{r}, E) \rangle} = \frac{\phi^{\dagger}(\ve{r}, E)}{R} \\
-  %
-  \hat{q}(\ve{r}, E) &= \frac{\phi^{\dagger}(\ve{r}, E) q(\ve{r}, E)}{R} \\
-  %
-  w_0(\ve{r}, E) &= \frac{q(\ve{r}, E)}{\hat{q}(\ve{r}, E)} = \frac{R}{\phi^{\dagger}(\ve{r}, E)} 
-\end{align*}
-
-\end{frame}
 
 
 % --------------------------------------------------------------
@@ -677,48 +631,10 @@ Use \textit{adjoint}: the importance of a source particle to the solution
      the current implementation of FW/CADIS \vspace*{1 em}
 	\item Immediately useful; widely applicable \vspace*{1 em}
 	\item We are studying and characterizing the impact\vspace*{1 em}
-	\item Is available ADVANTG \cite{mosher_new_2010}
+	\item Is available currently ADVANTG \cite{mosher_new_2010}
 	\end{itemize}
 	
 \end{frame}
-
-
-% --------------------------------------------------------------
-% --------------------------------------------------------------
-%\section{\scshape Results \& Plans}
-%\begin{frame}[fragile]
-%  \frametitle{Current Status}
-%
-%    \begin{enumerate}
-%    \item Implementation: \alert{complete}
-%      \begin{itemize}
-%      %\item Large data handling is \alert{broader outcome}
-%      \item Implementation of weighted flux algorithm in Denovo \cite{Evans2010} is 
-%      complete
-%      \item Integration of method into ADVANTG complete
-%      %\item ADVANTG allows for ease of use; broader user base
-%      %\item Denovo integration enhances use on other hybrid platforms
-%      \end{itemize} 
-%      \vspace*{0.5em}
-%      \pause
-%    \item Testing: \alert{in process}
-%      \begin{itemize}
-%      \item A collection of small tests with varying anisotropies
-%      \item Studying performance compared to existing methods as a function of degree of anisotropy
-%      \item Investigating impact of angular discretization
-%      \end{itemize}
-%      \vspace*{0.5em}
-%      \pause
-%    \item Impact characterization: \alert{started}
-%      \begin{itemize}
-%      \item Investigating performance for one used fuel canister
-%      \item Investigating performance for array of used fuel canisters
-%      \item Extending to other applications of interest like monitoring reprocessing
-%      \end{itemize}
-%    \end{enumerate}
-%
-%	
-%\end{frame}
 
 
 %% --------------------------------------------------------------
@@ -751,97 +667,119 @@ Comparing the original adjoint to CADIS-$\Omega$....
 %% --------------------------------------------------------------
 %
 \begin{frame}[fragile]
-  \frametitle{Response in Maze Detector}
+  \frametitle{Single-Turn Maze Results}
   
 \begin{columns}
   \begin{column}{0.45\textwidth}
-  CADIS-$\Omega$ has:
   \begin{itemize}
-    \item Relatively uniform uncertainty distribution
-    \item Faster runtimes than CADIS
+    \item CADIS-$\Omega$ has lower REs at higher energies
+    \item Analog has high RE
+    \item CADIS-$\Omega$ was in the middle for FOM using the worst RE
   \end{itemize}
-  \vspace*{.5em}
-  \begin{tabular}{|l|c c|}
-  \hline
-      Run Type & Time (m) & FOM \\  
-      \hline
-      CADIS  & 524.9  &  5.1 \\
-      CADIS-$\Omega$ & 491.9 & 145 \\
-      \hline
-  \end{tabular}
-  \end{column}
-  \begin{column}{0.55\textwidth}
-  	\begin{figure}
-  	\begin{center}
-  		\includegraphics[height=1.5in,clip]{../figs/maze-results.png}\\
-		%\caption{Response for maze 2}
-  		\includegraphics[height=1.5in,clip]{../figs/maze-re.png}
-		%\caption{Relative errors for response function}
-		% point out that while the FOM is better for analog, it has high RE in regions, so overall it performs poorer
-	\end{center}
-  	\end{figure}
-  \end{column}
-\end{columns}
-\end{frame}
-
-
-
-%% --------------------------------------------------------------
-\begin{frame}[fragile]
-
-  \frametitle{Quantifying Anisotropy}
-  
-  To measure how the method performs based on the degree of problem anisotropy, we've defined several metrics
   \vspace*{1em}
-    \begin{columns}
-    \begin{column}{0.5\textwidth}
-      \begin{itemize}
-      \item $M_{1} = \frac{\phi^{\dagger}(\vecr,E)\phi(\vecr,E)}{\int_{\vOmega}\psi^{\dagger}(\vecr,\vOmega,E)\psi(\vecr,\vOmega,E)}$
-      \item $M_{2} = \frac{\phi^{\dagger}_{\vOmega}(\vecr,E)}{\phi^{\dagger}(\vecr,E)}$
-      \item $M_{3} = \frac{\max(\int_{\vOmega}\psi^{\dagger}(\vecr,\vOmega,E)\psi(\vecr,\vOmega,E))}{\text{avg}(\int_{\vOmega}\psi^{\dagger}(\vecr,\vOmega,E)\psi(\vecr,\vOmega,E))}$
-       \item $M_{4} = \frac{\max(\int_{\vOmega}\psi^{\dagger}(\vecr,\vOmega,E)\psi(\vecr,\vOmega,E))}{\min(\int_{\vOmega}\psi^{\dagger}(\vecr,\vOmega,E)\psi(\vecr,\vOmega,E))}$
-      \end{itemize}
-    \end{column}    
-    \begin{column}{0.5\textwidth}
-    Example: source in a room
-      	\begin{figure}
-  	\begin{center}
-  		\includegraphics[height=1.5in,clip]{../figs/therapy-room.png}
-	\end{center}
-  	\end{figure}
-    \end{column}
-  \end{columns}   
-
-\end{frame}
-
-
-%% --------------------------------------------------------------
-\begin{frame}[fragile]
-  \frametitle{Response in Room Detector}
   
-\begin{columns}
-  \begin{column}{0.45\textwidth}
-  CADIS-$\Omega$ again has:
-  \begin{itemize}
-    \item Relatively uniform uncertainty distribution
-    \item Faster runtimes than CADIS
-  \end{itemize}
-  \vspace*{.5em}
   \begin{tabular}{|l|c c|}
   \hline
       Run Type & Time (m) & FOM \\  
       \hline
-      CADIS  & 69.05  &  287 \\
-      CADIS-$\Omega$ & 50.4 & 373 \\
+      CADIS  & 84.4  &  2.21 \\
+      CADIS-$\Omega$ & 237 & \alert{0.318} \\
+      analog & 11.7 & 0.0857\\
       \hline
   \end{tabular}
   \end{column}
   \begin{column}{0.55\textwidth}
   	\begin{figure}
   	\begin{center}
-  		\includegraphics[height=1.5in,clip]{../figs/room-both-tally.png}\\
+  		\includegraphics[height=1.5in,clip]{../figs/maze_2_tally_result_compare.pdf}\\
 		%\caption{Response for maze 2}
-  		\includegraphics[height=1.5in,clip]{../figs/room-both-re.png}
+  		\includegraphics[height=1.5in,clip]{../figs/maze_2_tally_error_compare.pdf}
+		%\caption{Relative errors for response function}
+		% point out that while the FOM is better for analog, it has high RE in regions, so overall it performs poorer
+	\end{center}
+  	\end{figure}
+  \end{column}
+\end{columns}
+\end{frame}
+
+
+
+%% --------------------------------------------------------------
+%\begin{frame}[fragile]
+%
+%  \frametitle{Quantifying Anisotropy}
+%  
+%  To measure how the method performs based on the degree of problem anisotropy, we've defined several metrics
+%  \vspace*{1em}
+%    \begin{columns}
+%    \begin{column}{0.45\textwidth}
+%      \begin{itemize}
+%      \item $M_{1} = \frac{\phi^{\dagger}(\vecr,E)\phi(\vecr,E)}{\int_{\vOmega}\psi^{\dagger}(\vecr,\vOmega,E)\psi(\vecr,\vOmega,E)}$
+%      \item $M_{2} = \frac{\phi^{\dagger}_{\vOmega}(\vecr,E)}{\phi^{\dagger}(\vecr,E)}$
+%      \item $M_{3} = \frac{\max(\int_{\vOmega}\psi^{\dagger}(\vecr,\vOmega,E)\psi(\vecr,\vOmega,E))}{\text{avg}(\int_{\vOmega}\psi^{\dagger}(\vecr,\vOmega,E)\psi(\vecr,\vOmega,E))}$
+%       \item $M_{4} = \frac{\max(\int_{\vOmega}\psi^{\dagger}(\vecr,\vOmega,E)\psi(\vecr,\vOmega,E))}{\min(\int_{\vOmega}\psi^{\dagger}(\vecr,\vOmega,E)\psi(\vecr,\vOmega,E))}$
+%      \end{itemize}
+%    \end{column}    
+%    \begin{column}{0.55\textwidth}
+%    Example: M$_4$ in lowest energy group
+%      	\begin{figure}
+%  	\begin{center}
+%  		\includegraphics[height=1.25in,clip]{../figs/maze2M4G26.png}
+%	\end{center}
+%  	\end{figure}
+%    \end{column}
+%  \end{columns}   
+%
+%\end{frame}
+
+
+%% --------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Steel Beam in Concrete}
+  
+  	\begin{figure}
+  	\begin{center}
+  		\includegraphics[height=1.5in,clip]{../figs/steel-beam.png}\\
+	\end{center}
+  	\end{figure} 
+%
+    \begin{itemize}
+    \item Steel plate embedded in concrete; air on each end
+    \item $^{235}$U fission spectrum plane source
+    \item Steel streams neutrons, concrete scatters them
+    \end{itemize}
+
+\end{frame}
+
+%% --------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Steel Beam in Plate Results}
+  
+\begin{columns}
+  \begin{column}{0.45\textwidth}
+  \begin{itemize}
+    \item CADIS-$\Omega$ has lower REs at all energies
+    \item Analog has high RE
+    \item CADIS-$\Omega$ performed best for all FOMs
+  \end{itemize}
+  \vspace*{1em}
+  
+  \begin{tabular}{|l|c c|}
+  \hline
+      Run Type & Time (m) & FOM \\  
+      \hline
+      CADIS  & 420  &  3.69 \\
+      CADIS-$\Omega$ & 2,110 & \alert{6.71} \\
+      analog & 22 &  0.0448 \\
+      \hline
+  \end{tabular}  
+  \end{column}
+  \begin{column}{0.55\textwidth}
+  	\begin{figure}
+  	\begin{center}
+  		\includegraphics[height=1.5in,clip]{../figs/steel_beam_tally_result_compare.pdf}\\
+		%\caption{Response for maze 2}
+  		\includegraphics[height=1.5in,clip]{../figs/steel_beam_tally_error_compare.pdf}
 		%\caption{Relative errors for response function}
 		% point out that while the FOM is better for analog, it has high RE in regions, so overall it performs poorer
 	\end{center}
@@ -854,205 +792,65 @@ Comparing the original adjoint to CADIS-$\Omega$....
 %% --------------------------------------------------------------
 \begin{frame}[fragile]
 
-  \frametitle{Impact Tests}
-  
+  \frametitle{Results Summary}
+
+    We tested a variety of characterization problems  
     \begin{columns}
-    \begin{column}{0.55\textwidth}
-    Real system tests will show the ability of the method to improve MC for applications of interest\\
-    \vspace*{1em}
-    We are starting with a full storage cask with highly-detailed information
+    \begin{column}{0.5\textwidth}
+    \begin{itemize}
+       \item Problems with air streaming did not work well for any solver
+       \item With weight windows
+       \begin{itemize}
+         \item flux changes magnitude too quickly
+         \item causes lots of splitting and dramatic weight change
+         \item causes high variance and long runtime
+       \end{itemize}       
+    \end{itemize}
     \end{column}    
-    \begin{column}{0.45\textwidth}
-  \begin{center}
-  \includegraphics[height=2.5in,clip]{../figs/Transfer_Side_profile}  
-  \end{center}
+
+\pause
+    \begin{column}{0.5\textwidth}
+    \begin{itemize}
+       \item CADIS-$\Omega$ was great for problems with denser streaming materials  
+       \item These have enough scattering so flux changes more slowly
+       \item And enough streaming that anisotropy is strong
+       \item \textit{This is exactly the problem we want to solve}
+    \end{itemize}   
     \end{column}
-  \end{columns}   
+    \end{columns}   
 
 \end{frame}
 
 % --------------------------------------------------------------
 % --------------------------------------------------------------
-
-
-%% --------------------------------------------------------------
-%% --------------------------------------------------------------
-%\section{\scshape LDO Method}
-\begin{frame}[fragile]
-
-  \frametitle{Lagrange Discrete Ordinates (LDO) \cite{Ahrens2015}}
-
-   We're also looking at an entirely different approach.    
-\pause
-\begin{itemize}
-\item{Formally the same as the classical $S_N$ equations}
-	\begin{itemize}
-	\pause
-	\item{The difference lies in how the scattering source is calculated and in the representation of the angular flux}
-	\pause
-	\item{\textbf{No need to evaluate spherical harmonic moments of angular flux}}
-	\end{itemize}
-\pause
-\item{Increasing the angular resolution of the LDO equations brings ability to mitigate ray effects}
-%	\begin{itemize}
-%	\pause
-%	\item{Positive-weight quadrature sets on which LDO equations are based can integrate spherical harmonics from degree 0 to degree 165}
-%	\pause
-%	\item{For a fixed maximum degree of integration $N$, the corresponding number of quadrature points (ordinates) is $(N+1)^2$}
-%	\end{itemize}
-\pause
-\item{\textbf{LDO equations naturally allow angular flux to be evaluated in directions other than those found in the quadrature set}}
-	\begin{itemize}
-	\pause
-	\item{Solution of the LDO equations has interpolatory structure in angle}
-	\pause
-	\item{Opens the door to using angular biasing schemes for hybrid Monte Carlo calculations}
-	\end{itemize}
-\end{itemize}
-
-\end{frame}
-
-% --------------------------------------------------------------
-%\begin{frame}{Lagrange Discrete Ordinates (LDO) Equations}
-%\begin{multline}
-%\vOmega_i\cdot\nabla\psi_i^g(\vecr) + \Sigma_t^g(\vecr)\psi_i^g(\vecr) \\ \qquad= 
-%\sum_{g'=1}^{G}\sum_{j=1}^{\dn}\sum_{i'=1}^{\dn}\langle L_{i'},L_j\rangle\Sigma_{s,N}^{g'\rightarrow g}(\vecr,\vOmega_i\cdot\vOmega_j)\psi_{i'}^{g'}(\vecr) + S^g(\vecr,\vOmega_i);~ \\
-%i =1,2,\ldots,\dn;~g=1,2,\ldots,G
-%\end{multline}
-%These are the multigroup LDO equations, which are formally the same as the classical $S_N$ equations. The difference lies in how the scattering source is calculated and in the representation of the angular flux.
-%\end{frame}
-
-
-%% --------------------------------------------------------------
-\begin{frame}{Derivation of the LDO Equations}
-Start with the TE:
-\begin{multline}
-\vOmega\cdot  \nabla \psi(\vecr,E,\vOmega) + \Sigma_t(\vecr,E)\psi(\vecr,E,\vOmega) = S(\vecr, E, \vOmega) 
-\\ +
-\int_0^{\infty}\int_{\maths}\Sigma_s(\vecr, E'\rightarrow E,\vOmega'\cdot\vOmega)
-\psi(\vecr,E',\vOmega')d\vOmega'dE'
-\end{multline}
-\begin{itemize}
-\pause
-\item{Define approximation $\psi_N(\vecr,E,\vOmega) = \sum_{i=1}^{\dn}\psi_i(\vecr,E)L_i(\vOmega)$ and substitute it into the TE}
-\pause
-\item{$\psi_i(\vecr,E)$ are flux coefficients, $L_i(\vOmega)$ is the $i^{th}$ Lagrange element}
-\pause
-\item{$\dn\equiv \dim\hn = (N+1)^2$;
- 
- $\hn = \text{span}\{Y^m_n: |m| \leq n, 0 \leq n \leq N\}$}
-\end{itemize}
-\end{frame}
-
-%\begin{frame}{Lagrange Functions \cite{sph}}
-%Defined generally as:
-%\begin{equation}
-%L_i(\vOmega) =
-%\frac{
-%\det
-%\begin{bmatrix}
-%\ell_1(\vOmega_1)&\cdots&\ell_n(\vOmega_1) &\cdots& \ell_P(\vOmega_1) \\
-%\vdots & \ddots & \vdots & \ddots & \vdots \\
-%\ell_1(\vOmega_{i-1}) & \cdots &\ell_n(\vOmega_{i-1}) & \cdots & \ell_P(\vOmega_{i-1}) \\
-%\ell_1(\vOmega) & \cdots & \ell_n(\vOmega) & \cdots & \ell_P(\vOmega) \\
-%\ell_1(\vOmega_{i+1}) & \cdots & \ell_n(\vOmega_{i+1}) & \cdots & \ell_P(\vOmega_{i+1}) \\
-% \vdots & \ddots & \vdots & \ddots & \vdots \\
-%\ell_1(\vOmega_P) & \cdots & \ell_n(\vOmega_P) & \cdots & \ell_P(\vOmega_P)
-% \end{bmatrix} 
-%}
-%{
-%\det
-%\begin{bmatrix}
-%\ell_1(\vOmega_1)&\cdots&\ell_n(\vOmega_1) &\cdots& \ell_P(\vOmega_1) \\
-% \vdots & \ddots & \vdots & \ddots & \vdots \\
-%\ell_1(\vOmega_i)&\cdots&\ell_n(\vOmega_i) &\cdots& \ell_P(\vOmega_i) \\
-% \vdots & \ddots & \vdots & \ddots & \vdots \\
-%\ell_1(\vOmega_P)&\cdots&\ell_n(\vOmega_P) &\cdots& \ell_P(\vOmega_P)
-% \end{bmatrix} 
-%}
-%\end{equation}
-%Here, $\{\vOmega_1,\ldots,\vOmega_P\}$ varies over $\maths$ and $\{\ell_1,\ldots,\ell_P\}$ are basis functions for the space of polynomials of degree $\leq P$.
-%% pgs 190 and 133 of springer book, maybe ask
-%% look up basis functions and know how to talk about them!
-%% what can they be, what do we usually choose for them, etc.
-%\end{frame}
-
-
-%% --------------------------------------------------------------
-\begin{frame}{Lagrange Functions (cont'd.)}
-
-The $L_{i}(\vOmega)$ satisfy:
-\begin{equation}
-L_i(\vOmega_j) = \delta_{i,j};\quad i,j = 1,2,\ldots,P;\quad P = \dn
-\end{equation}
-\pause
-Interpolatory points allow definition of a quadrature for $f \in \hn$% = \text{span}\{Y^m_n: |m| \leq n, 0 \leq n \leq N\};\ \dim\hn = (N+1)^2 \equiv \dn$:
-\begin{equation}
-\int_{\maths}f(\vOmega)d\vOmega = \int_{\maths}\sum_{i=1}^{\dn} f_i L_i(\vOmega)d\vOmega 
-= \sum_{i=1}^{\dn}\int_{\maths}L_i(\vOmega)d\vOmega f_i = \sum_{i=1}^{\dn} w_i f_i
-\end{equation}
-\pause
-Quadrature weights:
-\begin{equation}
-w_i = \int_{\maths}L_{i}(\vOmega)d\vOmega = \sum_{j=1}^{\dn}\lij
-\end{equation}
-%Here, $\langle f,g\rangle$ is the inner product $\int_{\maths}f(\vOmega)g(\vOmega)d\vOmega$.
-\end{frame}
-
-
-%% --------------------------------------------------------------
-\begin{frame}[label=group_disc]{Derivation of the LDO Equations (cont'd.)}
-%Define the residual:
-%\begin{multline}
-%r_N(\vecr,E,\vOmega) \equiv \vOmega\cdot\nabla\psi_N(\vecr,E,\vOmega) + \sigt(\vecr,E)\psi_N(\vecr,E,\vOmega) \\
-%- \int_{0}^{\infty}\int_{\maths}\sigs(\vecr,E'\rightarrow E, \vOmega'\cdot\vOmega)\psi_N(\vecr,E',\vOmega')d\vOmega'dE' - S(\vecr,E,\vOmega)
-%\end{multline}
-%\pause
-\begin{itemize}
-\item Discretize the energy variable with a standard multigroup approach
-%\begin{multline}
-%r_N^g = \vOmega\cdot\sum_{i=1}^{\dn}\left[\nabla\psi_i^g(\vecr)\right]L_i(\vOmega) + \Sigma_t^g(\vecr)\sum_{i=1}^{\dn}\psi_i^g(\vecr)L_i(\vOmega) \\
-%- \sum_{g'=1}^G\sum_{i'=1}^{\dn} \psi_{i'}^{g'}(\vecr)\int_{\maths}\Sigma_{s}^{g'\rightarrow g}(\vecr,\vOmega'\cdot\vOmega)L_{i'}(\vOmega')d\vOmega'
-%- S^g(\vecr,\vOmega); \\ g=1,2,\ldots,G
-%\end{multline}
-%\end{frame}
-%\
-\pause
-%\begin{frame}[label=ldo-fin]{Derivation of the LDO Equations (cont'd.)}
-\item Analytically evaluate the scattering cross section and substitute it in%into the residual
-\end{itemize}
-%\begin{multline}
-%r_N^g = \vOmega\cdot\sum_{i=1}^{\dn}\left[\nabla\psi_i^g(\vecr)\right]L_i(\vOmega) + \Sigma_t^g(\vecr)\sum_{i=1}^{\dn}\psi_i^g(\vecr)L_i(\vOmega) \\
-%- \sum_{g'=1}^{G}\sum_{j=1}^{\dn}\sum_{i'=1}^{\dn}\langle L_{i'},L_j\rangle\Sigma_{s,N}^{g'\rightarrow g}(\vecr,\vOmega_j\cdot\vOmega)\psi_{i'}^{g'}(\vecr) - S^g(\vecr,\vOmega)
-%\end{multline}
-\pause
-We invoke a collocation procedure that requires the residual to be zero at the points 
-$\{\vOmega_i\}_{i=1}^{\dn}$, leading to the $G\times\dn$ equations:
-\begin{multline}
-\vOmega_i\cdot\nabla\psi_i^g(\vecr) + \Sigma_t^g(\vecr)\psi_i^g(\vecr) \\ \qquad= 
-\sum_{g'=1}^{G}\sum_{j=1}^{\dn}\sum_{i'=1}^{\dn}\langle L_{i'},L_j\rangle\Sigma_{s,N}^{g'\rightarrow g}(\vecr,\vOmega_i\cdot\vOmega_j)\psi_{i'}^{g'}(\vecr) + S^g(\vecr,\vOmega_i)%;~ \\
-%i =1,2,\ldots,\dn;~g=1,2,\ldots,G
-\end{multline}
-These are the new multigroup LDO equations.
-\end{frame}
-
-
-
-% --------------------------------------------------------------
-% --------------------------------------------------------------
-\section*{}
 \begin{frame}[fragile]
   \frametitle{Project 1 Summary}
   \begin{itemize}
   \item There are many situations of interest where neutron fluxes have strong anisotropies
   \item Current VR methods do not enhance performance sufficiently 
   \pause
-  \item CADIS-$\vOmega$ is one way to capture angular information and shows strong initial promise
-  \item Strategically using the LDO equations may provide another effective path
+  \item CADIS-$\Omega$ is one way to capture angular information and shows strong initial promise
+  %\item Strategically using the LDO equations may provide another effective path
   \pause
   \item We're looking at many types of problems and are scaling up to real applications
   \end{itemize}
 \end{frame}
+
+% --------------------------------------------------------------
+% --------------------------------------------------------------
+\section*{}
+\begin{frame}[fragile]
+  \frametitle{Interlude: Who are you, anyway?}
+
+  	\begin{figure}
+  	\begin{center}
+  		\includegraphics[width=\textwidth]{../figs/logos-slide.jpg}
+	\end{center}
+  	\end{figure}
+
+\end{frame}
+
+
 
 
 
@@ -1353,56 +1151,49 @@ These are the new multigroup LDO equations.
 %  \end{columns}
 \end{frame}
 
-%% --------------------------------------------------------------
-%\begin{frame}{Development Approach}
-%  \begin{columns}
-%    \begin{column}{0.55\linewidth}
-%      \begin{itemize}
-%        \item 1.2 g HEU foil
-%        \item $\sim80$ kg
-%        \item \SI{1e+8} - \SI{1e+9} Fissions
-%      \end{itemize}  
-%      
-%      \renewcommand*{\thesubfigure}{}
-%      \begin{figure}[htp]
-%        \centering
-%        \subcapcentertrue
-%        \vspace{-0.6cm}
-%        \subfigure[\small ETA Design]{\includegraphics[width=1.9in]{../figs/ETA_Design_1g235.png}}
-%      \end{figure}
-%    \end{column}
-%    
-%    \begin{column}{0.5\linewidth}
-%      \vspace{-1cm}      
-%      \renewcommand*{\thesubfigure}{}
-%      \begin{figure}[htp]
-%        \centering
-%        \subcapcentertrue
-%        \subfigure[]{\includegraphics[width=2.2in]{../figs/ETA_Output_vs_Obj_1g.png}}
-%      \end{figure}
-%      
-%      \vspace{-1.4cm}
-%      \begin{table}
-%        \centering
-%        \tiny
-%        \begin{tabular}{0.95\textwidth}%{@{} Y c c @{}} 
-%          \toprule
-%          \textbf{Energy} & \textbf{Target Normalized} & \textbf{\% Fluence} \\
-%          \textbf{Range} & \textbf{Differential Fluence} & \textbf{Achieved} \\
-%          \midrule
-%          0-3 keV & \SI{6.24e-05} & 103.4 $\mypm$ 2.0\% \\ \addlinespace
-%          3-100 keV & \SI{3.41e-02} & 140.7 $\mypm$ 0.1\% \\ \addlinespace
-%          0.1-6 MeV & \SI{8.46e-01} & 96.0 $\mypm$ 0.0\% \\ \addlinespace
-%          6-10 MeV & \SI{1.65E-02} & 117.3 $\mypm$ 0.2\% \\ \addlinespace
-%          10-16 MeV & \SI{1.01E-01} & 119.4 $\mypm$ 0.0\% \\ \addlinespace
-%          \bottomrule
-%        \end{tabular} 
-%      \end{table}
-%      \vspace{-0.2cm}      
-%      \small \centering ETA vs Objective Spectrum 
-%    \end{column}
-%  \end{columns}    
-%\end{frame}
+% --------------------------------------------------------------
+\begin{frame}{Development Approach}
+  \begin{columns}
+    \begin{column}{0.55\linewidth}
+      \begin{itemize}
+        \item 1.2 g HEU foil
+        \item $\sim80$ kg
+        \item \SI{1e+8} - \SI{1e+9} Fissions
+      \end{itemize}  
+      \begin{figure}[htp]
+        \centering
+        \vspace{-0.6cm}
+        \includegraphics[width=1.9in]{../figs/ETA_Design_1g235.png}
+      \end{figure}
+    \end{column}    
+    \begin{column}{0.45\linewidth}
+      \vspace{-1cm}      
+      \begin{figure}[htp]
+        \centering
+        \includegraphics[width=2.2in]{../figs/ETA_Output_vs_Obj_1g.png}
+      \end{figure}     
+      \vspace{-1cm}
+      \begin{table}
+        \centering
+        \tiny
+        \begin{tabular}{c c c}
+          \hline
+          \textbf{Energy} & \textbf{Target Normalized} & \textbf{\% Fluence} \\
+          \textbf{Range} & \textbf{Differential Fluence} & \textbf{Achieved} \\
+          \hline
+          0-3 keV & \SI{6.24e-05} & 103.4 $\mypm$ 2.0\% \\ 
+          3-100 keV & \SI{3.41e-02} & 140.7 $\mypm$ 0.1\% \\ 
+          0.1-6 MeV & \SI{8.46e-01} & 96.0 $\mypm$ 0.0\% \\ 
+          6-10 MeV & \SI{1.65E-02} & 117.3 $\mypm$ 0.2\% \\
+          10-16 MeV & \SI{1.01E-01} & 119.4 $\mypm$ 0.0\% \\ 
+          \hline
+        \end{tabular} 
+      \end{table}
+            \vspace{-0.2cm}      
+      \small \centering ETA vs Objective Spectrum 
+    \end{column}
+  \end{columns}    
+\end{frame}
 
 % --------------------------------------------------------------
 \begin{frame}{NIF experiment: TNF validation}
